@@ -3,7 +3,7 @@ EVE Online ESI Library
 
 ## Requirements
 * Lazarus 2.0.12 or newer
-* DCPcrypt 
+* DCPcrypt (Use Package -> Online Package Manager)
 
 ## Resources
 https://docs.esi.evetech.net/
