@@ -7,6 +7,7 @@ EVE Online ESI Library
 
 ## Resources
 https://docs.esi.evetech.net/
+
 https://esi.evetech.net/ui/
 
 ## Develop
