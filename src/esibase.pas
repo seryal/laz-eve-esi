@@ -23,11 +23,13 @@ type
   { TEVEBase }
 
   TEVEBase = class
+  protected
+    function Get(AAuthKey, AURL: string): string;
+    function Get(AURL: string): string;
   private
     FDataSource: string;
   public
     constructor Create;
-    function Get(AAuthKey, AURL: string): string;
     property DataSource: string read FDataSource write FDataSource;
   end;
 
@@ -49,13 +51,20 @@ begin
   try
     http.AddHeader('Content-Type', 'application/x-www-form-urlencoded');
     http.AddHeader('Host', 'login.eveonline.com');
-    http.AddHeader('Authorization', 'Bearer ' + AAuthKey);
+    if AAuthKey <> '' then
+      http.AddHeader('Authorization', 'Bearer ' + AAuthKey);
     Result := http.Get(AURL);
     if http.ResponseStatusCode <> 200 then
-      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' + http.ResponseStatusText);
+      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' +
+        http.ResponseStatusText);
   finally
     FreeAndNil(http);
   end;
+end;
+
+function TEVEBase.Get(AURL: string): string;
+begin
+  Result := Get('', AURL);
 end;
 
 end.

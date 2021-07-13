@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  esiauthorization, esihttpserver, LCLIntf, ComCtrls, ExtCtrls, JSONPropStorage,
+  esiauthorization, esihttpserver, LCLIntf, ComCtrls, ExtCtrls,
+  JSONPropStorage, esicharacter,
   esilocation;
 
 type
@@ -23,9 +24,11 @@ type
     btnAddScope: TButton;
     btnOnline: TButton;
     btnShip: TButton;
+    Button6: TButton;
     edAuthCode: TEdit;
     edClientID: TEdit;
     edCallbackURL: TEdit;
+    edCharacterID: TEdit;
     edScope: TEdit;
     edRefreshCode: TEdit;
     JSONPropStorage1: TJSONPropStorage;
@@ -34,6 +37,7 @@ type
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
+    Label6: TLabel;
     lblName: TLabel;
     lblCharID: TLabel;
     lbScopes: TListBox;
@@ -42,6 +46,7 @@ type
     Panel1: TPanel;
     Panel2: TPanel;
     Splitter1: TSplitter;
+    tbsCharacter: TTabSheet;
     tbsAuth: TTabSheet;
     tbsLocation: TTabSheet;
     procedure btnAddScopeClick(Sender: TObject);
@@ -53,6 +58,7 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure btnLcationClick(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
     procedure edCallbackURLChange(Sender: TObject);
     procedure edClientIDChange(Sender: TObject);
     procedure edRefreshCodeChange(Sender: TObject);
@@ -221,6 +227,16 @@ begin
   finally
     FreeAndNil(esi);
   end;
+end;
+
+procedure TForm1.Button6Click(Sender: TObject);
+var
+  character: TEVECharacter;
+  res: TEVECharacterPublic;
+begin
+  character := TEVECharacter.Create;
+  res := character.GetPublicInfo(StrToInt(edCharacterID.Text));
+  memo1.Lines.Add(res.Name + ' - ' + res.Gender);
 end;
 
 procedure TForm1.edCallbackURLChange(Sender: TObject);

@@ -1,0 +1,10 @@
+{
+  "TApplication" : {
+    "Form1" : {
+      "clientid" : "",
+      "refresh_code" : "",
+      "callbackurl" : "",
+      "scopes" : ""
+    }
+  }
+}
