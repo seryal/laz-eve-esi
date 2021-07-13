@@ -25,6 +25,7 @@ type
     btnOnline: TButton;
     btnShip: TButton;
     Button6: TButton;
+    Button7: TButton;
     edAuthCode: TEdit;
     edClientID: TEdit;
     edCallbackURL: TEdit;
@@ -59,6 +60,7 @@ type
     procedure Button5Click(Sender: TObject);
     procedure btnLcationClick(Sender: TObject);
     procedure Button6Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
     procedure edCallbackURLChange(Sender: TObject);
     procedure edClientIDChange(Sender: TObject);
     procedure edRefreshCodeChange(Sender: TObject);
@@ -92,6 +94,7 @@ var
   str: string;
 begin
   Fesi := TEVEESIAuth.Create;
+
   Fesi.ClientID := edClientID.Text;
   Fesi.CallbackURL := edCallbackURL.Text;
   for str in lbScopes.Items do
@@ -101,6 +104,7 @@ begin
   FCodeVerifier := Fesi.CodeVerifier;
   FCodeChallenge := Fesi.CodeChallenge;
   memo1.Lines.add(FUrl);
+
 end;
 
 procedure TForm1.btnAddScopeClick(Sender: TObject);
@@ -235,8 +239,29 @@ var
   res: TEVECharacterPublic;
 begin
   character := TEVECharacter.Create;
-  res := character.GetPublicInfo(StrToInt(edCharacterID.Text));
-  memo1.Lines.Add(res.Name + ' - ' + res.Gender);
+  try
+    res := character.GetPublicInfo(StrToInt(edCharacterID.Text));
+    memo1.Lines.Add(res.Name + ' - ' + res.Gender);
+
+  finally
+    FreeAndNil(character);
+  end;
+end;
+
+procedure TForm1.Button7Click(Sender: TObject);
+var
+  character: TEVECharacter;
+  res: TEVECharacterAgentList;
+begin
+  character := TEVECharacter.Create;
+  try
+    res := character.GetAgentResearch(edAuthCode.Text, StrToInt(lblCharID.Caption));
+    memo1.Lines.Add('Agents Count = ' + res.Count.ToString);
+    memo1.Lines.Add(res.Items[0].StartedAt);
+    FreeAndNil(res);
+  finally
+    FreeAndNil(character);
+  end;
 end;
 
 procedure TForm1.edCallbackURLChange(Sender: TObject);

@@ -16,7 +16,7 @@ unit esicharacter;
 interface
 
 uses
-  Classes, SysUtils, fpjson, esibase;
+  Classes, SysUtils, fpjson, esibase, Generics.Collections;
 
 type
   TEVECharacterPublic = record
@@ -31,11 +31,26 @@ type
     SecuityStatus: double;
   end;
 
+  TEVECharacterAgent = record
+    AgentID: integer;
+    PointsPerDay: double;
+    RemainderPoints: double;
+    SkillTypeID: integer;
+    StartedAt: string;
+  end;
+
+  TEVECharacterAgentList = specialize TList<TEVECharacterAgent>;
+
+
   { TEVECharacter }
 
   TEVECharacter = class(TEVEBase)
   public
+    {Get character's public information.}
     function GetPublicInfo(ACharacterId: UInt64): TEVECharacterPublic;
+    {Get agent research list
+     Free memory after use.}
+    function GetAgentResearch(AAccessToken: string; ACharacterId: uint64): TEVECharacterAgentList;
   end;
 
 implementation
@@ -63,6 +78,36 @@ begin
     Result.Name := TJSONObject(jData).Get('name');
     Result.RaceID := TJSONObject(jData).Get('race_id');
     Result.SecuityStatus := TJSONObject(jData).Get('security_status');
+  finally
+    FreeAndNil(jData);
+  end;
+end;
+
+function TEVECharacter.GetAgentResearch(AAccessToken: string; ACharacterId: uint64): TEVECharacterAgentList;
+const
+  URL = 'https://esi.evetech.net/latest/characters/%s/agents_research/?datasource=%s';
+var
+  req_url: string;
+  res: string;
+  jData: TJSONData;
+  agent: TEVECharacterAgent;
+  i: integer;
+
+begin
+  req_url := Format(URL, [ACharacterId.ToString, DataSource]);
+  res := Get(AAccessToken, req_url);
+  try
+    jData := GetJSON(res);
+    Result := TEVECharacterAgentList.Create;
+    for i := 0 to TJSONArray(jData).Count - 1 do
+    begin
+      agent.AgentID := TJSONObject(TJSONArray(jData).Items[i]).Get('agent_id');
+      agent.PointsPerDay := TJSONObject(TJSONArray(jData).Items[i]).Get('points_per_day');
+      agent.RemainderPoints := TJSONObject(TJSONArray(jData).Items[i]).Get('remainder_points');
+      agent.SkillTypeID := TJSONObject(TJSONArray(jData).Items[i]).Get('skill_type_id');
+      agent.StartedAt := TJSONObject(TJSONArray(jData).Items[i]).Get('started_at');
+      Result.Add(agent);
+    end;
   finally
     FreeAndNil(jData);
   end;
