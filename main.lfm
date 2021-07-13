@@ -240,6 +240,15 @@ object Form1: TForm1
         OnClick = Button7Click
         TabOrder = 2
       end
+      object btnBlueprints: TButton
+        Left = 128
+        Height = 25
+        Top = 104
+        Width = 75
+        Caption = 'Blueprints'
+        OnClick = btnBlueprintsClick
+        TabOrder = 3
+      end
     end
     object tbsLocation: TTabSheet
       Caption = 'Location'

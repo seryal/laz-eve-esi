@@ -26,6 +26,7 @@ type
     btnShip: TButton;
     Button6: TButton;
     Button7: TButton;
+    btnBlueprints: TButton;
     edAuthCode: TEdit;
     edClientID: TEdit;
     edCallbackURL: TEdit;
@@ -51,6 +52,7 @@ type
     tbsAuth: TTabSheet;
     tbsLocation: TTabSheet;
     procedure btnAddScopeClick(Sender: TObject);
+    procedure btnBlueprintsClick(Sender: TObject);
     procedure btnOnlineClick(Sender: TObject);
     procedure btnShipClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -112,6 +114,24 @@ begin
   lbScopes.Items.Add(edScope.Text);
   JSONPropStorage1.StoredValue['scopes'] := lbScopes.Items.Text;
   JSONPropStorage1.Save;
+end;
+
+procedure TForm1.btnBlueprintsClick(Sender: TObject);
+var
+  character: TEVECharacter;
+  res: TEVECharacterBlueprintList;
+begin
+  character := TEVECharacter.Create;
+  try
+    res := character.GetBlueprints(edAuthCode.Text, StrToInt(lblCharID.Caption));
+    try
+      memo1.Lines.Add('Blueprints count = ' + res.Count.ToString);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(character);
+  end;
 end;
 
 procedure TForm1.btnOnlineClick(Sender: TObject);
@@ -242,7 +262,6 @@ begin
   try
     res := character.GetPublicInfo(StrToInt(edCharacterID.Text));
     memo1.Lines.Add(res.Name + ' - ' + res.Gender);
-
   finally
     FreeAndNil(character);
   end;
@@ -256,9 +275,12 @@ begin
   character := TEVECharacter.Create;
   try
     res := character.GetAgentResearch(edAuthCode.Text, StrToInt(lblCharID.Caption));
-    memo1.Lines.Add('Agents Count = ' + res.Count.ToString);
-    memo1.Lines.Add(res.Items[0].StartedAt);
-    FreeAndNil(res);
+    try
+      memo1.Lines.Add('Agents Count = ' + res.Count.ToString);
+      memo1.Lines.Add(res.Items[0].StartedAt);
+    finally
+      FreeAndNil(res);
+    end;
   finally
     FreeAndNil(character);
   end;

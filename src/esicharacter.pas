@@ -41,6 +41,18 @@ type
 
   TEVECharacterAgentList = specialize TList<TEVECharacterAgent>;
 
+  TEVECharacterBlueprint = record
+    ItemID: UInt64;
+    LocationFlag: string;
+    LocationID: UInt64;
+    MaterialEfficiency: integer;
+    Quantity: integer;
+    Runs: integer;
+    TimeEfficiency: integer;
+    TypeID: integer;
+  end;
+
+  TEVECharacterBlueprintList = specialize TList<TEVECharacterBlueprint>;
 
   { TEVECharacter }
 
@@ -51,6 +63,9 @@ type
     {Get agent research list
      Free memory after use.}
     function GetAgentResearch(AAccessToken: string; ACharacterId: uint64): TEVECharacterAgentList;
+    {Get blueprint list
+     Free memory after use.}
+    function GetBlueprints(AAccessToken: string; ACharacterId: uint64): TEVECharacterBlueprintList;
   end;
 
 implementation
@@ -110,6 +125,48 @@ begin
     end;
   finally
     FreeAndNil(jData);
+  end;
+end;
+
+function TEVECharacter.GetBlueprints(AAccessToken: string;
+  ACharacterId: uint64): TEVECharacterBlueprintList;
+const
+  URL = 'https://esi.evetech.net/latest/characters/%s/blueprints/?datasource=%s&page=%d';
+var
+  req_url: string;
+  res: string;
+  jData: TJSONData;
+  blueprint: TEVECharacterBlueprint;
+  i: integer;
+  page: integer;
+
+begin
+  page := 1;
+  Result := TEVECharacterBlueprintList.Create;
+  while True do
+  begin
+    req_url := Format(URL, [ACharacterId.ToString, DataSource, page]);
+    res := Get(AAccessToken, req_url);
+    try
+      jData := GetJSON(res);
+      if TJSONArray(jData).Count = 0 then
+        exit;
+      for i := 0 to TJSONArray(jData).Count - 1 do
+      begin
+        blueprint.ItemID := TJSONObject(TJSONArray(jData).Items[i]).Get('item_id');
+        blueprint.LocationFlag := TJSONObject(TJSONArray(jData).Items[i]).Get('location_flag');
+        blueprint.LocationID := TJSONObject(TJSONArray(jData).Items[i]).Get('location_id');
+        blueprint.MaterialEfficiency := TJSONObject(TJSONArray(jData).Items[i]).Get('material_efficiency');
+        blueprint.Quantity := TJSONObject(TJSONArray(jData).Items[i]).Get('quantity');
+        blueprint.Runs := TJSONObject(TJSONArray(jData).Items[i]).Get('runs');
+        blueprint.TimeEfficiency := TJSONObject(TJSONArray(jData).Items[i]).Get('time_efficiency');
+        blueprint.TypeID := TJSONObject(TJSONArray(jData).Items[i]).Get('type_id');
+        Result.Add(blueprint);
+      end;
+    finally
+      FreeAndNil(jData);
+    end;
+    Inc(page);
   end;
 end;
 

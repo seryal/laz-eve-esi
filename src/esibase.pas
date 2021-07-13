@@ -43,6 +43,11 @@ begin
   DataSource := 'tranquility';
 end;
 
+function TEVEBase.Get(AURL: string): string;
+begin
+  Result := Get('', AURL);
+end;
+
 function TEVEBase.Get(AAuthKey, AURL: string): string;
 var
   http: TFPHTTPClient;
@@ -55,16 +60,10 @@ begin
       http.AddHeader('Authorization', 'Bearer ' + AAuthKey);
     Result := http.Get(AURL);
     if http.ResponseStatusCode <> 200 then
-      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' +
-        http.ResponseStatusText);
+      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' + http.ResponseStatusText);
   finally
     FreeAndNil(http);
   end;
-end;
-
-function TEVEBase.Get(AURL: string): string;
-begin
-  Result := Get('', AURL);
 end;
 
 end.
