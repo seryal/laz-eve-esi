@@ -5,3 +5,4 @@ lib/x86_64-win64/esiauthorization.o
 lib/
 *.dbg
 *.exe
+settings.json
