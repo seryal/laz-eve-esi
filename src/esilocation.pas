@@ -22,7 +22,7 @@ type
 
   TEVELocationLocation = record
     SolarSystemId: uint64;
-    StationId: uint64;
+    StationId: integer;
     StructureId: uint64;
   end;
 
@@ -67,7 +67,7 @@ begin
   res := Get(AAccessToken, req_url);
   try
     jData := GetJSON(res);
-    Result.SolarSystemId := TJSONObject(jData).Get('solar_system_id', 0);
+    Result.SolarSystemId := TJSONObject(jData).Get('solar_system_id');
     Result.StationId := TJSONObject(jData).Get('station_id', 0);
     Result.StructureId := TJSONObject(jData).Get('structure_id', 0);
   finally
@@ -90,7 +90,7 @@ begin
     Result.LastLogin := TJSONObject(jData).Get('last_login', '');
     Result.LastLogout := TJSONObject(jData).Get('last_logout', '');
     Result.Logins := TJSONObject(jData).Get('logins', 0);
-    Result.Online := TJSONObject(jData).Get('online', False);
+    Result.Online := TJSONObject(jData).Get('online');
   finally
     FreeAndNil(jData);
   end;
@@ -108,9 +108,9 @@ begin
   res := Get(AAccessToken, req_url);
   try
     jData := GetJSON(res);
-    Result.ShipItemId := TJSONObject(jData).Get('ship_item_id', 0);
-    Result.ShipName := TJSONObject(jData).Get('ship_name', '');
-    Result.ShipTypeId := TJSONObject(jData).Get('ship_type_id', 0);
+    Result.ShipItemId := TJSONObject(jData).Get('ship_item_id');
+    Result.ShipName := TJSONObject(jData).Get('ship_name');
+    Result.ShipTypeId := TJSONObject(jData).Get('ship_type_id');
   finally
     FreeAndNil(jData);
   end;

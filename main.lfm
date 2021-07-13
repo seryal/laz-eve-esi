@@ -277,6 +277,15 @@ object Form1: TForm1
           OnClick = Button7Click
           TabOrder = 1
         end
+        object Button9: TButton
+          Left = 208
+          Height = 25
+          Top = 16
+          Width = 88
+          Caption = 'Jump Fatigue'
+          OnClick = Button9Click
+          TabOrder = 2
+        end
       end
     end
     object tbsLocation: TTabSheet

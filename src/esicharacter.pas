@@ -54,14 +54,20 @@ type
 
   TEVECharacterBlueprintList = specialize TList<TEVECharacterBlueprint>;
 
-  TEVECorporation = record
+  TEVECharacterCorporation = record
     CorporationID: integer;
     IsDeleted: boolean;
     RecordID: integer;
     StartDate: string;
   end;
 
-  TEVECorporationList = specialize TList<TEVECorporation>;
+  TEVECharacterCorporationList = specialize TList<TEVECharacterCorporation>;
+
+  TEVECharacterJumpFatigue = record
+    JumpFatigueExpireDate: string;
+    LastJumpDate: string;
+    LastUpdateDate: string;
+  end;
 
   { TEVECharacter }
 
@@ -77,7 +83,9 @@ type
     function GetBlueprints(AAccessToken: string; ACharacterId: uint64): TEVECharacterBlueprintList;
     {Get Corporation list
      Free memory after use.}
-    function GetCorporationHistory(ACharacterId: uint64): TEVECorporationList;
+    function GetCorporationHistory(ACharacterId: uint64): TEVECharacterCorporationList;
+    {Get Jump Fatigue}
+    function GetJumpFatigue(AAccessToken: string; ACharacterId: uint64): TEVECharacterJumpFatigue;
   end;
 
 implementation
@@ -180,20 +188,20 @@ begin
   end;
 end;
 
-function TEVECharacter.GetCorporationHistory(ACharacterId: uint64): TEVECorporationList;
+function TEVECharacter.GetCorporationHistory(ACharacterId: uint64): TEVECharacterCorporationList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/corporationhistory/?datasource=%s';
 var
   req_url: string;
   res: string;
   jData: TJSONData;
-  corporation: TEVECorporation;
+  corporation: TEVECharacterCorporation;
   i: integer;
 begin
   req_url := Format(URL, [ACharacterId.ToString, DataSource]);
   res := Get(req_url);
   try
-    Result := TEVECorporationList.Create;
+    Result := TEVECharacterCorporationList.Create;
     jData := GetJSON(res);
     for i := 0 to TJSONArray(jData).Count - 1 do
     begin
@@ -203,6 +211,27 @@ begin
       corporation.StartDate := TJSONObject(TJSONArray(jData).Items[i]).Get('start_date');
       Result.Add(corporation);
     end;
+  finally
+    FreeAndNil(jData);
+  end;
+end;
+
+function TEVECharacter.GetJumpFatigue(AAccessToken: string; ACharacterId: uint64): TEVECharacterJumpFatigue;
+const
+  URL = 'https://esi.evetech.net/latest/characters/%s/fatigue/?datasource=%s';
+var
+  req_url: string;
+  res: string;
+  jData: TJSONData;
+  i: integer;
+begin
+  req_url := Format(URL, [ACharacterId.ToString, DataSource]);
+  res := Get(AAccessToken, req_url);
+  try
+    jData := GetJSON(res);
+    Result.JumpFatigueExpireDate := TJSONObject(jData).Get('jump_fatigue_expire_date', '');
+    Result.LastJumpDate := TJSONObject(jData).Get('last_jump_date', '');
+    Result.LastUpdateDate := TJSONObject(jData).Get('last_update_date', '');
   finally
     FreeAndNil(jData);
   end;

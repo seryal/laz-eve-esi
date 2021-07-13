@@ -28,6 +28,7 @@ type
     Button6: TButton;
     Button7: TButton;
     Button8: TButton;
+    Button9: TButton;
     edAuthCode: TEdit;
     edCharacterID: TEdit;
     edClientID: TEdit;
@@ -67,6 +68,7 @@ type
     procedure Button6Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
     procedure Button8Click(Sender: TObject);
+    procedure Button9Click(Sender: TObject);
     procedure edCallbackURLChange(Sender: TObject);
     procedure edClientIDChange(Sender: TObject);
     procedure edRefreshCodeChange(Sender: TObject);
@@ -293,7 +295,7 @@ end;
 procedure TForm1.Button8Click(Sender: TObject);
 var
   character: TEVECharacter;
-  res: TEVECorporationList;
+  res: TEVECharacterCorporationList;
 begin
   character := TEVECharacter.Create;
   try
@@ -307,7 +309,20 @@ begin
   finally
     FreeAndNil(character);
   end;
+end;
 
+procedure TForm1.Button9Click(Sender: TObject);
+var
+  character: TEVECharacter;
+  res: TEVECharacterJumpFatigue;
+begin
+  character := TEVECharacter.Create;
+  try
+    res := character.GetJumpFatigue(edAuthCode.Text, StrToInt(lblCharID.Caption));
+    memo1.Lines.Add('Update = ' + res.JumpFatigueExpireDate);
+  finally
+    FreeAndNil(character);
+  end;
 end;
 
 procedure TForm1.edCallbackURLChange(Sender: TObject);
