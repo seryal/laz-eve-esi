@@ -15,6 +15,7 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    btnBlueprints: TButton;
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
@@ -26,13 +27,15 @@ type
     btnShip: TButton;
     Button6: TButton;
     Button7: TButton;
-    btnBlueprints: TButton;
+    Button8: TButton;
     edAuthCode: TEdit;
+    edCharacterID: TEdit;
     edClientID: TEdit;
     edCallbackURL: TEdit;
-    edCharacterID: TEdit;
     edScope: TEdit;
     edRefreshCode: TEdit;
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
     JSONPropStorage1: TJSONPropStorage;
     Label1: TLabel;
     Label2: TLabel;
@@ -63,6 +66,7 @@ type
     procedure btnLcationClick(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
     procedure edCallbackURLChange(Sender: TObject);
     procedure edClientIDChange(Sender: TObject);
     procedure edRefreshCodeChange(Sender: TObject);
@@ -284,6 +288,26 @@ begin
   finally
     FreeAndNil(character);
   end;
+end;
+
+procedure TForm1.Button8Click(Sender: TObject);
+var
+  character: TEVECharacter;
+  res: TEVECorporationList;
+begin
+  character := TEVECharacter.Create;
+  try
+    res := character.GetCorporationHistory(StrToInt(edCharacterID.Text));
+    try
+      memo1.Lines.Add('Corporation Cont = ' + res.Count.ToString);
+      memo1.Lines.Add(res.Items[0].CorporationID.ToString);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(character);
+  end;
+
 end;
 
 procedure TForm1.edCallbackURLChange(Sender: TObject);

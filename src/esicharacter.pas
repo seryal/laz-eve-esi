@@ -54,6 +54,15 @@ type
 
   TEVECharacterBlueprintList = specialize TList<TEVECharacterBlueprint>;
 
+  TEVECorporation = record
+    CorporationID: integer;
+    IsDeleted: boolean;
+    RecordID: integer;
+    StartDate: string;
+  end;
+
+  TEVECorporationList = specialize TList<TEVECorporation>;
+
   { TEVECharacter }
 
   TEVECharacter = class(TEVEBase)
@@ -66,6 +75,9 @@ type
     {Get blueprint list
      Free memory after use.}
     function GetBlueprints(AAccessToken: string; ACharacterId: uint64): TEVECharacterBlueprintList;
+    {Get Corporation list
+     Free memory after use.}
+    function GetCorporationHistory(ACharacterId: uint64): TEVECorporationList;
   end;
 
 implementation
@@ -107,7 +119,6 @@ var
   jData: TJSONData;
   agent: TEVECharacterAgent;
   i: integer;
-
 begin
   req_url := Format(URL, [ACharacterId.ToString, DataSource]);
   res := Get(AAccessToken, req_url);
@@ -139,7 +150,6 @@ var
   blueprint: TEVECharacterBlueprint;
   i: integer;
   page: integer;
-
 begin
   page := 1;
   Result := TEVECharacterBlueprintList.Create;
@@ -167,6 +177,34 @@ begin
       FreeAndNil(jData);
     end;
     Inc(page);
+  end;
+end;
+
+function TEVECharacter.GetCorporationHistory(ACharacterId: uint64): TEVECorporationList;
+const
+  URL = 'https://esi.evetech.net/latest/characters/%s/corporationhistory/?datasource=%s';
+var
+  req_url: string;
+  res: string;
+  jData: TJSONData;
+  corporation: TEVECorporation;
+  i: integer;
+begin
+  req_url := Format(URL, [ACharacterId.ToString, DataSource]);
+  res := Get(req_url);
+  try
+    Result := TEVECorporationList.Create;
+    jData := GetJSON(res);
+    for i := 0 to TJSONArray(jData).Count - 1 do
+    begin
+      corporation.CorporationID := TJSONObject(TJSONArray(jData).Items[i]).Get('corporation_id');
+      corporation.IsDeleted := TJSONObject(TJSONArray(jData).Items[i]).Get('is_deleted', False);
+      corporation.RecordID := TJSONObject(TJSONArray(jData).Items[i]).Get('record_id');
+      corporation.StartDate := TJSONObject(TJSONArray(jData).Items[i]).Get('start_date');
+      Result.Add(corporation);
+    end;
+  finally
+    FreeAndNil(jData);
   end;
 end;
 
