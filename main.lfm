@@ -286,6 +286,15 @@ object Form1: TForm1
           OnClick = Button9Click
           TabOrder = 2
         end
+        object btnMedals: TButton
+          Left = 304
+          Height = 25
+          Top = 16
+          Width = 75
+          Caption = 'Get Medals'
+          OnClick = btnMedalsClick
+          TabOrder = 3
+        end
       end
     end
     object tbsLocation: TTabSheet

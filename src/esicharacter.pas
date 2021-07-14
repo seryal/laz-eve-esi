@@ -150,6 +150,67 @@ type
     property last_update_date: string read FLastUpdateDate write FLastUpdateDate;
   end;
 
+  { TEVECharactersMedalsGraphic }
+
+  TEVECharactersMedalsGraphic = class(TCollectionItem)
+  private
+    Fcolor: integer;
+    Fgraphic: string;
+    Flayer: integer;
+    Fpart: integer;
+  published
+    property color: integer read Fcolor write Fcolor;
+    property graphic: string read Fgraphic write Fgraphic;
+    property layer: integer read Flayer write Flayer;
+    property part: integer read Fpart write Fpart;
+  end;
+
+  { TEVECharactersMedalsGraphicList }
+
+  TEVECharactersMedalsGraphicList = class(TCollection)
+  private
+    function GetItems(Index: integer): TEVECharactersMedalsGraphic;
+    procedure SetItems(Index: integer; AValue: TEVECharactersMedalsGraphic);
+  public
+    property Items[Index: integer]: TEVECharactersMedalsGraphic read GetItems write SetItems;
+  end;
+
+  { TCharactersCharacterMedals }
+
+  TEVECharactersMedals = class(TCollectionItem)
+  private
+    Fcorporation_id: integer;
+    Fdate: string;
+    Fdescription: string;
+    Fgraphics: TEVECharactersMedalsGraphicList;
+    Fcolor: integer;
+    Fgraphic: string;
+    Flayer: integer;
+    Fpart: integer;
+  public
+    constructor Create(ACollection: TCollection); override;
+    destructor Destroy; override;
+  published
+    property corporation_id: integer read Fcorporation_id write Fcorporation_id;
+    property date: string read Fdate write Fdate;
+    property description: string read Fdescription write Fdescription;
+    property &graphics: TEVECharactersMedalsGraphicList read Fgraphics write Fgraphics;
+    property color: integer read Fcolor write Fcolor;
+    property graphic: string read Fgraphic write Fgraphic;
+    property layer: integer read Flayer write Flayer;
+    property part: integer read Fpart write Fpart;
+  end;
+
+  { TEVECharactersMedalsList }
+
+  TEVECharactersMedalsList = class(TCollection)
+  private
+    function GetItems(Index: integer): TEVECharactersMedals;
+    procedure SetItems(Index: integer; AValue: TEVECharactersMedals);
+  public
+    property Items[Index: integer]: TEVECharactersMedals read GetItems write SetItems;
+  end;
+
   { TEVECharacter }
 
   TEVECharacter = class(TEVEBase)
@@ -165,11 +226,54 @@ type
     {Get Corporation list
      Free memory after use.}
     function GetCorporationHistory(ACharacterId: uint64): TEVECharacterCorporationList;
-    {Get Jump Fatigue}
+    {Get Jump Fatigue
+     Free memory after use.}
     function GetJumpFatigue(AAccessToken: string; ACharacterId: uint64): TEVECharacterJumpFatigue;
+    {Get Characters Medals
+     Free memory after use.}
+    function GetCharactersMedals(AAccessToken: string; ACharacterId: uint64): TEVECharactersMedalsList;
+
   end;
 
 implementation
+
+{ TEVECharactersMedals }
+
+constructor TEVECharactersMedals.Create(ACollection: TCollection);
+begin
+  inherited Create(ACollection);
+  Fgraphics := TEVECharactersMedalsGraphicList.Create(TEVECharactersMedalsGraphic);
+end;
+
+destructor TEVECharactersMedals.Destroy;
+begin
+  FreeAndNil(Fgraphics);
+  inherited Destroy;
+end;
+
+{ TEVECharactersMedalsList }
+
+function TEVECharactersMedalsList.GetItems(Index: integer): TEVECharactersMedals;
+begin
+  Result := TEVECharactersMedals(inherited Items[Index]);
+end;
+
+procedure TEVECharactersMedalsList.SetItems(Index: integer; AValue: TEVECharactersMedals);
+begin
+  Items[Index].Assign(AValue);
+end;
+
+{ TEVECharactersMedalsGraphicList }
+
+function TEVECharactersMedalsGraphicList.GetItems(Index: integer): TEVECharactersMedalsGraphic;
+begin
+  Result := TEVECharactersMedalsGraphic(inherited Items[Index]);
+end;
+
+procedure TEVECharactersMedalsGraphicList.SetItems(Index: integer; AValue: TEVECharactersMedalsGraphic);
+begin
+  Items[Index].Assign(AValue);
+end;
 
 { TEVECharacterCorporationList }
 
@@ -247,6 +351,14 @@ const
 begin
   Result := TEVECharacterJumpFatigue.Create(nil);
   DeStreamerObject(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TObject(Result));
+end;
+
+function TEVECharacter.GetCharactersMedals(AAccessToken: string; ACharacterId: uint64): TEVECharactersMedalsList;
+const
+  URL = 'https://esi.evetech.net/latest/characters/%s/medals/?datasource=%s';
+begin
+  Result := TEVECharactersMedalsList.Create(TEVECharactersMedals);
+  DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TCollection(Result));
 end;
 
 end.

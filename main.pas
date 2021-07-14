@@ -17,6 +17,7 @@ type
   TForm1 = class(TForm)
     btnBlueprints: TButton;
     Button1: TButton;
+    btnMedals: TButton;
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
@@ -57,6 +58,7 @@ type
     tbsLocation: TTabSheet;
     procedure btnAddScopeClick(Sender: TObject);
     procedure btnBlueprintsClick(Sender: TObject);
+    procedure btnMedalsClick(Sender: TObject);
     procedure btnOnlineClick(Sender: TObject);
     procedure btnShipClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -138,6 +140,27 @@ begin
   finally
     FreeAndNil(character);
   end;
+end;
+
+procedure TForm1.btnMedalsClick(Sender: TObject);
+var
+  tmp: TEVECharacter;
+  medals: TEVECharactersMedalsList;
+begin
+  tmp := TEVECharacter.Create;
+  try
+    medals := tmp.GetCharactersMedals(edAuthCode.Text, StrToInt(lblCharID.Caption));
+    try
+      Memo1.Lines.Add('-----MEDALS------');
+      Memo1.Lines.Add(medals.Items[0].description);
+      Memo1.Lines.Add(medals.Items[0].Graphics.Items[0].graphic);
+    finally
+      FreeAndNil(medals);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+
 end;
 
 procedure TForm1.btnOnlineClick(Sender: TObject);

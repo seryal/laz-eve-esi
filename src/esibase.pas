@@ -62,8 +62,7 @@ begin
   end;
 end;
 
-procedure TEVEBase.DeStreamerArray(AJsonString: string; var AObject: TCollection
-  );
+procedure TEVEBase.DeStreamerArray(AJsonString: string; var AObject: TCollection);
 var
   jsoDeSerialize: TJSONDeStreamer;
 begin
