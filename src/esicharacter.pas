@@ -100,7 +100,6 @@ type
     property type_id: integer read Ftype_id write Ftype_id;
   end;
 
-
   { TEVECharacterBlueprintList }
 
   TEVECharacterBlueprintList = class(TCollection)
@@ -304,7 +303,7 @@ type
     {Get Character Notification
      Free memory after use.}
     function GetContacts(AAccessToken: string; ACharacterId: uint64): TEVECharacterContactList;
-    {Get Character Notification
+    {Get Character Portrait
      Free memory after use.}
     function GetPortrait(ACharacterId: uint64): TEVECharacterPortrait;
 
