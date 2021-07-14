@@ -19,54 +19,135 @@ uses
   Classes, SysUtils, fpjson, esibase, Generics.Collections;
 
 type
-  TEVECharacterPublic = record
-    AncestryId: integer;
-    BirthDay: string;
-    BloodlineID: integer;
-    CorporationID: UInt64;
-    Description: string;
-    Gender: string;
-    Name: string;
-    RaceID: integer;
-    SecuityStatus: double;
+
+  { TEVECharacterPublic }
+
+  TEVECharacterPublic = class(TCollectionItem)
+  private
+    FAllianceID: integer;
+    FAncestryId: integer;
+    FBirthDay: string;
+    FBloodlineID: integer;
+    FCorporationID: integer;
+    FDescription: string;
+    FFactionID: integer;
+    FGender: string;
+    FName: string;
+    FRaceID: integer;
+    FSecuityStatus: double;
+    FTitle: string;
+  published
+    property alliance_id: integer read FAllianceID write FAllianceID;
+    property ancestry_id: integer read FAncestryId write FAncestryId;
+    property birthday: string read FBirthDay write FBirthDay;
+    property bloodline_id: integer read FBloodlineID write FBloodlineID;
+    property corporation_id: integer read FCorporationID write FCorporationID;
+    property description: string read FDescription write FDescription;
+    property faction_id: integer read FFactionID write FFactionID;
+    property gender: string read FGender write FGender;
+    property &name: string read FName write FName;
+    property race_id: integer read FRaceID write FRaceID;
+    property security_status: double read FSecuityStatus write FSecuityStatus;
+    property title: string read FTitle write FTitle;
   end;
 
-  TEVECharacterAgent = record
-    AgentID: integer;
-    PointsPerDay: double;
-    RemainderPoints: double;
-    SkillTypeID: integer;
-    StartedAt: string;
+  { TEVECharacterAgent }
+
+  TEVECharacterAgent = class(TCollectionItem)
+  private
+    Fagent_id: integer;
+    Fpoints_per_day: double;
+    Fremainder_points: double;
+    Fskill_type_id: integer;
+    Fstarted_at: string;
+  published
+    property agent_id: integer read Fagent_id write Fagent_id;
+    property points_per_day: double read Fpoints_per_day write Fpoints_per_day;
+    property remainder_points: double read Fremainder_points write Fremainder_points;
+    property skill_type_id: integer read Fskill_type_id write Fskill_type_id;
+    property started_at: string read Fstarted_at write Fstarted_at;
   end;
 
-  TEVECharacterAgentList = specialize TList<TEVECharacterAgent>;
+  { TEVECharacterAgentList }
 
-  TEVECharacterBlueprint = record
-    ItemID: UInt64;
-    LocationFlag: string;
-    LocationID: UInt64;
-    MaterialEfficiency: integer;
-    Quantity: integer;
-    Runs: integer;
-    TimeEfficiency: integer;
-    TypeID: integer;
+  TEVECharacterAgentList = class(TCollection)
+  private
+    function GetItems(Index: integer): TEVECharacterAgent;
+    procedure SetItems(Index: integer; AValue: TEVECharacterAgent);
+  public
+    property Items[Index: integer]: TEVECharacterAgent read GetItems write SetItems;
   end;
 
-  TEVECharacterBlueprintList = specialize TList<TEVECharacterBlueprint>;
+  { TEVECharacterBlueprint }
 
-  TEVECharacterCorporation = record
-    CorporationID: integer;
-    IsDeleted: boolean;
-    RecordID: integer;
-    StartDate: string;
+  TEVECharacterBlueprint = class(TCollectionItem)
+  private
+    Fitem_id: uint64;
+    Flocation_flag: string;
+    Flocation_id: uint64;
+    Fmaterial_efficiency: integer;
+    Fquantity: integer;
+    Fruns: integer;
+    Ftime_efficiency: integer;
+    Ftype_id: integer;
+  published
+    property item_id: uint64 read Fitem_id write Fitem_id;
+    property location_flag: string read Flocation_flag write Flocation_flag;
+    property location_id: uint64 read Flocation_id write Flocation_id;
+    property material_efficiency: integer read Fmaterial_efficiency write Fmaterial_efficiency;
+    property quantity: integer read Fquantity write Fquantity;
+    property runs: integer read Fruns write Fruns;
+    property time_efficiency: integer read Ftime_efficiency write Ftime_efficiency;
+    property type_id: integer read Ftype_id write Ftype_id;
   end;
 
-  TEVECharacterCorporationList = specialize TList<TEVECharacterCorporation>;
 
-  TEVECharacterJumpFatigue = record
-    JumpFatigueExpireDate: string;
-    LastJumpDate: string;
-    LastUpdateDate: string;
+  { TEVECharacterBlueprintList }
+
+  TEVECharacterBlueprintList = class(TCollection)
+  private
+    function GetItems(Index: integer): TEVECharacterBlueprint;
+    procedure SetItems(Index: integer; AValue: TEVECharacterBlueprint);
+  public
+    property Items[Index: integer]: TEVECharacterBlueprint read GetItems write SetItems;
+  end;
+
+  { TEVECharacterCorporation }
+
+  TEVECharacterCorporation = class(TCollectionItem)
+  private
+    Fcorporation_id: integer;
+    Fis_deleted: boolean;
+    Frecord_id: integer;
+    Fstart_date: string;
+  published
+    property corporation_id: integer read Fcorporation_id write Fcorporation_id;
+    property is_deleted: boolean read Fis_deleted write Fis_deleted;
+    property record_id: integer read Frecord_id write Frecord_id;
+    property start_date: string read Fstart_date write Fstart_date;
+  end;
+
+  { TEVECharacterCorporationList }
+
+  TEVECharacterCorporationList = class(TCollection)
+  private
+    function GetItems(Index: integer): TEVECharacterCorporation;
+    procedure SetItems(Index: integer; AValue: TEVECharacterCorporation);
+  public
+    property Items[Index: integer]: TEVECharacterCorporation read GetItems write SetItems;
+  end;
+
+  { TEVECharacterJumpFatigue }
+
+  TEVECharacterJumpFatigue = class(TCollectionItem)
+  private
+    FJumpFatigueExpireDate: string;
+    FLastJumpDate: string;
+    FLastUpdateDate: string;
+  published
+    property jump_fatigue_expire_date: string read FJumpFatigueExpireDate write FJumpFatigueExpireDate;
+    property last_jump_date: string read FLastJumpDate write FLastJumpDate;
+    property last_update_date: string read FLastUpdateDate write FLastUpdateDate;
   end;
 
   { TEVECharacter }
@@ -74,13 +155,13 @@ type
   TEVECharacter = class(TEVEBase)
   public
     {Get character's public information.}
-    function GetPublicInfo(ACharacterId: UInt64): TEVECharacterPublic;
+    function GetPublicInfo(ACharacterId: uint64): TEVECharacterPublic;
     {Get agent research list
      Free memory after use.}
     function GetAgentResearch(AAccessToken: string; ACharacterId: uint64): TEVECharacterAgentList;
     {Get blueprint list
      Free memory after use.}
-    function GetBlueprints(AAccessToken: string; ACharacterId: uint64): TEVECharacterBlueprintList;
+    function GetBlueprints(AAccessToken: string; ACharacterId: uint64; APage: integer): TEVECharacterBlueprintList;
     {Get Corporation list
      Free memory after use.}
     function GetCorporationHistory(ACharacterId: uint64): TEVECharacterCorporationList;
@@ -90,151 +171,82 @@ type
 
 implementation
 
+{ TEVECharacterCorporationList }
+
+function TEVECharacterCorporationList.GetItems(Index: integer): TEVECharacterCorporation;
+begin
+  Result := TEVECharacterCorporation(inherited Items[Index]);
+end;
+
+procedure TEVECharacterCorporationList.SetItems(Index: integer; AValue: TEVECharacterCorporation);
+begin
+  Items[Index].Assign(AValue);
+end;
+
+{ TEVECharacterBlueprintList }
+
+function TEVECharacterBlueprintList.GetItems(Index: integer): TEVECharacterBlueprint;
+begin
+  Result := TEVECharacterBlueprint(inherited Items[Index]);
+end;
+
+procedure TEVECharacterBlueprintList.SetItems(Index: integer; AValue: TEVECharacterBlueprint);
+begin
+  Items[Index].Assign(AValue);
+end;
+
+{ TEVECharacterAgentList }
+
+function TEVECharacterAgentList.GetItems(Index: integer): TEVECharacterAgent;
+begin
+  Result := TEVECharacterAgent(inherited Items[Index]);
+end;
+
+procedure TEVECharacterAgentList.SetItems(Index: integer; AValue: TEVECharacterAgent);
+begin
+  Items[Index].Assign(AValue);
+end;
+
 { TEVECharacter }
 
-function TEVECharacter.GetPublicInfo(ACharacterId: UInt64): TEVECharacterPublic;
+function TEVECharacter.GetPublicInfo(ACharacterId: uint64): TEVECharacterPublic;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/?datasource=%s';
-var
-  req_url: string;
-  res: string;
-  jData: TJSONData;
 begin
-  req_url := Format(URL, [ACharacterId.ToString, DataSource]);
-  res := Get(req_url);
-  try
-    jData := GetJSON(res);
-    Result.AncestryId := TJSONObject(jData).Get('ancestry_id');
-    Result.BirthDay := TJSONObject(jData).Get('birthday');
-    Result.BloodlineID := TJSONObject(jData).Get('bloodline_id');
-    Result.CorporationID := TJSONObject(jData).Get('corporation_id');
-    Result.Description := TJSONObject(jData).Get('description');
-    Result.Gender := TJSONObject(jData).Get('gender');
-    Result.Name := TJSONObject(jData).Get('name');
-    Result.RaceID := TJSONObject(jData).Get('race_id');
-    Result.SecuityStatus := TJSONObject(jData).Get('security_status');
-  finally
-    FreeAndNil(jData);
-  end;
+  Result := TEVECharacterPublic.Create(nil);
+  DeStreamerObject(Get(Format(URL, [ACharacterId.ToString, DataSource])), TObject(Result));
 end;
 
 function TEVECharacter.GetAgentResearch(AAccessToken: string; ACharacterId: uint64): TEVECharacterAgentList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/agents_research/?datasource=%s';
-var
-  req_url: string;
-  res: string;
-  jData: TJSONData;
-  agent: TEVECharacterAgent;
-  i: integer;
 begin
-  req_url := Format(URL, [ACharacterId.ToString, DataSource]);
-  res := Get(AAccessToken, req_url);
-  try
-    jData := GetJSON(res);
-    Result := TEVECharacterAgentList.Create;
-    for i := 0 to TJSONArray(jData).Count - 1 do
-    begin
-      agent.AgentID := TJSONObject(TJSONArray(jData).Items[i]).Get('agent_id');
-      agent.PointsPerDay := TJSONObject(TJSONArray(jData).Items[i]).Get('points_per_day');
-      agent.RemainderPoints := TJSONObject(TJSONArray(jData).Items[i]).Get('remainder_points');
-      agent.SkillTypeID := TJSONObject(TJSONArray(jData).Items[i]).Get('skill_type_id');
-      agent.StartedAt := TJSONObject(TJSONArray(jData).Items[i]).Get('started_at');
-      Result.Add(agent);
-    end;
-  finally
-    FreeAndNil(jData);
-  end;
+  Result := TEVECharacterAgentList.Create(TEVECharacterAgent);
+  DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TCollection(Result));
 end;
 
-function TEVECharacter.GetBlueprints(AAccessToken: string;
-  ACharacterId: uint64): TEVECharacterBlueprintList;
+function TEVECharacter.GetBlueprints(AAccessToken: string; ACharacterId: uint64; APage: integer): TEVECharacterBlueprintList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/blueprints/?datasource=%s&page=%d';
-var
-  req_url: string;
-  res: string;
-  jData: TJSONData;
-  blueprint: TEVECharacterBlueprint;
-  i: integer;
-  page: integer;
 begin
-  page := 1;
-  Result := TEVECharacterBlueprintList.Create;
-  while True do
-  begin
-    req_url := Format(URL, [ACharacterId.ToString, DataSource, page]);
-    res := Get(AAccessToken, req_url);
-    try
-      jData := GetJSON(res);
-      if TJSONArray(jData).Count = 0 then
-        exit;
-      for i := 0 to TJSONArray(jData).Count - 1 do
-      begin
-        blueprint.ItemID := TJSONObject(TJSONArray(jData).Items[i]).Get('item_id');
-        blueprint.LocationFlag := TJSONObject(TJSONArray(jData).Items[i]).Get('location_flag');
-        blueprint.LocationID := TJSONObject(TJSONArray(jData).Items[i]).Get('location_id');
-        blueprint.MaterialEfficiency := TJSONObject(TJSONArray(jData).Items[i]).Get('material_efficiency');
-        blueprint.Quantity := TJSONObject(TJSONArray(jData).Items[i]).Get('quantity');
-        blueprint.Runs := TJSONObject(TJSONArray(jData).Items[i]).Get('runs');
-        blueprint.TimeEfficiency := TJSONObject(TJSONArray(jData).Items[i]).Get('time_efficiency');
-        blueprint.TypeID := TJSONObject(TJSONArray(jData).Items[i]).Get('type_id');
-        Result.Add(blueprint);
-      end;
-    finally
-      FreeAndNil(jData);
-    end;
-    Inc(page);
-  end;
+  Result := TEVECharacterBlueprintList.Create(TEVECharacterBlueprint);
+  DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource, APage])), TCollection(Result));
 end;
 
 function TEVECharacter.GetCorporationHistory(ACharacterId: uint64): TEVECharacterCorporationList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/corporationhistory/?datasource=%s';
-var
-  req_url: string;
-  res: string;
-  jData: TJSONData;
-  corporation: TEVECharacterCorporation;
-  i: integer;
 begin
-  req_url := Format(URL, [ACharacterId.ToString, DataSource]);
-  res := Get(req_url);
-  try
-    Result := TEVECharacterCorporationList.Create;
-    jData := GetJSON(res);
-    for i := 0 to TJSONArray(jData).Count - 1 do
-    begin
-      corporation.CorporationID := TJSONObject(TJSONArray(jData).Items[i]).Get('corporation_id');
-      corporation.IsDeleted := TJSONObject(TJSONArray(jData).Items[i]).Get('is_deleted', False);
-      corporation.RecordID := TJSONObject(TJSONArray(jData).Items[i]).Get('record_id');
-      corporation.StartDate := TJSONObject(TJSONArray(jData).Items[i]).Get('start_date');
-      Result.Add(corporation);
-    end;
-  finally
-    FreeAndNil(jData);
-  end;
+  Result := TEVECharacterCorporationList.Create(TEVECharacterCorporation);
+  DeStreamerArray(Get(Format(URL, [ACharacterId.ToString, DataSource])), TCollection(Result));
 end;
 
 function TEVECharacter.GetJumpFatigue(AAccessToken: string; ACharacterId: uint64): TEVECharacterJumpFatigue;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/fatigue/?datasource=%s';
-var
-  req_url: string;
-  res: string;
-  jData: TJSONData;
-  i: integer;
 begin
-  req_url := Format(URL, [ACharacterId.ToString, DataSource]);
-  res := Get(AAccessToken, req_url);
-  try
-    jData := GetJSON(res);
-    Result.JumpFatigueExpireDate := TJSONObject(jData).Get('jump_fatigue_expire_date', '');
-    Result.LastJumpDate := TJSONObject(jData).Get('last_jump_date', '');
-    Result.LastUpdateDate := TJSONObject(jData).Get('last_update_date', '');
-  finally
-    FreeAndNil(jData);
-  end;
+  Result := TEVECharacterJumpFatigue.Create(nil);
+  DeStreamerObject(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TObject(Result));
 end;
 
 end.

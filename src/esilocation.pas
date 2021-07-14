@@ -16,27 +16,49 @@ unit esilocation;
 interface
 
 uses
-  Classes, SysUtils, fpjson, esibase;
+  Classes, SysUtils, fpjson, esibase, fpjsonrtti;
 
 type
 
-  TEVELocationLocation = record
-    SolarSystemId: uint64;
-    StationId: integer;
-    StructureId: uint64;
+  { TEVELocationLocation }
+
+  TEVELocationLocation = class(TCollectionItem)
+  private
+    FSolarSystemId: UInt64;
+    FStationId: integer;
+    FStructureId: UInt64;
+  published
+    property solar_system_id: UInt64 read FSolarSystemId write FSolarSystemId;
+    property station_id: integer read FStationId write FStationId;
+    property structure_id: UInt64 read FStructureId write FStructureId;
   end;
 
-  TEVELocationOnline = record
-    LastLogin: string;
-    LastLogout: string;
-    Logins: uint64;
-    Online: boolean;
+  { TEVELocationOnline }
+
+  TEVELocationOnline = class(TCollectionItem)
+  private
+    FLastLogin: string;
+    FLastLogout: string;
+    FLogins: UInt64;
+    FOnline: boolean;
+  published
+    property last_login: string read FLastLogin write FLastLogin;
+    property last_logout: string read FLastLogout write FLastLogout;
+    property logins: UInt64 read FLogins write FLogins;
+    property online: boolean read FOnline write FOnline;
   end;
 
-  TEVELocationShip = record
-    ShipItemId: uint64;
-    ShipName: string;
-    ShipTypeId: uint64;
+  { TEVELocationShip }
+
+  TEVELocationShip = class(TCollectionItem)
+  private
+    FShipItemId: UInt64;
+    FShipName: string;
+    FShipTypeId: integer;
+  published
+    property ship_item_id: UInt64 read FShipItemId write FShipItemId;
+    property ship_name: string read FShipName write FShipName;
+    property ship_type_id: integer read FShipTypeId write FShipTypeId;
   end;
 
   { TEVEESILocation }
@@ -45,9 +67,9 @@ type
   private
     FAuthKey: string;
   public
-    function GetLocation(AAccessToken: string; ACharacterId: uint64): TEVELocationLocation;
-    function GetOnline(AAccessToken: string; ACharacterId: uint64): TEVELocationOnline;
-    function GetShip(AAccessToken: string; ACharacterId: uint64): TEVELocationShip;
+    function GetLocation(AAccessToken: string; ACharacterId: UInt64): TEVELocationLocation;
+    function GetOnline(AAccessToken: string; ACharacterId: UInt64): TEVELocationOnline;
+    function GetShip(AAccessToken: string; ACharacterId: UInt64): TEVELocationShip;
   end;
 
 
@@ -55,65 +77,28 @@ implementation
 
 { TEVEESILocation }
 
-function TEVEESILocation.GetLocation(AAccessToken: string; ACharacterId: uint64): TEVELocationLocation;
+function TEVEESILocation.GetLocation(AAccessToken: string; ACharacterId: UInt64): TEVELocationLocation;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/location/?datasource=%s';
-var
-  req_url: string;
-  res: string;
-  jData: TJSONData;
 begin
-  req_url := Format(URL, [ACharacterId.ToString, DataSource]);
-  res := Get(AAccessToken, req_url);
-  try
-    jData := GetJSON(res);
-    Result.SolarSystemId := TJSONObject(jData).Get('solar_system_id');
-    Result.StationId := TJSONObject(jData).Get('station_id', 0);
-    Result.StructureId := TJSONObject(jData).Get('structure_id', 0);
-  finally
-    FreeAndNil(jData);
-  end;
+  Result := TEVELocationLocation.Create(nil);
+  DeStreamerObject(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TObject(Result));
 end;
 
-function TEVEESILocation.GetOnline(AAccessToken: string; ACharacterId: uint64): TEVELocationOnline;
+function TEVEESILocation.GetOnline(AAccessToken: string; ACharacterId: UInt64): TEVELocationOnline;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/online/?datasource=%s';
-var
-  req_url: string;
-  res: string;
-  jData: TJSONData;
 begin
-  req_url := Format(URL, [ACharacterId.ToString, DataSource]);
-  res := Get(AAccessToken, req_url);
-  try
-    jData := GetJSON(res);
-    Result.LastLogin := TJSONObject(jData).Get('last_login', '');
-    Result.LastLogout := TJSONObject(jData).Get('last_logout', '');
-    Result.Logins := TJSONObject(jData).Get('logins', 0);
-    Result.Online := TJSONObject(jData).Get('online');
-  finally
-    FreeAndNil(jData);
-  end;
+  Result := TEVELocationOnline.Create(nil);
+  DeStreamerObject(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TObject(Result));
 end;
 
-function TEVEESILocation.GetShip(AAccessToken: string; ACharacterId: uint64): TEVELocationShip;
+function TEVEESILocation.GetShip(AAccessToken: string; ACharacterId: UInt64): TEVELocationShip;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/ship/?datasource=%s';
-var
-  req_url: string;
-  res: string;
-  jData: TJSONData;
 begin
-  req_url := Format(URL, [ACharacterId.ToString, DataSource]);
-  res := Get(AAccessToken, req_url);
-  try
-    jData := GetJSON(res);
-    Result.ShipItemId := TJSONObject(jData).Get('ship_item_id');
-    Result.ShipName := TJSONObject(jData).Get('ship_name');
-    Result.ShipTypeId := TJSONObject(jData).Get('ship_type_id');
-  finally
-    FreeAndNil(jData);
-  end;
+  Result := TEVELocationShip.Create(nil);
+  DeStreamerObject(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TObject(Result));
 end;
 
 end.

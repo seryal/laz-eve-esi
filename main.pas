@@ -129,7 +129,7 @@ var
 begin
   character := TEVECharacter.Create;
   try
-    res := character.GetBlueprints(edAuthCode.Text, StrToInt(lblCharID.Caption));
+    res := character.GetBlueprints(edAuthCode.Text, StrToInt(lblCharID.Caption), 1);
     try
       memo1.Lines.Add('Blueprints count = ' + res.Count.ToString);
     finally
@@ -148,11 +148,15 @@ begin
   esi := TEVEESILocation.Create;
   try
     online := esi.GetOnline(edAuthCode.Text, StrToInt(lblCharID.Caption));
-    Memo1.Lines.Add('-----ONLINE------');
-    Memo1.Lines.Add(online.LastLogin);
-    Memo1.Lines.Add(online.LastLogout);
-    Memo1.Lines.Add(online.Logins.ToString);
-    Memo1.Lines.Add(online.Online.ToString());
+    try
+      Memo1.Lines.Add('-----ONLINE------');
+      Memo1.Lines.Add(online.last_login);
+      Memo1.Lines.Add(online.last_logout);
+      Memo1.Lines.Add(online.logins.ToString);
+      Memo1.Lines.Add(online.online.ToString());
+    finally
+      FreeAndNil(online);
+    end;
   finally
     FreeAndNil(esi);
   end;
@@ -166,10 +170,15 @@ begin
   esi := TEVEESILocation.Create;
   try
     ship := esi.GetShip(edAuthCode.Text, StrToInt(lblCharID.Caption));
-    Memo1.Lines.Add('-----SHIP------');
-    Memo1.Lines.Add(ship.ShipItemId.ToString);
-    Memo1.Lines.Add(ship.ShipName);
-    Memo1.Lines.Add(ship.ShipTypeId.ToString);
+    try
+      Memo1.Lines.Add('-----SHIP------');
+      Memo1.Lines.Add(ship.ship_item_id.ToString);
+      Memo1.Lines.Add(ship.ship_name);
+      Memo1.Lines.Add(ship.ship_type_id.ToString);
+
+    finally
+      FreeAndNil(ship);
+    end;
   finally
     FreeAndNil(esi);
   end;
@@ -249,11 +258,15 @@ var
 begin
   esi := TEVEESILocation.Create;
   try
-    loc := esi.GetLocation(edAuthCode.Text, StrToInt(lblCharID.Caption));
-    Memo1.Lines.Add('-----LOCATION------');
-    Memo1.Lines.Add(loc.SolarSystemId.ToString);
-    Memo1.Lines.Add(loc.StationId.ToString);
-    Memo1.Lines.Add(loc.StructureId.ToString);
+    try
+      loc := esi.GetLocation(edAuthCode.Text, StrToInt(lblCharID.Caption));
+      Memo1.Lines.Add('-----LOCATION------');
+      Memo1.Lines.Add(loc.solar_system_id.ToString);
+      Memo1.Lines.Add(loc.station_id.ToString);
+      Memo1.Lines.Add(loc.structure_id.ToString);
+    finally
+      FreeAndNil(loc);
+    end;
   finally
     FreeAndNil(esi);
   end;
@@ -267,7 +280,11 @@ begin
   character := TEVECharacter.Create;
   try
     res := character.GetPublicInfo(StrToInt(edCharacterID.Text));
-    memo1.Lines.Add(res.Name + ' - ' + res.Gender);
+    try
+      memo1.Lines.Add(res.Name + ' - ' + res.Gender);
+    finally
+      FreeAndNil(res);
+    end;
   finally
     FreeAndNil(character);
   end;
@@ -283,7 +300,7 @@ begin
     res := character.GetAgentResearch(edAuthCode.Text, StrToInt(lblCharID.Caption));
     try
       memo1.Lines.Add('Agents Count = ' + res.Count.ToString);
-      memo1.Lines.Add(res.Items[0].StartedAt);
+      memo1.Lines.Add(res.Items[0].started_at);
     finally
       FreeAndNil(res);
     end;
@@ -302,7 +319,7 @@ begin
     res := character.GetCorporationHistory(StrToInt(edCharacterID.Text));
     try
       memo1.Lines.Add('Corporation Cont = ' + res.Count.ToString);
-      memo1.Lines.Add(res.Items[0].CorporationID.ToString);
+      memo1.Lines.Add(res.Items[0].corporation_id.ToString);
     finally
       FreeAndNil(res);
     end;
@@ -319,7 +336,11 @@ begin
   character := TEVECharacter.Create;
   try
     res := character.GetJumpFatigue(edAuthCode.Text, StrToInt(lblCharID.Caption));
-    memo1.Lines.Add('Update = ' + res.JumpFatigueExpireDate);
+    try
+      memo1.Lines.Add('Update = ' + res.jump_fatigue_expire_date);
+    finally
+      FreeAndNil(res);
+    end;
   finally
     FreeAndNil(character);
   end;

@@ -16,7 +16,7 @@ unit esibase;
 interface
 
 uses
-  Classes, SysUtils, fphttpclient, opensslsockets;
+  Classes, SysUtils, fphttpclient, opensslsockets, fpjsonrtti;
 
 type
 
@@ -26,6 +26,8 @@ type
   protected
     function Get(AAuthKey, AURL: string): string;
     function Get(AURL: string): string;
+    procedure DeStreamerObject(AJsonString: string; var AObject: TObject);
+    procedure DeStreamerArray(AJsonString: string; var AObject: TCollection);
   private
     FDataSource: string;
   public
@@ -46,6 +48,31 @@ end;
 function TEVEBase.Get(AURL: string): string;
 begin
   Result := Get('', AURL);
+end;
+
+procedure TEVEBase.DeStreamerObject(AJsonString: string; var AObject: TObject);
+var
+  jsoDeSerialize: TJSONDeStreamer;
+begin
+  jsoDeSerialize := TJSONDeStreamer.Create(nil);
+  try
+    jsoDeSerialize.JSONToObject(AJsonString, AObject);
+  finally
+    FreeAndNil(jsoDeSerialize);
+  end;
+end;
+
+procedure TEVEBase.DeStreamerArray(AJsonString: string; var AObject: TCollection
+  );
+var
+  jsoDeSerialize: TJSONDeStreamer;
+begin
+  jsoDeSerialize := TJSONDeStreamer.Create(nil);
+  try
+    jsoDeSerialize.JSONToCollection(AJsonString, AObject);
+  finally
+    FreeAndNil(jsoDeSerialize);
+  end;
 end;
 
 function TEVEBase.Get(AAuthKey, AURL: string): string;
