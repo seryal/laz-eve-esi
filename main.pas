@@ -18,6 +18,9 @@ type
     btnBlueprints: TButton;
     Button1: TButton;
     btnMedals: TButton;
+    btnNotification: TButton;
+    btnContacts: TButton;
+    Button10: TButton;
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
@@ -58,9 +61,12 @@ type
     tbsLocation: TTabSheet;
     procedure btnAddScopeClick(Sender: TObject);
     procedure btnBlueprintsClick(Sender: TObject);
+    procedure btnContactsClick(Sender: TObject);
     procedure btnMedalsClick(Sender: TObject);
+    procedure btnNotificationClick(Sender: TObject);
     procedure btnOnlineClick(Sender: TObject);
     procedure btnShipClick(Sender: TObject);
+    procedure Button10Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -142,20 +148,59 @@ begin
   end;
 end;
 
+procedure TForm1.btnContactsClick(Sender: TObject);
+var
+  character: TEVECharacter;
+  res: TEVECharacterContactList;
+begin
+  character := TEVECharacter.Create;
+  try
+    res := character.GetContacts(edAuthCode.Text, StrToInt(lblCharID.Caption));
+    try
+      memo1.Lines.Add('Count = ' + res.Count.ToString);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(character);
+  end;
+end;
+
 procedure TForm1.btnMedalsClick(Sender: TObject);
 var
   tmp: TEVECharacter;
-  medals: TEVECharactersMedalsList;
+  medals: TEVECharacterMedalsList;
 begin
   tmp := TEVECharacter.Create;
   try
-    medals := tmp.GetCharactersMedals(edAuthCode.Text, StrToInt(lblCharID.Caption));
+    medals := tmp.GetMedals(edAuthCode.Text, StrToInt(lblCharID.Caption));
     try
       Memo1.Lines.Add('-----MEDALS------');
       Memo1.Lines.Add(medals.Items[0].description);
       Memo1.Lines.Add(medals.Items[0].Graphics.Items[0].graphic);
     finally
       FreeAndNil(medals);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+
+end;
+
+procedure TForm1.btnNotificationClick(Sender: TObject);
+var
+  tmp: TEVECharacter;
+  res: TEVECharacterNotificationList;
+begin
+  tmp := TEVECharacter.Create;
+  try
+    res := tmp.GetNotifications(edAuthCode.Text, StrToInt(lblCharID.Caption));
+    try
+      Memo1.Lines.Add('-----MEDALS------');
+      Memo1.Lines.Add(res.Items[0].sender_id.ToString);
+      Memo1.Lines.Add(res.Items[0].Text);
+    finally
+      FreeAndNil(res);
     end;
   finally
     FreeAndNil(tmp);
@@ -205,6 +250,27 @@ begin
   finally
     FreeAndNil(esi);
   end;
+end;
+
+procedure TForm1.Button10Click(Sender: TObject);
+var
+  esi: TEVECharacter;
+  tmp: TEVECharacterPortrait;
+begin
+  esi := TEVECharacter.Create;
+  try
+    tmp := esi.GetPortrait(StrToInt(edCharacterID.Text));
+    try
+      Memo1.Lines.Add('-----PORTRAIT------');
+      Memo1.Lines.Add(tmp.px128x128);
+
+    finally
+      FreeAndNil(tmp);
+    end;
+  finally
+    FreeAndNil(esi);
+  end;
+
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);

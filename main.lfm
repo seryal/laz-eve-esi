@@ -249,6 +249,15 @@ object Form1: TForm1
           Caption = 'Character ID'
           ParentColor = False
         end
+        object Button10: TButton
+          Left = 221
+          Height = 25
+          Top = 64
+          Width = 75
+          Caption = 'Portrait'
+          OnClick = Button10Click
+          TabOrder = 3
+        end
       end
       object GroupBox2: TGroupBox
         Left = 8
@@ -294,6 +303,24 @@ object Form1: TForm1
           Caption = 'Get Medals'
           OnClick = btnMedalsClick
           TabOrder = 3
+        end
+        object btnNotification: TButton
+          Left = 384
+          Height = 25
+          Top = 16
+          Width = 88
+          Caption = 'Notifications'
+          OnClick = btnNotificationClick
+          TabOrder = 4
+        end
+        object btnContacts: TButton
+          Left = 8
+          Height = 25
+          Top = 55
+          Width = 75
+          Caption = 'Contacts'
+          OnClick = btnContactsClick
+          TabOrder = 5
         end
       end
     end
