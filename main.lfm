@@ -215,13 +215,13 @@ object Form1: TForm1
         ClientHeight = 108
         ClientWidth = 477
         TabOrder = 0
-        object Button8: TButton
+        object btnCorporation: TButton
           Left = 88
           Height = 25
           Top = 64
           Width = 123
           Caption = 'Corporation History'
-          OnClick = Button8Click
+          OnClick = btnCorporationClick
           TabOrder = 0
         end
         object Button6: TButton
@@ -321,6 +321,33 @@ object Form1: TForm1
           Caption = 'Contacts'
           OnClick = btnContactsClick
           TabOrder = 5
+        end
+        object btnRoles: TButton
+          Left = 91
+          Height = 25
+          Top = 55
+          Width = 75
+          Caption = 'Roles'
+          OnClick = btnRolesClick
+          TabOrder = 6
+        end
+        object btnStanding: TButton
+          Left = 176
+          Height = 25
+          Top = 55
+          Width = 75
+          Caption = 'Standing'
+          OnClick = btnStandingClick
+          TabOrder = 7
+        end
+        object btnTitle: TButton
+          Left = 256
+          Height = 25
+          Top = 55
+          Width = 75
+          Caption = 'Title'
+          OnClick = btnTitleClick
+          TabOrder = 8
         end
       end
     end

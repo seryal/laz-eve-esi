@@ -21,6 +21,7 @@ type
     btnNotification: TButton;
     btnContacts: TButton;
     Button10: TButton;
+    btnRoles: TButton;
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
@@ -31,7 +32,9 @@ type
     btnShip: TButton;
     Button6: TButton;
     Button7: TButton;
-    Button8: TButton;
+    btnCorporation: TButton;
+    btnStanding: TButton;
+    btnTitle: TButton;
     Button9: TButton;
     edAuthCode: TEdit;
     edCharacterID: TEdit;
@@ -65,7 +68,9 @@ type
     procedure btnMedalsClick(Sender: TObject);
     procedure btnNotificationClick(Sender: TObject);
     procedure btnOnlineClick(Sender: TObject);
+    procedure btnRolesClick(Sender: TObject);
     procedure btnShipClick(Sender: TObject);
+    procedure btnStandingClick(Sender: TObject);
     procedure Button10Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -75,13 +80,15 @@ type
     procedure btnLcationClick(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
-    procedure Button8Click(Sender: TObject);
+    procedure btnCorporationClick(Sender: TObject);
+    procedure btnTitleClick(Sender: TObject);
     procedure Button9Click(Sender: TObject);
     procedure edCallbackURLChange(Sender: TObject);
     procedure edClientIDChange(Sender: TObject);
     procedure edRefreshCodeChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormShow(Sender: TObject);
+    procedure ScrollBar1Change(Sender: TObject);
   private
     FUrl: string;
     FAuthCode: string;
@@ -137,8 +144,8 @@ var
 begin
   character := TEVECharacter.Create;
   try
-    res := character.GetBlueprints(edAuthCode.Text, StrToInt(lblCharID.Caption), 1);
     try
+      res := character.GetBlueprints(edAuthCode.Text, StrToInt(lblCharID.Caption), 1);
       memo1.Lines.Add('Blueprints count = ' + res.Count.ToString);
     finally
       FreeAndNil(res);
@@ -155,8 +162,8 @@ var
 begin
   character := TEVECharacter.Create;
   try
-    res := character.GetContacts(edAuthCode.Text, StrToInt(lblCharID.Caption));
     try
+      res := character.GetContacts(edAuthCode.Text, StrToInt(lblCharID.Caption));
       memo1.Lines.Add('Count = ' + res.Count.ToString);
     finally
       FreeAndNil(res);
@@ -173,8 +180,8 @@ var
 begin
   tmp := TEVECharacter.Create;
   try
-    medals := tmp.GetMedals(edAuthCode.Text, StrToInt(lblCharID.Caption));
     try
+      medals := tmp.GetMedals(edAuthCode.Text, StrToInt(lblCharID.Caption));
       Memo1.Lines.Add('-----MEDALS------');
       Memo1.Lines.Add(medals.Items[0].description);
       Memo1.Lines.Add(medals.Items[0].Graphics.Items[0].graphic);
@@ -194,9 +201,9 @@ var
 begin
   tmp := TEVECharacter.Create;
   try
-    res := tmp.GetNotifications(edAuthCode.Text, StrToInt(lblCharID.Caption));
     try
-      Memo1.Lines.Add('-----MEDALS------');
+      res := tmp.GetNotifications(edAuthCode.Text, StrToInt(lblCharID.Caption));
+      Memo1.Lines.Add('-----NOTIFICATIONS------');
       Memo1.Lines.Add(res.Items[0].sender_id.ToString);
       Memo1.Lines.Add(res.Items[0].Text);
     finally
@@ -215,8 +222,8 @@ var
 begin
   esi := TEVEESILocation.Create;
   try
-    online := esi.GetOnline(edAuthCode.Text, StrToInt(lblCharID.Caption));
     try
+      online := esi.GetOnline(edAuthCode.Text, StrToInt(lblCharID.Caption));
       Memo1.Lines.Add('-----ONLINE------');
       Memo1.Lines.Add(online.last_login);
       Memo1.Lines.Add(online.last_logout);
@@ -230,6 +237,26 @@ begin
   end;
 end;
 
+procedure TForm1.btnRolesClick(Sender: TObject);
+var
+  tmp: TEVECharacter;
+  res: TEVECharacterRoles;
+begin
+  tmp := TEVECharacter.Create;
+  try
+    try
+      res := tmp.GetRoles(edAuthCode.Text, StrToInt(lblCharID.Caption));
+      Memo1.Lines.Add('-----Roles------');
+      Memo1.Lines.Add(res.roles.Text);
+      Memo1.Lines.Add(res.roles_at_base.Text);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+end;
+
 procedure TForm1.btnShipClick(Sender: TObject);
 var
   esi: TEVEESILocation;
@@ -237,8 +264,8 @@ var
 begin
   esi := TEVEESILocation.Create;
   try
-    ship := esi.GetShip(edAuthCode.Text, StrToInt(lblCharID.Caption));
     try
+      ship := esi.GetShip(edAuthCode.Text, StrToInt(lblCharID.Caption));
       Memo1.Lines.Add('-----SHIP------');
       Memo1.Lines.Add(ship.ship_item_id.ToString);
       Memo1.Lines.Add(ship.ship_name);
@@ -252,6 +279,26 @@ begin
   end;
 end;
 
+procedure TForm1.btnStandingClick(Sender: TObject);
+var
+  esi: TEVECharacter;
+  tmp: TEVECharacterStandingList;
+begin
+  esi := TEVECharacter.Create;
+  try
+    try
+      tmp := esi.GetStanding(edAuthCode.Text, StrToInt(lblCharID.Caption));
+      Memo1.Lines.Add('-----STANDING------');
+      Memo1.Lines.Add(tmp.Items[0].from_type);
+
+    finally
+      FreeAndNil(tmp);
+    end;
+  finally
+    FreeAndNil(esi);
+  end;
+end;
+
 procedure TForm1.Button10Click(Sender: TObject);
 var
   esi: TEVECharacter;
@@ -259,8 +306,8 @@ var
 begin
   esi := TEVECharacter.Create;
   try
-    tmp := esi.GetPortrait(StrToInt(edCharacterID.Text));
     try
+      tmp := esi.GetPortrait(StrToInt(edCharacterID.Text));
       Memo1.Lines.Add('-----PORTRAIT------');
       Memo1.Lines.Add(tmp.px128x128);
 
@@ -368,8 +415,8 @@ var
 begin
   character := TEVECharacter.Create;
   try
-    res := character.GetPublicInfo(StrToInt(edCharacterID.Text));
     try
+      res := character.GetPublicInfo(StrToInt(edCharacterID.Text));
       memo1.Lines.Add(res.Name + ' - ' + res.Gender);
     finally
       FreeAndNil(res);
@@ -386,8 +433,8 @@ var
 begin
   character := TEVECharacter.Create;
   try
-    res := character.GetAgentResearch(edAuthCode.Text, StrToInt(lblCharID.Caption));
     try
+      res := character.GetAgentResearch(edAuthCode.Text, StrToInt(lblCharID.Caption));
       memo1.Lines.Add('Agents Count = ' + res.Count.ToString);
       memo1.Lines.Add(res.Items[0].started_at);
     finally
@@ -398,23 +445,43 @@ begin
   end;
 end;
 
-procedure TForm1.Button8Click(Sender: TObject);
+procedure TForm1.btnCorporationClick(Sender: TObject);
 var
   character: TEVECharacter;
   res: TEVECharacterCorporationList;
 begin
   character := TEVECharacter.Create;
   try
-    res := character.GetCorporationHistory(StrToInt(edCharacterID.Text));
     try
+      res := character.GetCorporationHistory(StrToInt(edCharacterID.Text));
       memo1.Lines.Add('Corporation Cont = ' + res.Count.ToString);
-      memo1.Lines.Add(res.Items[0].corporation_id.ToString);
+      //     memo1.Lines.Add(res.Items[0].corporation_id.ToString);
     finally
       FreeAndNil(res);
     end;
   finally
     FreeAndNil(character);
   end;
+end;
+
+procedure TForm1.btnTitleClick(Sender: TObject);
+var
+  tmp: TEVECharacter;
+  res: TEVECharacterTitleList;
+begin
+  tmp := TEVECharacter.Create;
+  try
+    try
+      res := tmp.GetTitles(edAuthCode.Text, StrToInt(lblCharID.Caption));
+      Memo1.Lines.Add('-----TITLE------');
+      Memo1.Lines.Add(res.Items[0].title_id.ToString);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+
 end;
 
 procedure TForm1.Button9Click(Sender: TObject);
@@ -424,8 +491,8 @@ var
 begin
   character := TEVECharacter.Create;
   try
-    res := character.GetJumpFatigue(edAuthCode.Text, StrToInt(lblCharID.Caption));
     try
+      res := character.GetJumpFatigue(edAuthCode.Text, StrToInt(lblCharID.Caption));
       memo1.Lines.Add('Update = ' + res.jump_fatigue_expire_date);
     finally
       FreeAndNil(res);
@@ -465,6 +532,11 @@ begin
   edCallbackURL.Text := JSONPropStorage1.StoredValue['callbackurl'];
   edRefreshCode.Text := JSONPropStorage1.StoredValue['refresh_code'];
   lbScopes.Items.Text := JSONPropStorage1.StoredValue['scopes'];
+end;
+
+procedure TForm1.ScrollBar1Change(Sender: TObject);
+begin
+
 end;
 
 procedure TForm1.TestRequest(Sender: TObject; AResult, ACode, AState: string);

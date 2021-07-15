@@ -276,6 +276,64 @@ type
     property px64x64: string read Fpx64x64 write Fpx64x64;
   end;
 
+  { TEVECharacterRoles }
+
+  TEVECharacterRoles = class(TCollectionItem)
+  private
+    Froles: TStringList;
+    Froles_at_base: TStringList;
+    Froles_at_hq: TStringList;
+    Froles_at_other: TStringList;
+  public
+    constructor Create(ACollection: TCollection); override;
+    destructor Destroy; override;
+  published
+    property roles: TStringList read Froles write Froles;
+    property roles_at_base: TStringList read Froles_at_base write Froles_at_base;
+    property roles_at_hq: TStringList read Froles_at_hq write Froles_at_hq;
+    property roles_at_other: TStringList read Froles_at_other write Froles_at_other;
+  end;
+
+  { TEVECharacterStanding }
+
+  TEVECharacterStanding = class(TCollectionItem)
+  private
+    Ffrom_id: integer;
+    Ffrom_type: string;
+    Fstanding: double;
+  published
+    property from_id: integer read Ffrom_id write Ffrom_id;
+    property from_type: string read Ffrom_type write Ffrom_type;
+    property standing: double read Fstanding write Fstanding;
+  end;
+
+  { TEVECharacterStandingList }
+
+  TEVECharacterStandingList = class(TCollection)
+  private
+    function GetItems(Index: integer): TEVECharacterStanding;
+  public
+    property Items[Index: integer]: TEVECharacterStanding read GetItems;
+  end;
+
+  TEVECharacterTitle = class(TCollectionItem)
+  private
+    Fname: string;
+    Ftitle_id: integer;
+  published
+    property Name: string read Fname write Fname;
+    property title_id: integer read Ftitle_id write Ftitle_id;
+  end;
+
+  { TEVECharacterTitleList }
+
+  TEVECharacterTitleList = class(TCollection)
+  private
+    function GetItems(Index: integer): TEVECharacterTitle;
+  public
+    property Items[Index: integer]: TEVECharacterTitle read GetItems;
+  end;
+
   { TEVECharacter }
 
   TEVECharacter = class(TEVEBase)
@@ -306,10 +364,52 @@ type
     {Get Character Portrait
      Free memory after use.}
     function GetPortrait(ACharacterId: uint64): TEVECharacterPortrait;
-
+    {Get Character Roles
+     Free memory after use.}
+    function GetRoles(AAccessToken: string; ACharacterId: uint64): TEVECharacterRoles;
+    {Get Character Standing
+     Free memory after use.}
+    function GetStanding(AAccessToken: string; ACharacterId: uint64): TEVECharacterStandingList;
+    {Get Character Titles
+     Free memory after use.}
+    function GetTitles(AAccessToken: string; ACharacterId: uint64): TEVECharacterTitleList;
   end;
 
 implementation
+
+{ TEVECharacterTitleList }
+
+function TEVECharacterTitleList.GetItems(Index: integer): TEVECharacterTitle;
+begin
+  Result := TEVECharacterTitle(inherited Items[Index]);
+end;
+
+{ TEVECharacterStandingList }
+
+function TEVECharacterStandingList.GetItems(Index: integer): TEVECharacterStanding;
+begin
+  Result := TEVECharacterStanding(inherited Items[Index]);
+end;
+
+{ TEVECharacterRoles }
+
+constructor TEVECharacterRoles.Create(ACollection: TCollection);
+begin
+  inherited Create(ACollection);
+  Froles := TStringList.Create;
+  Froles_at_base := TStringList.Create;
+  Froles_at_hq := TStringList.Create;
+  Froles_at_other := TStringList.Create;
+end;
+
+destructor TEVECharacterRoles.Destroy;
+begin
+  FreeAndNil(Froles_at_other);
+  FreeAndNil(Froles_at_hq);
+  FreeAndNil(Froles_at_base);
+  FreeAndNil(Froles);
+  inherited Destroy;
+end;
 
 { TEVECharacterContactList }
 
@@ -446,6 +546,30 @@ const
 begin
   Result := TEVECharacterPortrait.Create(nil);
   DeStreamerObject(Get(Format(URL, [ACharacterId.ToString, DataSource])), TObject(Result));
+end;
+
+function TEVECharacter.GetRoles(AAccessToken: string; ACharacterId: uint64): TEVECharacterRoles;
+const
+  URL = 'https://esi.evetech.net/latest/characters/%s/roles/?datasource=%s';
+begin
+  Result := TEVECharacterRoles.Create(nil);
+  DeStreamerObject(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TObject(Result));
+end;
+
+function TEVECharacter.GetStanding(AAccessToken: string; ACharacterId: uint64): TEVECharacterStandingList;
+const
+  URL = 'https://esi.evetech.net/latest/characters/%s/standings/?datasource=%s';
+begin
+  Result := TEVECharacterStandingList.Create(TEVECharacterStanding);
+  DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TCollection(Result));
+end;
+
+function TEVECharacter.GetTitles(AAccessToken: string; ACharacterId: uint64): TEVECharacterTitleList;
+const
+  URL = 'https://esi.evetech.net/latest/characters/%s/standings/?datasource=%s';
+begin
+  Result := TEVECharacterTitleList.Create(TEVECharacterTitle);
+  DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TCollection(Result));
 end;
 
 end.
