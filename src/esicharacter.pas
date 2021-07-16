@@ -334,6 +334,30 @@ type
     property Items[Index: integer]: TEVECharacterTitle read GetItems;
   end;
 
+  { TEVECharacterAffiliation }
+
+  TEVECharacterAffiliation = class(TCollectionItem)
+  private
+    Falliance_id: integer;
+    Fcharacter_id: integer;
+    Fcorporation_id: integer;
+    Ffaction_id: integer;
+  published
+    property alliance_id: integer read Falliance_id write Falliance_id;
+    property character_id: integer read Fcharacter_id write Fcharacter_id;
+    property corporation_id: integer read Fcorporation_id write Fcorporation_id;
+    property faction_id: integer read Ffaction_id write Ffaction_id;
+  end;
+
+  { TEVECharacterAffiliationList }
+
+  TEVECharacterAffiliationList = class(TCollection)
+  private
+    function GetItems(Index: integer): TEVECharacterAffiliation;
+  public
+    property Items[Index: integer]: TEVECharacterAffiliation read GetItems;
+  end;
+
   { TEVECharacter }
 
   TEVECharacter = class(TEVEBase)
@@ -373,9 +397,19 @@ type
     {Get Character Titles
      Free memory after use.}
     function GetTitles(AAccessToken: string; ACharacterId: uint64): TEVECharacterTitleList;
+    {Get Character Affiliation
+     Free memory after use.}
+    function GetAffiliation(ACharacterList: TStrings): TEVECharacterAffiliationList;
   end;
 
 implementation
+
+{ TEVECharacterAffiliationList }
+
+function TEVECharacterAffiliationList.GetItems(Index: integer): TEVECharacterAffiliation;
+begin
+  Result := TEVECharacterAffiliation(inherited Items[Index]);
+end;
 
 { TEVECharacterTitleList }
 
@@ -570,6 +604,22 @@ const
 begin
   Result := TEVECharacterTitleList.Create(TEVECharacterTitle);
   DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TCollection(Result));
+end;
+
+function TEVECharacter.GetAffiliation(ACharacterList: TStrings): TEVECharacterAffiliationList;
+const
+  URL = 'https://esi.evetech.net/latest/characters/affiliation/?datasource=%s';
+var
+  str: string;
+  res: string;
+begin
+  Result := TEVECharacterAffiliationList.Create(TEVECharacterAffiliation);
+  res := '';
+  for str in ACharacterList do
+    res := res + str + ',';
+  res := Copy(res, 0, Length(res) - 1);
+  res := '[' + res + ']';
+  DeStreamerArray(Post(Format(URL, [DataSource]), res), TCollection(Result));
 end;
 
 end.

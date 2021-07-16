@@ -15,6 +15,7 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    btnAffilation: TButton;
     btnBlueprints: TButton;
     Button1: TButton;
     btnMedals: TButton;
@@ -63,6 +64,7 @@ type
     tbsAuth: TTabSheet;
     tbsLocation: TTabSheet;
     procedure btnAddScopeClick(Sender: TObject);
+    procedure btnAffilationClick(Sender: TObject);
     procedure btnBlueprintsClick(Sender: TObject);
     procedure btnContactsClick(Sender: TObject);
     procedure btnMedalsClick(Sender: TObject);
@@ -135,6 +137,30 @@ begin
   lbScopes.Items.Add(edScope.Text);
   JSONPropStorage1.StoredValue['scopes'] := lbScopes.Items.Text;
   JSONPropStorage1.Save;
+end;
+
+procedure TForm1.btnAffilationClick(Sender: TObject);
+var
+  tmp: TEVECharacter;
+  res: TEVECharacterAffiliationList;
+  str: TStringList;
+begin
+  tmp := TEVECharacter.Create;
+  try
+    try
+      str := TStringList.Create;
+      str.Add('93153521');
+      str.Add('96614010');
+      res := tmp.GetAffiliation(str);
+      Memo1.Lines.Add('-----AFFILATION------');
+      Memo1.Lines.Add(res.Items[0].corporation_id.ToString);
+      FreeAndNil(str);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
 end;
 
 procedure TForm1.btnBlueprintsClick(Sender: TObject);

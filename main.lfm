@@ -258,6 +258,15 @@ object Form1: TForm1
           OnClick = Button10Click
           TabOrder = 3
         end
+        object btnAffilation: TButton
+          Left = 304
+          Height = 25
+          Top = 64
+          Width = 75
+          Caption = 'Affilation'
+          OnClick = btnAffilationClick
+          TabOrder = 4
+        end
       end
       object GroupBox2: TGroupBox
         Left = 8
