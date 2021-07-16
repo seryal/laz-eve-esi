@@ -206,7 +206,7 @@ begin
   try
     try
       res := tmp.GetIcon(StrToInt(edAllianceID.Text));
-      Memo1.Lines.Add('-----CORPORATIONS------');
+      Memo1.Lines.Add('-----ICONS------');
       Memo1.Lines.Add(res.px128x128);
       Memo1.Lines.Add(res.px64x64);
     finally
