@@ -16,7 +16,7 @@ unit esicharacter;
 interface
 
 uses
-  Classes, SysUtils, fpjson, esibase, Generics.Collections;
+  Classes, SysUtils, esibase;
 
 type
 

@@ -47,7 +47,7 @@ object Form1: TForm1
     Height = 371
     Top = 82
     Width = 905
-    ActivePage = tbsCharacter
+    ActivePage = tbsAlliance
     Align = alClient
     TabIndex = 1
     TabOrder = 2
@@ -200,6 +200,63 @@ object Form1: TForm1
         Caption = '5. Verify'
         OnClick = Button5Click
         TabOrder = 11
+      end
+    end
+    object tbsAlliance: TTabSheet
+      Caption = 'Alliance'
+      ClientHeight = 343
+      ClientWidth = 897
+      object btnAllianceList: TButton
+        Left = 9
+        Height = 25
+        Top = 56
+        Width = 75
+        Caption = 'List'
+        OnClick = btnAllianceListClick
+        TabOrder = 0
+      end
+      object btnInfo: TButton
+        Left = 91
+        Height = 25
+        Top = 56
+        Width = 75
+        Caption = 'Info'
+        OnClick = btnInfoClick
+        TabOrder = 1
+      end
+      object edAllianceID: TEdit
+        Left = 8
+        Height = 23
+        Top = 24
+        Width = 200
+        TabOrder = 2
+        Text = '100'
+      end
+      object Label7: TLabel
+        Left = 9
+        Height = 15
+        Top = 7
+        Width = 56
+        Caption = 'Alliance ID'
+        ParentColor = False
+      end
+      object btnAllianceCorporation: TButton
+        Left = 174
+        Height = 25
+        Top = 56
+        Width = 75
+        Caption = 'Corporations'
+        OnClick = btnAllianceCorporationClick
+        TabOrder = 3
+      end
+      object btnAllianceIcon: TButton
+        Left = 256
+        Height = 25
+        Top = 56
+        Width = 91
+        Caption = 'Alliance Icon'
+        OnClick = btnAllianceIconClick
+        TabOrder = 4
       end
     end
     object tbsCharacter: TTabSheet

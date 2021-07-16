@@ -16,7 +16,7 @@ unit esilocation;
 interface
 
 uses
-  Classes, SysUtils, fpjson, esibase, fpjsonrtti;
+  Classes, SysUtils, esibase;
 
 type
 

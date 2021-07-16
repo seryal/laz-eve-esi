@@ -29,6 +29,8 @@ type
     function Post(AURL: string; AValue: string): string;
     procedure DeStreamerObject(AJsonString: string; var AObject: TObject);
     procedure DeStreamerArray(AJsonString: string; var AObject: TCollection);
+    procedure DeStreamerArray(AJsonString: string; var V: variant);
+
   private
     FDataSource: string;
   public
@@ -86,7 +88,19 @@ var
 begin
   jsoDeSerialize := TJSONDeStreamer.Create(nil);
   try
-    jsoDeSerialize.JSONToCollection(AJsonString, AObject);
+    jsoDeSerialize.JSONToObject(AJsonString, AObject);
+  finally
+    FreeAndNil(jsoDeSerialize);
+  end;
+end;
+
+procedure TEVEBase.DeStreamerArray(AJsonString: string; var V: variant);
+var
+  jsoDeSerialize: TJSONDeStreamer;
+begin
+  jsoDeSerialize := TJSONDeStreamer.Create(nil);
+  try
+    V := jsoDeSerialize.JSONToVariant(AJsonString);
   finally
     FreeAndNil(jsoDeSerialize);
   end;

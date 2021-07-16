@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   esiauthorization, esihttpserver, LCLIntf, ComCtrls, ExtCtrls,
-  JSONPropStorage, esicharacter,
+  JSONPropStorage, esicharacter, esialliance,
   esilocation;
 
 type
@@ -36,11 +36,16 @@ type
     btnCorporation: TButton;
     btnStanding: TButton;
     btnTitle: TButton;
+    btnAllianceList: TButton;
+    btnInfo: TButton;
+    btnAllianceCorporation: TButton;
+    btnAllianceIcon: TButton;
     Button9: TButton;
     edAuthCode: TEdit;
     edCharacterID: TEdit;
     edClientID: TEdit;
     edCallbackURL: TEdit;
+    edAllianceID: TEdit;
     edScope: TEdit;
     edRefreshCode: TEdit;
     GroupBox1: TGroupBox;
@@ -52,6 +57,7 @@ type
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
+    Label7: TLabel;
     lblName: TLabel;
     lblCharID: TLabel;
     lbScopes: TListBox;
@@ -60,13 +66,18 @@ type
     Panel1: TPanel;
     Panel2: TPanel;
     Splitter1: TSplitter;
+    tbsAlliance: TTabSheet;
     tbsCharacter: TTabSheet;
     tbsAuth: TTabSheet;
     tbsLocation: TTabSheet;
     procedure btnAddScopeClick(Sender: TObject);
     procedure btnAffilationClick(Sender: TObject);
+    procedure btnAllianceCorporationClick(Sender: TObject);
+    procedure btnAllianceIconClick(Sender: TObject);
+    procedure btnAllianceListClick(Sender: TObject);
     procedure btnBlueprintsClick(Sender: TObject);
     procedure btnContactsClick(Sender: TObject);
+    procedure btnInfoClick(Sender: TObject);
     procedure btnMedalsClick(Sender: TObject);
     procedure btnNotificationClick(Sender: TObject);
     procedure btnOnlineClick(Sender: TObject);
@@ -163,6 +174,73 @@ begin
   end;
 end;
 
+procedure TForm1.btnAllianceCorporationClick(Sender: TObject);
+var
+  tmp: TEVEAlliance;
+  res: TEVEAllianceCorporationList;
+begin
+  tmp := TEVEAlliance.Create;
+  try
+    try
+      res := tmp.GetCorporations(StrToInt(edAllianceID.Text));
+      Memo1.Lines.Add('-----CORPORATIONS------');
+      Memo1.Lines.Add(res.Count.ToString);
+      Memo1.Lines.Add(res.Items[0].corporation_id.ToString);
+      Memo1.Lines.Add(res.Items[1].corporation_id.ToString);
+      Memo1.Lines.Add(res.Items[2].corporation_id.ToString);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+
+end;
+
+procedure TForm1.btnAllianceIconClick(Sender: TObject);
+var
+  tmp: TEVEAlliance;
+  res: TEVEAllianceIcons;
+begin
+  tmp := TEVEAlliance.Create;
+  try
+    try
+      res := tmp.GetIcon(StrToInt(edAllianceID.Text));
+      Memo1.Lines.Add('-----CORPORATIONS------');
+      Memo1.Lines.Add(res.px128x128);
+      Memo1.Lines.Add(res.px64x64);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+
+end;
+
+procedure TForm1.btnAllianceListClick(Sender: TObject);
+var
+  tmp: TEVEAlliance;
+  res: TEVEAllianceList;
+begin
+  tmp := TEVEAlliance.Create;
+  try
+    try
+      res := tmp.GetAlliances;
+      Memo1.Lines.Add('-----ALLIANCES------');
+      Memo1.Lines.Add(res.Count.ToString);
+      Memo1.Lines.Add(res.Items[0].alliance_id.ToString);
+      Memo1.Lines.Add(res.Items[1].alliance_id.ToString);
+      Memo1.Lines.Add(res.Items[2].alliance_id.ToString);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+
+end;
+
 procedure TForm1.btnBlueprintsClick(Sender: TObject);
 var
   character: TEVECharacter;
@@ -197,6 +275,27 @@ begin
   finally
     FreeAndNil(character);
   end;
+end;
+
+procedure TForm1.btnInfoClick(Sender: TObject);
+var
+  tmp: TEVEAlliance;
+  res: TEVEAllianceInfo;
+begin
+  tmp := TEVEAlliance.Create;
+  try
+    try
+      res := tmp.GetInfo(StrToInt(edAllianceID.Text));
+      Memo1.Lines.Add('-----ALLIANCES------');
+      Memo1.Lines.Add(res.&name);
+      Memo1.Lines.Add(res.date_founded);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+
 end;
 
 procedure TForm1.btnMedalsClick(Sender: TObject);
