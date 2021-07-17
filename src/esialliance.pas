@@ -80,9 +80,13 @@ type
 
   TEVEAlliance = class(TEVEBase)
   public
+    {List all active player alliances}
     function GetAlliances: TEVEAllianceList;
+    {Public information about an alliance}
     function GetInfo(AAllianceID: integer): TEVEAllianceInfo;
+    {List all current member corporations of an alliance}
     function GetCorporations(AAllianceID: integer): TEVEAllianceCorporationList;
+    {Get the icon urls for a alliance}
     function GetIcon(AAllianceID: integer): TEVEAllianceIcons;
   end;
 

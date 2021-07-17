@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   esiauthorization, esihttpserver, LCLIntf, ComCtrls, ExtCtrls,
   JSONPropStorage, esicharacter, esialliance,
-  esilocation;
+  esilocation, esiassets;
 
 type
 
@@ -40,6 +40,7 @@ type
     btnInfo: TButton;
     btnAllianceCorporation: TButton;
     btnAllianceIcon: TButton;
+    btnAssets: TButton;
     Button9: TButton;
     edAuthCode: TEdit;
     edCharacterID: TEdit;
@@ -66,6 +67,7 @@ type
     Panel1: TPanel;
     Panel2: TPanel;
     Splitter1: TSplitter;
+    tbsAssets: TTabSheet;
     tbsAlliance: TTabSheet;
     tbsCharacter: TTabSheet;
     tbsAuth: TTabSheet;
@@ -75,6 +77,7 @@ type
     procedure btnAllianceCorporationClick(Sender: TObject);
     procedure btnAllianceIconClick(Sender: TObject);
     procedure btnAllianceListClick(Sender: TObject);
+    procedure btnAssetsClick(Sender: TObject);
     procedure btnBlueprintsClick(Sender: TObject);
     procedure btnContactsClick(Sender: TObject);
     procedure btnInfoClick(Sender: TObject);
@@ -232,6 +235,36 @@ begin
       Memo1.Lines.Add(res.Items[0].alliance_id.ToString);
       Memo1.Lines.Add(res.Items[1].alliance_id.ToString);
       Memo1.Lines.Add(res.Items[2].alliance_id.ToString);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+
+end;
+
+procedure TForm1.btnAssetsClick(Sender: TObject);
+var
+  tmp: TEVEAssets;
+  res: TEVEAssetCharacterList;
+  Count: integer;
+  page: integer;
+begin
+  tmp := TEVEAssets.Create;
+  try
+    try
+      Count := 1000;
+      page := 1;
+      while Count <> 0 do
+      begin
+        res := tmp.GetAssets(edAuthCode.Text, StrToInt(lblCharID.Caption), page);
+        Count := res.Count;
+        FreeAndNil(res);
+        memo1.Lines.Add('Assets count = ' + Count.ToString);
+        Inc(page);
+        if Count < 1000 then break;
+      end;
     finally
       FreeAndNil(res);
     end;

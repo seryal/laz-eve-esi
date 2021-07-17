@@ -47,9 +47,9 @@ object Form1: TForm1
     Height = 371
     Top = 82
     Width = 905
-    ActivePage = tbsAlliance
+    ActivePage = tbsAssets
     Align = alClient
-    TabIndex = 1
+    TabIndex = 2
     TabOrder = 2
     object tbsAuth: TTabSheet
       Caption = 'Authentication'
@@ -257,6 +257,20 @@ object Form1: TForm1
         Caption = 'Alliance Icon'
         OnClick = btnAllianceIconClick
         TabOrder = 4
+      end
+    end
+    object tbsAssets: TTabSheet
+      Caption = 'Assets'
+      ClientHeight = 343
+      ClientWidth = 897
+      object btnAssets: TButton
+        Left = 16
+        Height = 25
+        Top = 24
+        Width = 75
+        Caption = 'Assets'
+        OnClick = btnAssetsClick
+        TabOrder = 0
       end
     end
     object tbsCharacter: TTabSheet
