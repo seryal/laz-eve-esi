@@ -32,7 +32,7 @@ type
     Expires: integer;
   end;
 
-  TCharacter = record
+  TEVEAuthCharacter = record
     CharacterID: uint64;
     CharacterName: string;
     ExpiresOn: string;
@@ -72,7 +72,7 @@ type
     procedure DeleteScope(AIndex: integer);
     function AuthByAccessToken(ACode: string; ACodeVerifier: string): TAccessToken;
     function AuthByRefreshToken(ARefreshCode: string): TAccessToken;
-    function GetCharacter(AAccessToken: string): TCharacter;
+    function GetCharacter(AAccessToken: string): TEVEAuthCharacter;
     property ClientID: string read FClientID write FClientID;
     property CallbackURL: string read FCallbackURL write FCallbackURL;
     property Scope[Index: integer]: string read GetScope;
@@ -155,8 +155,7 @@ begin
     scopes := scopes + ' ' + tmp;
   scopes := trim(scopes);
   url := OAUTH2_URL + _URL;
-  Result := format(url, [EncodeURLElement(FCallbackURL), FClientID,
-    EncodeURLElement(scopes), Base64UrlSafe(FCodeChallenge)]);
+  Result := format(url, [EncodeURLElement(FCallbackURL), FClientID, EncodeURLElement(scopes), Base64UrlSafe(FCodeChallenge)]);
   if State <> '' then
     Result := Result + format('&state=%s', [state]);
 end;
@@ -193,8 +192,7 @@ begin
   FScopeList.Delete(AIndex);
 end;
 
-function TEVEESIAuth.AuthByAccessToken(ACode: string;
-  ACodeVerifier: string): TAccessToken;
+function TEVEESIAuth.AuthByAccessToken(ACode: string; ACodeVerifier: string): TAccessToken;
 const
   AUTH_STR = 'grant_type=authorization_code&code=%s&client_id=%s&code_verifier=%s';
 var
@@ -210,8 +208,7 @@ begin
     form := format(AUTH_STR, [ACode, ClientID, FCodeVerifier]);
     resp := http.FormPost(TOKEN_URL, form);
     if http.ResponseStatusCode <> 200 then
-      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' +
-        http.ResponseStatusText);
+      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' + http.ResponseStatusText);
     try
       jData := GetJSON(resp);
       Result.AccessToken := TJSONObject(jData).Get('access_token');
@@ -242,8 +239,7 @@ begin
     form := format(AUTH_STR, [EncodeURLElement(ARefreshCode), ClientID]);
     resp := http.FormPost(TOKEN_URL, form);
     if http.ResponseStatusCode <> 200 then
-      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' +
-        http.ResponseStatusText);
+      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' + http.ResponseStatusText);
     jData := GetJSON(resp);
     try
       Result.AccessToken := TJSONObject(jData).Get('access_token');
@@ -258,7 +254,7 @@ begin
   end;
 end;
 
-function TEVEESIAuth.GetCharacter(AAccessToken: string): TCharacter;
+function TEVEESIAuth.GetCharacter(AAccessToken: string): TEVEAuthCharacter;
 const
   URL = 'https://esi.evetech.net/verify';
 var
@@ -273,8 +269,7 @@ begin
     http.AddHeader('Authorization', 'Bearer ' + AAccessToken);
     resp := http.Get(URL);
     if http.ResponseStatusCode <> 200 then
-      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' +
-        http.ResponseStatusText);
+      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' + http.ResponseStatusText);
     try
       jData := GetJSON(resp);
       Result.CharacterID := TJSONObject(jData).Get('CharacterID');

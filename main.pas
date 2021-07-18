@@ -41,6 +41,11 @@ type
     btnAllianceCorporation: TButton;
     btnAllianceIcon: TButton;
     btnAssets: TButton;
+    btnAssetsLocation: TButton;
+    btnAssetNames: TButton;
+    btnCorporationAssets: TButton;
+    btnCorpLocation: TButton;
+    btnCorpNames: TButton;
     Button9: TButton;
     edAuthCode: TEdit;
     edCharacterID: TEdit;
@@ -59,6 +64,7 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
+    lblCorpId: TLabel;
     lblName: TLabel;
     lblCharID: TLabel;
     lbScopes: TListBox;
@@ -77,9 +83,14 @@ type
     procedure btnAllianceCorporationClick(Sender: TObject);
     procedure btnAllianceIconClick(Sender: TObject);
     procedure btnAllianceListClick(Sender: TObject);
+    procedure btnAssetNamesClick(Sender: TObject);
     procedure btnAssetsClick(Sender: TObject);
+    procedure btnAssetsLocationClick(Sender: TObject);
     procedure btnBlueprintsClick(Sender: TObject);
     procedure btnContactsClick(Sender: TObject);
+    procedure btnCorpLocationClick(Sender: TObject);
+    procedure btnCorpNamesClick(Sender: TObject);
+    procedure btnCorporationAssetsClick(Sender: TObject);
     procedure btnInfoClick(Sender: TObject);
     procedure btnMedalsClick(Sender: TObject);
     procedure btnNotificationClick(Sender: TObject);
@@ -244,6 +255,32 @@ begin
 
 end;
 
+procedure TForm1.btnAssetNamesClick(Sender: TObject);
+var
+  tmp: TEVEAssets;
+  res: TEVEAssetNameList;
+  list: TStringList;
+begin
+  tmp := TEVEAssets.Create;
+  try
+    try
+      list := TStringList.Create;
+      list.Add('34');
+      list.Add('35');
+      list.Add('36');
+      res := tmp.GetNames(edAuthCode.Text, StrToInt(lblCharID.Caption), list);
+      FreeAndNil(list);
+      Memo1.Lines.Add('-----LOCATION------');
+      Memo1.Lines.Add(res.Items[0].item_id.ToString);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+
+end;
+
 procedure TForm1.btnAssetsClick(Sender: TObject);
 var
   tmp: TEVEAssets;
@@ -265,6 +302,32 @@ begin
         Inc(page);
         if Count < 1000 then break;
       end;
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+
+end;
+
+procedure TForm1.btnAssetsLocationClick(Sender: TObject);
+var
+  tmp: TEVEAssets;
+  res: TEVEAssetLocationList;
+  list: TStringList;
+begin
+  tmp := TEVEAssets.Create;
+  try
+    try
+      list := TStringList.Create;
+      list.Add('34');
+      list.Add('35');
+      list.Add('36');
+      res := tmp.GetLocation(edAuthCode.Text, StrToInt(lblCharID.Caption), list);
+      FreeAndNil(list);
+      Memo1.Lines.Add('-----LOCATION------');
+      Memo1.Lines.Add(res.Items[0].item_id.ToString);
     finally
       FreeAndNil(res);
     end;
@@ -308,6 +371,88 @@ begin
   finally
     FreeAndNil(character);
   end;
+end;
+
+procedure TForm1.btnCorpLocationClick(Sender: TObject);
+var
+  tmp: TEVEAssets;
+  res: TEVEAssetLocationList;
+  list: TStringList;
+begin
+  tmp := TEVEAssets.Create;
+  try
+    try
+      list := TStringList.Create;
+      list.Add('34');
+      list.Add('35');
+      list.Add('36');
+      res := tmp.GetCorporationLocation(edAuthCode.Text, StrToInt(lblCorpId.Caption), list);
+      FreeAndNil(list);
+      Memo1.Lines.Add('-----LOCATION------');
+      Memo1.Lines.Add(res.Items[0].item_id.ToString);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+
+end;
+
+procedure TForm1.btnCorpNamesClick(Sender: TObject);
+var
+  tmp: TEVEAssets;
+  res: TEVEAssetNameList;
+  list: TStringList;
+begin
+  tmp := TEVEAssets.Create;
+  try
+    try
+      list := TStringList.Create;
+      list.Add('34');
+      list.Add('35');
+      list.Add('36');
+      res := tmp.GetCorporationNames(edAuthCode.Text, StrToInt(lblCharID.Caption), list);
+      FreeAndNil(list);
+      Memo1.Lines.Add('-----LOCATION------');
+      Memo1.Lines.Add(res.Items[0].item_id.ToString);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+
+end;
+
+procedure TForm1.btnCorporationAssetsClick(Sender: TObject);
+var
+  tmp: TEVEAssets;
+  res: TEVEAssetCorporationList;
+  Count: integer;
+  page: integer;
+begin
+  tmp := TEVEAssets.Create;
+  try
+    try
+      Count := 1000;
+      page := 1;
+      while Count <> 0 do
+      begin
+        res := tmp.GetCorporation(edAuthCode.Text, StrToInt(lblCorpId.Caption), page);
+        Count := res.Count;
+        FreeAndNil(res);
+        memo1.Lines.Add('Assets count = ' + Count.ToString);
+        Inc(page);
+        if Count < 1000 then break;
+      end;
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+
 end;
 
 procedure TForm1.btnInfoClick(Sender: TObject);
@@ -529,7 +674,9 @@ end;
 procedure TForm1.Button5Click(Sender: TObject);
 var
   esi: TEVEESIAuth;
-  char: TCharacter;
+  char: TEVEAuthCharacter;
+  info: TEVECharacter;
+  val: TEVECharacterPublic;
 begin
   esi := TEVEESIAuth.Create;
   try
@@ -540,6 +687,11 @@ begin
     Memo1.Lines.Add(char.CharacterName);
     lblName.Caption := char.CharacterName;
     lblCharID.Caption := char.CharacterID.ToString;
+    info := TEVECharacter.Create;
+    val := info.GetPublicInfo(StrToInt(lblCharID.Caption));
+    lblCorpId.Caption := val.corporation_id.ToString;
+    FreeAndNil(val);
+    FreeAndNil(info);
   finally
     FreeAndNil(esi);
   end;

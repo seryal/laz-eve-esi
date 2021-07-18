@@ -272,6 +272,51 @@ object Form1: TForm1
         OnClick = btnAssetsClick
         TabOrder = 0
       end
+      object btnAssetsLocation: TButton
+        Left = 104
+        Height = 25
+        Top = 24
+        Width = 75
+        Caption = 'Location'
+        OnClick = btnAssetsLocationClick
+        TabOrder = 1
+      end
+      object btnAssetNames: TButton
+        Left = 192
+        Height = 25
+        Top = 24
+        Width = 75
+        Caption = 'Names'
+        OnClick = btnAssetNamesClick
+        TabOrder = 2
+      end
+      object btnCorporationAssets: TButton
+        Left = 16
+        Height = 25
+        Top = 80
+        Width = 75
+        Caption = 'Corporation'
+        OnClick = btnCorporationAssetsClick
+        TabOrder = 3
+      end
+      object btnCorpLocation: TButton
+        Left = 104
+        Height = 25
+        Top = 80
+        Width = 88
+        Caption = 'Corp Location'
+        OnClick = btnCorpLocationClick
+        TabOrder = 4
+      end
+      object btnCorpNames: TButton
+        Left = 208
+        Height = 25
+        Top = 80
+        Width = 75
+        Caption = 'Corp Names'
+        OnClick = btnCorpNamesClick
+        TabOrder = 5
+      end
     end
     object tbsCharacter: TTabSheet
       Caption = 'Character'
@@ -488,6 +533,14 @@ object Form1: TForm1
       Top = 32
       Width = 49
       Caption = 'lblCharID'
+      ParentColor = False
+    end
+    object lblCorpId: TLabel
+      Left = 8
+      Height = 15
+      Top = 58
+      Width = 49
+      Caption = 'lblCorpId'
       ParentColor = False
     end
   end

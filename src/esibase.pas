@@ -27,6 +27,7 @@ type
     function Get(AAuthKey, AURL: string): string;
     function Get(AURL: string): string;
     function Post(AURL: string; AValue: string): string;
+    function Post(AAuthKey, AURL: string; AValue: string): string;
     procedure DeStreamerObject(AJsonString: string; var AObject: TObject);
     procedure DeStreamerArray(AJsonString: string; var AObject: TCollection);
     procedure DeStreamerArray(AJsonString: string; var V: variant);
@@ -54,6 +55,11 @@ begin
 end;
 
 function TEVEBase.Post(AURL: string; AValue: string): string;
+begin
+  Result := Post('', AURL, AValue);
+end;
+
+function TEVEBase.Post(AAuthKey, AURL: string; AValue: string): string;
 var
   http: TFPHTTPClient;
   res: integer;
@@ -62,12 +68,15 @@ begin
   try
     http.AddHeader('Content-Type', 'application/x-www-form-urlencoded');
     http.AddHeader('Host', 'login.eveonline.com');
+    if AAuthKey <> '' then
+      http.AddHeader('Authorization', 'Bearer ' + AAuthKey);
     Result := http.FormPost(AURL, AValue);
     if http.ResponseStatusCode <> 200 then
       raise Exception.Create(http.ResponseStatusCode.ToString + ': ' + http.ResponseStatusText);
   finally
     FreeAndNil(http);
   end;
+
 end;
 
 procedure TEVEBase.DeStreamerObject(AJsonString: string; var AObject: TObject);
