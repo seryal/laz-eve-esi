@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   esiauthorization, esihttpserver, LCLIntf, ComCtrls, ExtCtrls,
   JSONPropStorage, esicharacter, esialliance,
-  esilocation, esiassets, esibookmarks, esicalendar;
+  esilocation, esiassets, esibookmarks, esicalendar, esiclones;
 
 type
 
@@ -49,6 +49,8 @@ type
     btnCorpNames: TButton;
     btnCharBookmark: TButton;
     btnCalendarResponse: TButton;
+    btnClones: TButton;
+    btnImplants: TButton;
     Button9: TButton;
     edAuthCode: TEdit;
     edCharacterID: TEdit;
@@ -76,6 +78,7 @@ type
     Panel1: TPanel;
     Panel2: TPanel;
     Splitter1: TSplitter;
+    tbsClones: TTabSheet;
     tbsCalendar: TTabSheet;
     tbsBookmark: TTabSheet;
     tbsAssets: TTabSheet;
@@ -95,10 +98,12 @@ type
     procedure btnCalendarResponseClick(Sender: TObject);
     procedure btnCharBookmarkClick(Sender: TObject);
     procedure btnCharFoldersClick(Sender: TObject);
+    procedure btnClonesClick(Sender: TObject);
     procedure btnContactsClick(Sender: TObject);
     procedure btnCorpLocationClick(Sender: TObject);
     procedure btnCorpNamesClick(Sender: TObject);
     procedure btnCorporationAssetsClick(Sender: TObject);
+    procedure btnImplantsClick(Sender: TObject);
     procedure btnInfoClick(Sender: TObject);
     procedure btnMedalsClick(Sender: TObject);
     procedure btnNotificationClick(Sender: TObject);
@@ -419,6 +424,29 @@ begin
   end;
 end;
 
+procedure TForm1.btnClonesClick(Sender: TObject);
+var
+  tmp: TESIClones;
+  res: TEVEClonesCharacter;
+begin
+  tmp := TESIClones.Create;
+  try
+    try
+      res := tmp.GetClones(edAuthCode.Text, StrToInt(lblCharID.Caption));
+      Memo1.Lines.Add('------CLONES-------');
+      memo1.Lines.Add(res.home_location.location_id.ToString);
+      memo1.Lines.Add(res.home_location.location_type);
+
+      //memo1.Lines.Add(res.jump_clones.Items[0].implants.Items[0].ToString);
+
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+end;
+
 procedure TForm1.btnContactsClick(Sender: TObject);
 var
   character: TESICharacter;
@@ -517,6 +545,29 @@ begin
     FreeAndNil(tmp);
   end;
 
+end;
+
+procedure TForm1.btnImplantsClick(Sender: TObject);
+var
+  tmp: TESIClones;
+  res: TEVEImplantList;
+begin
+  tmp := TESIClones.Create;
+  try
+    try
+      res := tmp.GetImplants(edAuthCode.Text, StrToInt(lblCharID.Caption));
+      Memo1.Lines.Add('------IMPLANTS-------');
+      memo1.Lines.Add(res.Count.ToString);
+      memo1.Lines.Add(res.Items[0].ToString);
+
+      //memo1.Lines.Add(res.jump_clones.Items[0].implants.Items[0].ToString);
+
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
 end;
 
 procedure TForm1.btnInfoClick(Sender: TObject);
