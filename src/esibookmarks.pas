@@ -46,6 +46,9 @@ type
     Flabel: string;
     Flocation_id: integer;
     Fnotes: string;
+  public
+    constructor Create(ACollection: TCollection); override;
+    destructor Destroy; override;
   published
     property bookmark_id: integer read Fbookmark_id write Fbookmark_id;
     property coordinates: TEVEBookmarkCoordinates read Fcoordinates write Fcoordinates;
@@ -98,6 +101,22 @@ type
   end;
 
 implementation
+
+{ TEVEBookmark }
+
+constructor TEVEBookmark.Create(ACollection: TCollection);
+begin
+  inherited Create(ACollection);
+  Fcoordinates := TEVEBookmarkCoordinates.Create(nil);
+  Fitem := TEVEBookmarkItem.Create(nil);
+end;
+
+destructor TEVEBookmark.Destroy;
+begin
+  FreeAndNil(Fitem);
+  FreeAndNil(Fcoordinates);
+  inherited Destroy;
+end;
 
 { TEVEBookmarksFolderList }
 
