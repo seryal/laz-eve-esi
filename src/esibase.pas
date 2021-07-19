@@ -20,9 +20,9 @@ uses
 
 type
 
-  { TEVEBase }
+  { TESIBase }
 
-  TEVEBase = class
+  TESIBase = class
   protected
     function Get(AAuthKey, AURL: string): string;
     function Get(AURL: string): string;
@@ -42,24 +42,24 @@ type
 
 implementation
 
-{ TEVEBase }
+{ TESIBase }
 
-constructor TEVEBase.Create;
+constructor TESIBase.Create;
 begin
   DataSource := 'tranquility';
 end;
 
-function TEVEBase.Get(AURL: string): string;
+function TESIBase.Get(AURL: string): string;
 begin
   Result := Get('', AURL);
 end;
 
-function TEVEBase.Post(AURL: string; AValue: string): string;
+function TESIBase.Post(AURL: string; AValue: string): string;
 begin
   Result := Post('', AURL, AValue);
 end;
 
-function TEVEBase.Post(AAuthKey, AURL: string; AValue: string): string;
+function TESIBase.Post(AAuthKey, AURL: string; AValue: string): string;
 var
   http: TFPHTTPClient;
   res: integer;
@@ -79,7 +79,7 @@ begin
 
 end;
 
-procedure TEVEBase.DeStreamerObject(AJsonString: string; var AObject: TObject);
+procedure TESIBase.DeStreamerObject(AJsonString: string; var AObject: TObject);
 var
   jsoDeSerialize: TJSONDeStreamer;
 begin
@@ -91,7 +91,7 @@ begin
   end;
 end;
 
-procedure TEVEBase.DeStreamerArray(AJsonString: string; var AObject: TCollection);
+procedure TESIBase.DeStreamerArray(AJsonString: string; var AObject: TCollection);
 var
   jsoDeSerialize: TJSONDeStreamer;
 begin
@@ -103,7 +103,7 @@ begin
   end;
 end;
 
-procedure TEVEBase.DeStreamerArray(AJsonString: string; var V: variant);
+procedure TESIBase.DeStreamerArray(AJsonString: string; var V: variant);
 var
   jsoDeSerialize: TJSONDeStreamer;
 begin
@@ -115,7 +115,7 @@ begin
   end;
 end;
 
-function TEVEBase.Get(AAuthKey, AURL: string): string;
+function TESIBase.Get(AAuthKey, AURL: string): string;
 var
   http: TFPHTTPClient;
 begin

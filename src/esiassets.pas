@@ -133,9 +133,9 @@ type
 
 
 
-  { TEVEAssets }
+  { TESIAssets }
 
-  TEVEAssets = class(TEVEBase)
+  TESIAssets = class(TESIBase)
   public
     function GetAssets(AAccessToken: string; ACharacterId: integer; APage: integer): TEVEAssetCharacterList;
     function GetLocation(AAccessToken: string; ACharacterId: integer; AList: TStringList): TEVEAssetLocationList;
@@ -192,9 +192,9 @@ begin
   Result := TEVEAssetCharacter(inherited Items[Index]);
 end;
 
-{ TEVEAssets }
+{ TESIAssets }
 
-function TEVEAssets.GetAssets(AAccessToken: string; ACharacterId: integer; APage: integer): TEVEAssetCharacterList;
+function TESIAssets.GetAssets(AAccessToken: string; ACharacterId: integer; APage: integer): TEVEAssetCharacterList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/assets/?datasource=%s&page=%d';
 begin
@@ -202,7 +202,7 @@ begin
   DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource, APage])), TCollection(Result));
 end;
 
-function TEVEAssets.GetLocation(AAccessToken: string; ACharacterId: integer; AList: TStringList): TEVEAssetLocationList;
+function TESIAssets.GetLocation(AAccessToken: string; ACharacterId: integer; AList: TStringList): TEVEAssetLocationList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/assets/locations/?datasource=%s';
 var
@@ -218,7 +218,7 @@ begin
   DeStreamerArray(Post(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource]), res), TCollection(Result));
 end;
 
-function TEVEAssets.GetNames(AAccessToken: string; ACharacterId: integer; AList: TStringList): TEVEAssetNameList;
+function TESIAssets.GetNames(AAccessToken: string; ACharacterId: integer; AList: TStringList): TEVEAssetNameList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/assets/names/?datasource=%s';
 var
@@ -234,7 +234,7 @@ begin
   DeStreamerArray(Post(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource]), res), TCollection(Result));
 end;
 
-function TEVEAssets.GetCorporation(AAccessToken: string; ACharacterId: integer; APage: integer): TEVEAssetCorporationList;
+function TESIAssets.GetCorporation(AAccessToken: string; ACharacterId: integer; APage: integer): TEVEAssetCorporationList;
 const
   URL = 'https://esi.evetech.net/latest/corporations/%s/assets/?datasource=%s&page=%d';
 begin
@@ -242,7 +242,7 @@ begin
   DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource, APage])), TCollection(Result));
 end;
 
-function TEVEAssets.GetCorporationLocation(AAccessToken: string; ACorporationId: integer; AList: TStringList): TEVEAssetLocationList;
+function TESIAssets.GetCorporationLocation(AAccessToken: string; ACorporationId: integer; AList: TStringList): TEVEAssetLocationList;
 const
   URL = 'https://esi.evetech.net/latest/corporations/%s/assets/locations/?datasource=%s';
 var
@@ -258,7 +258,7 @@ begin
   DeStreamerArray(Post(AAccessToken, Format(URL, [ACorporationId.ToString, DataSource]), res), TCollection(Result));
 end;
 
-function TEVEAssets.GetCorporationNames(AAccessToken: string; ACorporationId: integer; AList: TStringList): TEVEAssetNameList;
+function TESIAssets.GetCorporationNames(AAccessToken: string; ACorporationId: integer; AList: TStringList): TEVEAssetNameList;
 const
   URL = 'https://esi.evetech.net/latest/corporations/%s/assets/names/?datasource=%s';
 var

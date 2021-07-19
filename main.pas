@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   esiauthorization, esihttpserver, LCLIntf, ComCtrls, ExtCtrls,
   JSONPropStorage, esicharacter, esialliance,
-  esilocation, esiassets;
+  esilocation, esiassets, esibookmarks;
 
 type
 
@@ -23,6 +23,7 @@ type
     btnContacts: TButton;
     Button10: TButton;
     btnRoles: TButton;
+    btnCharFolders: TButton;
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
@@ -46,6 +47,7 @@ type
     btnCorporationAssets: TButton;
     btnCorpLocation: TButton;
     btnCorpNames: TButton;
+    btnCharBookmark: TButton;
     Button9: TButton;
     edAuthCode: TEdit;
     edCharacterID: TEdit;
@@ -73,6 +75,7 @@ type
     Panel1: TPanel;
     Panel2: TPanel;
     Splitter1: TSplitter;
+    tbsBookmark: TTabSheet;
     tbsAssets: TTabSheet;
     tbsAlliance: TTabSheet;
     tbsCharacter: TTabSheet;
@@ -87,6 +90,8 @@ type
     procedure btnAssetsClick(Sender: TObject);
     procedure btnAssetsLocationClick(Sender: TObject);
     procedure btnBlueprintsClick(Sender: TObject);
+    procedure btnCharBookmarkClick(Sender: TObject);
+    procedure btnCharFoldersClick(Sender: TObject);
     procedure btnContactsClick(Sender: TObject);
     procedure btnCorpLocationClick(Sender: TObject);
     procedure btnCorpNamesClick(Sender: TObject);
@@ -166,11 +171,11 @@ end;
 
 procedure TForm1.btnAffilationClick(Sender: TObject);
 var
-  tmp: TEVECharacter;
+  tmp: TESICharacter;
   res: TEVECharacterAffiliationList;
   str: TStringList;
 begin
-  tmp := TEVECharacter.Create;
+  tmp := TESICharacter.Create;
   try
     try
       str := TStringList.Create;
@@ -190,10 +195,10 @@ end;
 
 procedure TForm1.btnAllianceCorporationClick(Sender: TObject);
 var
-  tmp: TEVEAlliance;
+  tmp: TESIAlliance;
   res: TEVEAllianceCorporationList;
 begin
-  tmp := TEVEAlliance.Create;
+  tmp := TESIAlliance.Create;
   try
     try
       res := tmp.GetCorporations(StrToInt(edAllianceID.Text));
@@ -213,10 +218,10 @@ end;
 
 procedure TForm1.btnAllianceIconClick(Sender: TObject);
 var
-  tmp: TEVEAlliance;
+  tmp: TESIAlliance;
   res: TEVEAllianceIcons;
 begin
-  tmp := TEVEAlliance.Create;
+  tmp := TESIAlliance.Create;
   try
     try
       res := tmp.GetIcon(StrToInt(edAllianceID.Text));
@@ -234,10 +239,10 @@ end;
 
 procedure TForm1.btnAllianceListClick(Sender: TObject);
 var
-  tmp: TEVEAlliance;
+  tmp: TESIAlliance;
   res: TEVEAllianceList;
 begin
-  tmp := TEVEAlliance.Create;
+  tmp := TESIAlliance.Create;
   try
     try
       res := tmp.GetAlliances;
@@ -257,11 +262,11 @@ end;
 
 procedure TForm1.btnAssetNamesClick(Sender: TObject);
 var
-  tmp: TEVEAssets;
+  tmp: TESIAssets;
   res: TEVEAssetNameList;
   list: TStringList;
 begin
-  tmp := TEVEAssets.Create;
+  tmp := TESIAssets.Create;
   try
     try
       list := TStringList.Create;
@@ -283,12 +288,12 @@ end;
 
 procedure TForm1.btnAssetsClick(Sender: TObject);
 var
-  tmp: TEVEAssets;
+  tmp: TESIAssets;
   res: TEVEAssetCharacterList;
   Count: integer;
   page: integer;
 begin
-  tmp := TEVEAssets.Create;
+  tmp := TESIAssets.Create;
   try
     try
       Count := 1000;
@@ -313,11 +318,11 @@ end;
 
 procedure TForm1.btnAssetsLocationClick(Sender: TObject);
 var
-  tmp: TEVEAssets;
+  tmp: TESIAssets;
   res: TEVEAssetLocationList;
   list: TStringList;
 begin
-  tmp := TEVEAssets.Create;
+  tmp := TESIAssets.Create;
   try
     try
       list := TStringList.Create;
@@ -339,10 +344,10 @@ end;
 
 procedure TForm1.btnBlueprintsClick(Sender: TObject);
 var
-  character: TEVECharacter;
+  character: TESICharacter;
   res: TEVECharacterBlueprintList;
 begin
-  character := TEVECharacter.Create;
+  character := TESICharacter.Create;
   try
     try
       res := character.GetBlueprints(edAuthCode.Text, StrToInt(lblCharID.Caption), 1);
@@ -355,12 +360,53 @@ begin
   end;
 end;
 
+procedure TForm1.btnCharBookmarkClick(Sender: TObject);
+
+var
+  tmp: TESIBookmarks;
+  res: TEVEBookmarkList;
+begin
+  tmp := TESIBookmarks.Create;
+  try
+    try
+      res := tmp.GetCharacterBookmarks(edAuthCode.Text, StrToInt(lblCharID.Caption), 1);
+      Memo1.Lines.Add('-----CHAR BOOKMARKS------');
+      Memo1.Lines.Add(res.Count.ToString);
+      Memo1.Lines.Add(res.Items[0].&label);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+end;
+
+procedure TForm1.btnCharFoldersClick(Sender: TObject);
+var
+  tmp: TESIBookmarks;
+  res: TEVEBookmarksFolderList;
+begin
+  tmp := TESIBookmarks.Create;
+  try
+    try
+      res := tmp.GetCharacterBookmarksFolders(edAuthCode.Text, StrToInt(lblCharID.Caption), 1);
+      Memo1.Lines.Add('-----CHAR FOLDERS------');
+      Memo1.Lines.Add(res.Count.ToString);
+      Memo1.Lines.Add(res.Items[0].Name);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+end;
+
 procedure TForm1.btnContactsClick(Sender: TObject);
 var
-  character: TEVECharacter;
+  character: TESICharacter;
   res: TEVECharacterContactList;
 begin
-  character := TEVECharacter.Create;
+  character := TESICharacter.Create;
   try
     try
       res := character.GetContacts(edAuthCode.Text, StrToInt(lblCharID.Caption));
@@ -375,11 +421,11 @@ end;
 
 procedure TForm1.btnCorpLocationClick(Sender: TObject);
 var
-  tmp: TEVEAssets;
+  tmp: TESIAssets;
   res: TEVEAssetLocationList;
   list: TStringList;
 begin
-  tmp := TEVEAssets.Create;
+  tmp := TESIAssets.Create;
   try
     try
       list := TStringList.Create;
@@ -401,11 +447,11 @@ end;
 
 procedure TForm1.btnCorpNamesClick(Sender: TObject);
 var
-  tmp: TEVEAssets;
+  tmp: TESIAssets;
   res: TEVEAssetNameList;
   list: TStringList;
 begin
-  tmp := TEVEAssets.Create;
+  tmp := TESIAssets.Create;
   try
     try
       list := TStringList.Create;
@@ -427,12 +473,12 @@ end;
 
 procedure TForm1.btnCorporationAssetsClick(Sender: TObject);
 var
-  tmp: TEVEAssets;
+  tmp: TESIAssets;
   res: TEVEAssetCorporationList;
   Count: integer;
   page: integer;
 begin
-  tmp := TEVEAssets.Create;
+  tmp := TESIAssets.Create;
   try
     try
       Count := 1000;
@@ -457,10 +503,10 @@ end;
 
 procedure TForm1.btnInfoClick(Sender: TObject);
 var
-  tmp: TEVEAlliance;
+  tmp: TESIAlliance;
   res: TEVEAllianceInfo;
 begin
-  tmp := TEVEAlliance.Create;
+  tmp := TESIAlliance.Create;
   try
     try
       res := tmp.GetInfo(StrToInt(edAllianceID.Text));
@@ -478,10 +524,10 @@ end;
 
 procedure TForm1.btnMedalsClick(Sender: TObject);
 var
-  tmp: TEVECharacter;
+  tmp: TESICharacter;
   medals: TEVECharacterMedalsList;
 begin
-  tmp := TEVECharacter.Create;
+  tmp := TESICharacter.Create;
   try
     try
       medals := tmp.GetMedals(edAuthCode.Text, StrToInt(lblCharID.Caption));
@@ -499,10 +545,10 @@ end;
 
 procedure TForm1.btnNotificationClick(Sender: TObject);
 var
-  tmp: TEVECharacter;
+  tmp: TESICharacter;
   res: TEVECharacterNotificationList;
 begin
-  tmp := TEVECharacter.Create;
+  tmp := TESICharacter.Create;
   try
     try
       res := tmp.GetNotifications(edAuthCode.Text, StrToInt(lblCharID.Caption));
@@ -520,10 +566,10 @@ end;
 
 procedure TForm1.btnOnlineClick(Sender: TObject);
 var
-  esi: TEVEESILocation;
+  esi: TESILocation;
   online: TEVELocationOnline;
 begin
-  esi := TEVEESILocation.Create;
+  esi := TESILocation.Create;
   try
     try
       online := esi.GetOnline(edAuthCode.Text, StrToInt(lblCharID.Caption));
@@ -542,10 +588,10 @@ end;
 
 procedure TForm1.btnRolesClick(Sender: TObject);
 var
-  tmp: TEVECharacter;
+  tmp: TESICharacter;
   res: TEVECharacterRoles;
 begin
-  tmp := TEVECharacter.Create;
+  tmp := TESICharacter.Create;
   try
     try
       res := tmp.GetRoles(edAuthCode.Text, StrToInt(lblCharID.Caption));
@@ -562,10 +608,10 @@ end;
 
 procedure TForm1.btnShipClick(Sender: TObject);
 var
-  esi: TEVEESILocation;
+  esi: TESILocation;
   ship: TEVELocationShip;
 begin
-  esi := TEVEESILocation.Create;
+  esi := TESILocation.Create;
   try
     try
       ship := esi.GetShip(edAuthCode.Text, StrToInt(lblCharID.Caption));
@@ -584,10 +630,10 @@ end;
 
 procedure TForm1.btnStandingClick(Sender: TObject);
 var
-  esi: TEVECharacter;
+  esi: TESICharacter;
   tmp: TEVECharacterStandingList;
 begin
-  esi := TEVECharacter.Create;
+  esi := TESICharacter.Create;
   try
     try
       tmp := esi.GetStanding(edAuthCode.Text, StrToInt(lblCharID.Caption));
@@ -604,10 +650,10 @@ end;
 
 procedure TForm1.Button10Click(Sender: TObject);
 var
-  esi: TEVECharacter;
+  esi: TESICharacter;
   tmp: TEVECharacterPortrait;
 begin
-  esi := TEVECharacter.Create;
+  esi := TESICharacter.Create;
   try
     try
       tmp := esi.GetPortrait(StrToInt(edCharacterID.Text));
@@ -675,7 +721,7 @@ procedure TForm1.Button5Click(Sender: TObject);
 var
   esi: TEVEESIAuth;
   char: TEVEAuthCharacter;
-  info: TEVECharacter;
+  info: TESICharacter;
   val: TEVECharacterPublic;
 begin
   esi := TEVEESIAuth.Create;
@@ -687,7 +733,7 @@ begin
     Memo1.Lines.Add(char.CharacterName);
     lblName.Caption := char.CharacterName;
     lblCharID.Caption := char.CharacterID.ToString;
-    info := TEVECharacter.Create;
+    info := TESICharacter.Create;
     val := info.GetPublicInfo(StrToInt(lblCharID.Caption));
     lblCorpId.Caption := val.corporation_id.ToString;
     FreeAndNil(val);
@@ -699,10 +745,10 @@ end;
 
 procedure TForm1.btnLcationClick(Sender: TObject);
 var
-  esi: TEVEESILocation;
+  esi: TESILocation;
   loc: TEVELocationLocation;
 begin
-  esi := TEVEESILocation.Create;
+  esi := TESILocation.Create;
   try
     try
       loc := esi.GetLocation(edAuthCode.Text, StrToInt(lblCharID.Caption));
@@ -720,10 +766,10 @@ end;
 
 procedure TForm1.Button6Click(Sender: TObject);
 var
-  character: TEVECharacter;
+  character: TESICharacter;
   res: TEVECharacterPublic;
 begin
-  character := TEVECharacter.Create;
+  character := TESICharacter.Create;
   try
     try
       res := character.GetPublicInfo(StrToInt(edCharacterID.Text));
@@ -738,10 +784,10 @@ end;
 
 procedure TForm1.Button7Click(Sender: TObject);
 var
-  character: TEVECharacter;
+  character: TESICharacter;
   res: TEVECharacterAgentList;
 begin
-  character := TEVECharacter.Create;
+  character := TESICharacter.Create;
   try
     try
       res := character.GetAgentResearch(edAuthCode.Text, StrToInt(lblCharID.Caption));
@@ -757,10 +803,10 @@ end;
 
 procedure TForm1.btnCorporationClick(Sender: TObject);
 var
-  character: TEVECharacter;
+  character: TESICharacter;
   res: TEVECharacterCorporationList;
 begin
-  character := TEVECharacter.Create;
+  character := TESICharacter.Create;
   try
     try
       res := character.GetCorporationHistory(StrToInt(edCharacterID.Text));
@@ -776,10 +822,10 @@ end;
 
 procedure TForm1.btnTitleClick(Sender: TObject);
 var
-  tmp: TEVECharacter;
+  tmp: TESICharacter;
   res: TEVECharacterTitleList;
 begin
-  tmp := TEVECharacter.Create;
+  tmp := TESICharacter.Create;
   try
     try
       res := tmp.GetTitles(edAuthCode.Text, StrToInt(lblCharID.Caption));
@@ -796,10 +842,10 @@ end;
 
 procedure TForm1.Button9Click(Sender: TObject);
 var
-  character: TEVECharacter;
+  character: TESICharacter;
   res: TEVECharacterJumpFatigue;
 begin
-  character := TEVECharacter.Create;
+  character := TESICharacter.Create;
   try
     try
       res := character.GetJumpFatigue(edAuthCode.Text, StrToInt(lblCharID.Caption));

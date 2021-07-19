@@ -47,9 +47,9 @@ object Form1: TForm1
     Height = 371
     Top = 82
     Width = 905
-    ActivePage = tbsAssets
+    ActivePage = tbsBookmark
     Align = alClient
-    TabIndex = 2
+    TabIndex = 3
     TabOrder = 2
     object tbsAuth: TTabSheet
       Caption = 'Authentication'
@@ -316,6 +316,29 @@ object Form1: TForm1
         Caption = 'Corp Names'
         OnClick = btnCorpNamesClick
         TabOrder = 5
+      end
+    end
+    object tbsBookmark: TTabSheet
+      Caption = 'Bookmark'
+      ClientHeight = 343
+      ClientWidth = 897
+      object btnCharBookmark: TButton
+        Left = 15
+        Height = 25
+        Top = 47
+        Width = 105
+        Caption = 'Char Bookmark'
+        OnClick = btnCharBookmarkClick
+        TabOrder = 0
+      end
+      object btnCharFolders: TButton
+        Left = 136
+        Height = 25
+        Top = 47
+        Width = 75
+        Caption = 'Char Folders'
+        OnClick = btnCharFoldersClick
+        TabOrder = 1
       end
     end
     object tbsCharacter: TTabSheet

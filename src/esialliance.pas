@@ -76,9 +76,9 @@ type
   end;
 
 
-  { TEVEAlliance }
+  { TESIAlliance }
 
-  TEVEAlliance = class(TEVEBase)
+  TESIAlliance = class(TESIBase)
   public
     {List all active player alliances}
     function GetAlliances: TEVEAllianceList;
@@ -106,9 +106,9 @@ begin
   Result := TEVEAllianceNum(inherited Items[Index]);
 end;
 
-{ TEVEAlliance }
+{ TESIAlliance }
 
-function TEVEAlliance.GetAlliances: TEVEAllianceList;
+function TESIAlliance.GetAlliances: TEVEAllianceList;
 const
   URL = 'https://esi.evetech.net/latest/alliances/?datasource=tranquility';
 var
@@ -129,7 +129,7 @@ begin
   end;
 end;
 
-function TEVEAlliance.GetInfo(AAllianceID: integer): TEVEAllianceInfo;
+function TESIAlliance.GetInfo(AAllianceID: integer): TEVEAllianceInfo;
 const
   URL = 'https://esi.evetech.net/latest/alliances/%s/?datasource=%s';
 begin
@@ -137,7 +137,7 @@ begin
   DeStreamerObject(Get(Format(URL, [AAllianceID.ToString, DataSource])), TObject(Result));
 end;
 
-function TEVEAlliance.GetCorporations(AAllianceID: integer): TEVEAllianceCorporationList;
+function TESIAlliance.GetCorporations(AAllianceID: integer): TEVEAllianceCorporationList;
 const
   URL = 'https://esi.evetech.net/latest/alliances/%s/corporations/?datasource=%s';
 var
@@ -158,7 +158,7 @@ begin
   end;
 end;
 
-function TEVEAlliance.GetIcon(AAllianceID: integer): TEVEAllianceIcons;
+function TESIAlliance.GetIcon(AAllianceID: integer): TEVEAllianceIcons;
 const
   URL = 'https://esi.evetech.net/latest/alliances/%s/icons/?datasource=%s';
 begin
