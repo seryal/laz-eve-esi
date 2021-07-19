@@ -370,7 +370,7 @@ var
 begin
   tmp := TESICalendar.Create;
   try
-    res := tmp.SetResponse(edAuthCode.Text, StrToInt(lblCharID.Caption), 1, rspAccepted);
+    res := tmp.SetResponse(edAuthCode.Text, StrToInt(lblCharID.Caption), 2452800, rspAccepted);
     //memo1.Lines.Add('Blueprints count = ' + res.Count.ToString);
   finally
     FreeAndNil(tmp);

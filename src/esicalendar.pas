@@ -129,15 +129,14 @@ const
 var
   res: string;
 begin
+  Result := False;
   case AResponse of
     rspAccepted: res := Format(RESPONSE, ['accepted']);
     rspDeclined: res := Format(RESPONSE, ['declined']);
     rspTentative: res := Format(RESPONSE, ['tentative']);
   end;
-  { TODO: Implement this answer}
-  raise Exception.Create('Not Implemented');
   res := Put(AAccessToken, Format(URL, [ACharacterId.ToString, AEventId.ToString, DataSource]), res);
-
+  Result := True;
 end;
 
 function TESICalendar.GetAttendees(AAccessToken: string; ACharacterId, AEventId: integer): TEVECalendarAttendeeList;

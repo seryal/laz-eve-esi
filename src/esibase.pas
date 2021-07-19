@@ -92,7 +92,7 @@ begin
       http.AddHeader('Authorization', 'Bearer ' + AAuthKey);
     http.RequestBody := TRawByteStringStream.Create(AValue);
     Result := http.Put(AURL);
-    if http.ResponseStatusCode <> 200 then
+    if http.ResponseStatusCode <> 204 then
       raise Exception.Create(http.ResponseStatusCode.ToString + ': ' + http.ResponseStatusText);
   finally
     http.RequestBody.Free;
