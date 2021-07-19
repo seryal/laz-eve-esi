@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   esiauthorization, esihttpserver, LCLIntf, ComCtrls, ExtCtrls,
   JSONPropStorage, esicharacter, esialliance,
-  esilocation, esiassets, esibookmarks;
+  esilocation, esiassets, esibookmarks, esicalendar;
 
 type
 
@@ -48,6 +48,7 @@ type
     btnCorpLocation: TButton;
     btnCorpNames: TButton;
     btnCharBookmark: TButton;
+    btnCalendarResponse: TButton;
     Button9: TButton;
     edAuthCode: TEdit;
     edCharacterID: TEdit;
@@ -75,6 +76,7 @@ type
     Panel1: TPanel;
     Panel2: TPanel;
     Splitter1: TSplitter;
+    tbsCalendar: TTabSheet;
     tbsBookmark: TTabSheet;
     tbsAssets: TTabSheet;
     tbsAlliance: TTabSheet;
@@ -90,6 +92,7 @@ type
     procedure btnAssetsClick(Sender: TObject);
     procedure btnAssetsLocationClick(Sender: TObject);
     procedure btnBlueprintsClick(Sender: TObject);
+    procedure btnCalendarResponseClick(Sender: TObject);
     procedure btnCharBookmarkClick(Sender: TObject);
     procedure btnCharFoldersClick(Sender: TObject);
     procedure btnContactsClick(Sender: TObject);
@@ -358,6 +361,21 @@ begin
   finally
     FreeAndNil(character);
   end;
+end;
+
+procedure TForm1.btnCalendarResponseClick(Sender: TObject);
+var
+  tmp: TESICalendar;
+  res: boolean;
+begin
+  tmp := TESICalendar.Create;
+  try
+    res := tmp.SetResponse(edAuthCode.Text, StrToInt(lblCharID.Caption), 1, rspAccepted);
+    //memo1.Lines.Add('Blueprints count = ' + res.Count.ToString);
+  finally
+    FreeAndNil(tmp);
+  end;
+
 end;
 
 procedure TForm1.btnCharBookmarkClick(Sender: TObject);

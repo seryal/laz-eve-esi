@@ -8,7 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, main, ESIAuthorization, esihttpserver, esilocation, esibase,
-  esicharacter, esialliance, esiassets, esibookmarks
+  esicharacter, esialliance, esiassets, esibookmarks, esicalendar
   { you can add units after this };
 
 {$R *.res}

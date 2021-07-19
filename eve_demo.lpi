@@ -107,7 +107,7 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="10">
+    <Units Count="11">
       <Unit0>
         <Filename Value="eve_demo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -151,6 +151,10 @@
         <Filename Value="src\esibookmarks.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit9>
+      <Unit10>
+        <Filename Value="src\esicalendar.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
