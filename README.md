@@ -20,8 +20,8 @@ https://esi.evetech.net/ui/
 * Added getting character (https://esi.evetech.net/ui/#/Character)
 * Added getting alliance info (https://esi.evetech.net/ui/#/Alliance)
 * Added getting bookmarks (https://esi.evetech.net/ui/#/Bookmarks)
-* Added getting Calendar (https://esi.evetech.net/ui/#/Calendar)
-
+* Added getting calendar (https://esi.evetech.net/ui/#/Calendar)
+* Added getting clones (https://esi.evetech.net/ui/#/Clones)
 
 ## Usage
 Create You Application https://developers.eveonline.com/applications
