@@ -22,9 +22,11 @@ https://esi.evetech.net/ui/
 * Added getting bookmarks (https://esi.evetech.net/ui/#/Bookmarks)
 * Added getting calendar (https://esi.evetech.net/ui/#/Calendar)
 * Added getting clones (https://esi.evetech.net/ui/#/Clones)
+* Added getting contacts (https://esi.evetech.net/ui/#/Contacts)
 
 ## Usage
 Create You Application https://developers.eveonline.com/applications
+
 See demo.
 
 ## Contributing
