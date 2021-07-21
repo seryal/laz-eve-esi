@@ -1,3 +1,14 @@
+{==============================================================================|
+| Project : EVE Online ESI Library                                             |
+|==============================================================================|
+| Copyright (c)2021, Yuri Serebrennikov                                        |
+| All rights reserved.                                                         |
+|==============================================================================|
+| The Initial Developer of the Original Code is Yuri Serebrennikov             |
+| All Rights Reserved.                                                         |
+|==============================================================================|
+|          (Found at URL: https://github.com/seryal/laz-eve-esi/)              |
+|==============================================================================}
 unit esicalendar;
 
 {$mode ObjFPC}{$H+}
