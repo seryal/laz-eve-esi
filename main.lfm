@@ -47,9 +47,9 @@ object Form1: TForm1
     Height = 371
     Top = 82
     Width = 905
-    ActivePage = tbsClones
+    ActivePage = tbsContact
     Align = alClient
-    TabIndex = 6
+    TabIndex = 7
     TabOrder = 2
     object tbsAuth: TTabSheet
       Caption = 'Authentication'
@@ -534,6 +534,20 @@ object Form1: TForm1
         Caption = 'Implants'
         OnClick = btnImplantsClick
         TabOrder = 1
+      end
+    end
+    object tbsContact: TTabSheet
+      Caption = 'Contacts'
+      ClientHeight = 343
+      ClientWidth = 897
+      object btnContactCharacter: TButton
+        Left = 8
+        Height = 25
+        Top = 24
+        Width = 75
+        Caption = 'Characters'
+        OnClick = btnContactCharacterClick
+        TabOrder = 0
       end
     end
     object tbsLocation: TTabSheet

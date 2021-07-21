@@ -16,7 +16,7 @@ unit esibase;
 interface
 
 uses
-  Classes, SysUtils, fphttpclient, opensslsockets, fpjsonrtti;
+  Classes, SysUtils, fphttpclient, opensslsockets, fpjsonrtti, TypInfo, fpjson;
 
 type
 
@@ -32,7 +32,7 @@ type
     procedure DeStreamerObject(AJsonString: string; var AObject: TObject);
     procedure DeStreamerArray(AJsonString: string; var AObject: TCollection);
     procedure DeStreamerArray(AJsonString: string; var V: variant);
-
+    procedure RestorePropertyNotify(Sender: TObject; AObject: TObject; Info: PPropInfo; AValue: TJSONData; var Handled: boolean); virtual;
   private
     FDataSource: string;
   public
@@ -105,6 +105,7 @@ var
   jsoDeSerialize: TJSONDeStreamer;
 begin
   jsoDeSerialize := TJSONDeStreamer.Create(nil);
+  jsoDeSerialize.OnRestoreProperty := @RestorePropertyNotify;
   try
     jsoDeSerialize.JSONToObject(AJsonString, AObject);
   finally
@@ -117,6 +118,7 @@ var
   jsoDeSerialize: TJSONDeStreamer;
 begin
   jsoDeSerialize := TJSONDeStreamer.Create(nil);
+  jsoDeSerialize.OnRestoreProperty := @RestorePropertyNotify;
   try
     jsoDeSerialize.JSONToObject(AJsonString, AObject);
   finally
@@ -134,6 +136,11 @@ begin
   finally
     FreeAndNil(jsoDeSerialize);
   end;
+end;
+
+procedure TESIBase.RestorePropertyNotify(Sender: TObject; AObject: TObject; Info: PPropInfo; AValue: TJSONData; var Handled: boolean);
+begin
+
 end;
 
 function TESIBase.Get(AAuthKey, AURL: string): string;

@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   esiauthorization, esihttpserver, LCLIntf, ComCtrls, ExtCtrls,
   JSONPropStorage, esicharacter, esialliance,
-  esilocation, esiassets, esibookmarks, esicalendar, esiclones;
+  esilocation, esiassets, esibookmarks, esicalendar, esiclones, esicontacts;
 
 type
 
@@ -51,6 +51,7 @@ type
     btnCalendarResponse: TButton;
     btnClones: TButton;
     btnImplants: TButton;
+    btnContactCharacter: TButton;
     Button9: TButton;
     edAuthCode: TEdit;
     edCharacterID: TEdit;
@@ -78,6 +79,7 @@ type
     Panel1: TPanel;
     Panel2: TPanel;
     Splitter1: TSplitter;
+    tbsContact: TTabSheet;
     tbsClones: TTabSheet;
     tbsCalendar: TTabSheet;
     tbsBookmark: TTabSheet;
@@ -99,6 +101,7 @@ type
     procedure btnCharBookmarkClick(Sender: TObject);
     procedure btnCharFoldersClick(Sender: TObject);
     procedure btnClonesClick(Sender: TObject);
+    procedure btnContactCharacterClick(Sender: TObject);
     procedure btnContactsClick(Sender: TObject);
     procedure btnCorpLocationClick(Sender: TObject);
     procedure btnCorpNamesClick(Sender: TObject);
@@ -439,6 +442,30 @@ begin
 
       //memo1.Lines.Add(res.jump_clones.Items[0].implants.Items[0].ToString);
 
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
+end;
+
+procedure TForm1.btnContactCharacterClick(Sender: TObject);
+var
+  tmp: TESIContacts;
+  res: TEVEContactCharacterList;
+  i: integer;
+begin
+  tmp := TESIContacts.Create;
+  try
+    try
+      res := tmp.GetCharacterContacts(edAuthCode.Text, StrToInt(lblCharID.Caption), 1);
+      Memo1.Lines.Add('------CONTACT CHAR-------');
+      for i := 0 to res.Count - 1 do
+      begin
+        memo1.Lines.Add(res.Items[i].contact_id.ToString);
+        memo1.Lines.Add(res.Items[i].label_ids.Count.ToString);
+      end;
     finally
       FreeAndNil(res);
     end;
