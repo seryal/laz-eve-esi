@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   esiauthorization, esihttpserver, LCLIntf, ComCtrls, ExtCtrls,
   JSONPropStorage, esicharacter, esialliance,
-  esilocation, esiassets, esibookmarks, esicalendar, esiclones, esicontacts;
+  esilocation, esiassets, esibookmarks, esicalendar, esiclones, esicontacts, esicontracts;
 
 type
 
@@ -52,6 +52,7 @@ type
     btnClones: TButton;
     btnImplants: TButton;
     btnContactCharacter: TButton;
+    Button8: TButton;
     Button9: TButton;
     edAuthCode: TEdit;
     edCharacterID: TEdit;
@@ -79,6 +80,7 @@ type
     Panel1: TPanel;
     Panel2: TPanel;
     Splitter1: TSplitter;
+    tbsContracts: TTabSheet;
     tbsContact: TTabSheet;
     tbsClones: TTabSheet;
     tbsCalendar: TTabSheet;
@@ -125,6 +127,7 @@ type
     procedure Button7Click(Sender: TObject);
     procedure btnCorporationClick(Sender: TObject);
     procedure btnTitleClick(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
     procedure Button9Click(Sender: TObject);
     procedure edCallbackURLChange(Sender: TObject);
     procedure edClientIDChange(Sender: TObject);
@@ -934,6 +937,25 @@ begin
     FreeAndNil(tmp);
   end;
 
+end;
+
+procedure TForm1.Button8Click(Sender: TObject);
+var
+  tmp: TESIContracts;
+  res: TEVEContractList;
+begin
+  tmp := TESIContracts.Create;
+  try
+    try
+      res := tmp.GetPublicContracts(10000002, 1);
+      Memo1.Lines.Add('-----CONTRACTS PUBLIC------');
+      Memo1.Lines.Add(res.Items[0].issuer_id.ToString);
+    finally
+      FreeAndNil(res);
+    end;
+  finally
+    FreeAndNil(tmp);
+  end;
 end;
 
 procedure TForm1.Button9Click(Sender: TObject);

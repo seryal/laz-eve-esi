@@ -55,8 +55,12 @@ type
     Fis_blocked: boolean;
     Fis_watched: boolean;
   published
+    property contact_id: integer read Fcontact_id write Fcontact_id;
+    property contact_type: string read Fcontact_type write Fcontact_type;
     property is_blocked: boolean read Fis_blocked write Fis_blocked;
     property is_watched: boolean read Fis_watched write Fis_watched;
+    property label_ids: TEVEContactLabelID read Flabel_ids write Flabel_ids;
+    property standing: double read Fstanding write Fstanding;
   end;
 
   { TEVEContactCharacterList }
