@@ -105,8 +105,8 @@ var
   jsoDeSerialize: TJSONDeStreamer;
 begin
   jsoDeSerialize := TJSONDeStreamer.Create(nil);
-  jsoDeSerialize.OnRestoreProperty := @RestorePropertyNotify;
   try
+    jsoDeSerialize.OnRestoreProperty := @RestorePropertyNotify;
     jsoDeSerialize.JSONToObject(AJsonString, AObject);
   finally
     FreeAndNil(jsoDeSerialize);
@@ -118,8 +118,8 @@ var
   jsoDeSerialize: TJSONDeStreamer;
 begin
   jsoDeSerialize := TJSONDeStreamer.Create(nil);
-  jsoDeSerialize.OnRestoreProperty := @RestorePropertyNotify;
   try
+    jsoDeSerialize.OnRestoreProperty := @RestorePropertyNotify;
     jsoDeSerialize.JSONToObject(AJsonString, AObject);
   finally
     FreeAndNil(jsoDeSerialize);

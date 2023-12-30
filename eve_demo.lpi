@@ -58,6 +58,14 @@
               </Win32>
             </Options>
           </Linking>
+          <Other>
+            <CustomOptions Value="-dUNIX
+-dUseCThreads"/>
+            <OtherDefines Count="2">
+              <Define0 Value="UNIX"/>
+              <Define1 Value="UseCThreads"/>
+            </OtherDefines>
+          </Other>
         </CompilerOptions>
       </Item2>
       <Item3 Name="Release">
@@ -107,7 +115,7 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="14">
+    <Units Count="15">
       <Unit0>
         <Filename Value="eve_demo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -167,6 +175,10 @@
         <Filename Value="src\esicontracts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit13>
+      <Unit14>
+        <Filename Value="src\esikillmails.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit14>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -181,12 +193,21 @@
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf2Set"/>
+      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>
         </Win32>
       </Options>
     </Linking>
+    <Other>
+      <CustomOptions Value="-dUNIX"/>
+      <OtherDefines Count="1">
+        <Define0 Value="UNIX"/>
+      </OtherDefines>
+    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="3">

@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   esiauthorization, esihttpserver, LCLIntf, ComCtrls, ExtCtrls,
   JSONPropStorage, esicharacter, esialliance,
-  esilocation, esiassets, esibookmarks, esicalendar, esiclones, esicontacts, esicontracts;
+  esilocation, esiassets, esibookmarks, esicalendar, esiclones, esicontacts, esicontracts, esikillmails;
 
 type
 
@@ -24,6 +24,7 @@ type
     Button10: TButton;
     btnRoles: TButton;
     btnCharFolders: TButton;
+    Button11: TButton;
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
@@ -59,6 +60,8 @@ type
     edClientID: TEdit;
     edCallbackURL: TEdit;
     edAllianceID: TEdit;
+    edKillId: TEdit;
+    edKillHash: TEdit;
     edScope: TEdit;
     edRefreshCode: TEdit;
     GroupBox1: TGroupBox;
@@ -71,15 +74,19 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
     lblCorpId: TLabel;
     lblName: TLabel;
     lblCharID: TLabel;
     lbScopes: TListBox;
     Memo1: TMemo;
+    Memo2: TMemo;
     PageControl1: TPageControl;
     Panel1: TPanel;
     Panel2: TPanel;
     Splitter1: TSplitter;
+    TabSheet1: TTabSheet;
     tbsContracts: TTabSheet;
     tbsContact: TTabSheet;
     tbsClones: TTabSheet;
@@ -117,6 +124,7 @@ type
     procedure btnShipClick(Sender: TObject);
     procedure btnStandingClick(Sender: TObject);
     procedure Button10Click(Sender: TObject);
+    procedure Button11Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -766,6 +774,27 @@ begin
     FreeAndNil(esi);
   end;
 
+end;
+
+procedure TForm1.Button11Click(Sender: TObject);
+var
+  Killmail: TEVEKillmails;
+  SingleKillmail: TEVESingleKillmail;
+  l: TEVESingleKillmailVictim;
+  I: integer;
+  id: Integer;
+
+begin
+  Killmail := TEVEKillmails.Create;
+  try
+    SingleKillmail := Killmail.GetKillMails(StrToInt(edKillId.Text), edKillHash.Text);
+    I := SingleKillmail.attackers.Count;
+    l := SingleKillmail.victim;
+    Memo1.Lines.Add('CorpId: ' + l.items.Items[0].item_type_id.ToString);
+  finally
+    Killmail.Free;
+  end;
+  //
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
