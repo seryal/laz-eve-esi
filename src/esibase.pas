@@ -63,7 +63,6 @@ end;
 function TESIBase.Post(AAuthKey, AURL: string; AValue: string): string;
 var
   http: TFPHTTPClient;
-  res: integer;
 begin
   http := TFPHTTPClient.Create(nil);
   try

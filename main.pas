@@ -791,6 +791,7 @@ begin
     I := SingleKillmail.attackers.Count;
     l := SingleKillmail.victim;
     Memo1.Lines.Add('CorpId: ' + l.items.Items[0].item_type_id.ToString);
+    Memo1.Lines.Add('Position X: ' + l.position.x.ToString);
   finally
     Killmail.Free;
   end;
