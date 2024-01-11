@@ -23,6 +23,7 @@ https://esi.evetech.net/ui/
 * Added getting calendar (https://esi.evetech.net/ui/#/Calendar)
 * Added getting clones (https://esi.evetech.net/ui/#/Clones)
 * Added getting contacts (https://esi.evetech.net/ui/#/Contacts)
+* Added getting killmails (https://esi.evetech.net/ui/#/Killmails)
 
 ## Usage
 Create You Application https://developers.eveonline.com/applications
