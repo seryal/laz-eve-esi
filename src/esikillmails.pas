@@ -53,14 +53,14 @@ type
   private
     Fflag: Integer;
     Fitem_type_id: Integer;
-    Fquantity_destroyed: Integer;
-    Fquantity_dropped: Integer;
+    Fquantity_destroyed: Int64;
+    Fquantity_dropped: Int64;
     Fsingleton: Integer;
   published
     property flag: Integer read Fflag write Fflag;
     property item_type_id: Integer read Fitem_type_id write Fitem_type_id;
-    property quantity_destroyed: Integer read Fquantity_destroyed write Fquantity_destroyed;
-    property quantity_dropped: Integer read Fquantity_dropped write Fquantity_dropped;
+    property quantity_destroyed: Int64 read Fquantity_destroyed write Fquantity_destroyed;
+    property quantity_dropped: Int64 read Fquantity_dropped write Fquantity_dropped;
     property singleton: Integer read Fsingleton write Fsingleton;
   end;
 

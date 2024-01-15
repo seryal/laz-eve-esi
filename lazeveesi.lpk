@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <Name Value="LazEveEsi"/>
+    <Type Value="RunAndDesignTime"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="src"/>
+        <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)/"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Files>
+      <Item>
+        <Filename Value="src/esialliance.pas"/>
+        <UnitName Value="esialliance"/>
+      </Item>
+      <Item>
+        <Filename Value="src/esiassets.pas"/>
+        <UnitName Value="esiassets"/>
+      </Item>
+      <Item>
+        <Filename Value="src/esiauthorization.pas"/>
+        <UnitName Value="esiauthorization"/>
+      </Item>
+      <Item>
+        <Filename Value="src/esibase.pas"/>
+        <UnitName Value="esibase"/>
+      </Item>
+      <Item>
+        <Filename Value="src/esibookmarks.pas"/>
+        <UnitName Value="esibookmarks"/>
+      </Item>
+      <Item>
+        <Filename Value="src/esicalendar.pas"/>
+        <UnitName Value="esicalendar"/>
+      </Item>
+      <Item>
+        <Filename Value="src/esicharacter.pas"/>
+        <UnitName Value="esicharacter"/>
+      </Item>
+      <Item>
+        <Filename Value="src/esiclones.pas"/>
+        <UnitName Value="esiclones"/>
+      </Item>
+      <Item>
+        <Filename Value="src/esicontacts.pas"/>
+        <UnitName Value="esicontacts"/>
+      </Item>
+      <Item>
+        <Filename Value="src/esicontracts.pas"/>
+        <UnitName Value="esicontracts"/>
+      </Item>
+      <Item>
+        <Filename Value="src/esihttpserver.pas"/>
+        <UnitName Value="esihttpserver"/>
+      </Item>
+      <Item>
+        <Filename Value="src/esikillmails.pas"/>
+        <UnitName Value="esikillmails"/>
+      </Item>
+      <Item>
+        <Filename Value="src/esilocation.pas"/>
+        <UnitName Value="esilocation"/>
+      </Item>
+    </Files>
+    <RequiredPkgs>
+      <Item>
+        <PackageName Value="dcpcrypt"/>
+      </Item>
+      <Item>
+        <PackageName Value="IDEIntf"/>
+      </Item>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>
