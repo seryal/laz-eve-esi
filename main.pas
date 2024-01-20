@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   esiauthorization, esihttpserver, LCLIntf, ComCtrls, ExtCtrls,
   JSONPropStorage, esicharacter, esialliance,
-  esilocation, esiassets, esibookmarks, esicalendar, esiclones, esicontacts, esicontracts, esikillmails;
+  esilocation, esiassets, esibookmarks, esicalendar, esiclones, esicontacts, esicontracts, esikillmails, esiuniverse;
 
 type
 
@@ -25,6 +25,9 @@ type
     btnRoles: TButton;
     btnCharFolders: TButton;
     Button11: TButton;
+    Button12: TButton;
+    Button13: TButton;
+    Button14: TButton;
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
@@ -60,6 +63,9 @@ type
     edClientID: TEdit;
     edCallbackURL: TEdit;
     edAllianceID: TEdit;
+    edUniverseCategoryId: TEdit;
+    edUniverseGroupId: TEdit;
+    edUniverseTypeId: TEdit;
     edKillId: TEdit;
     edKillHash: TEdit;
     edScope: TEdit;
@@ -68,6 +74,9 @@ type
     GroupBox2: TGroupBox;
     JSONPropStorage1: TJSONPropStorage;
     Label1: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -87,6 +96,7 @@ type
     Panel2: TPanel;
     Splitter1: TSplitter;
     TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
     tbsContracts: TTabSheet;
     tbsContact: TTabSheet;
     tbsClones: TTabSheet;
@@ -125,6 +135,9 @@ type
     procedure btnStandingClick(Sender: TObject);
     procedure Button10Click(Sender: TObject);
     procedure Button11Click(Sender: TObject);
+    procedure Button12Click(Sender: TObject);
+    procedure Button13Click(Sender: TObject);
+    procedure Button14Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -796,6 +809,63 @@ begin
     Killmail.Free;
   end;
   //
+end;
+
+procedure TForm1.Button12Click(Sender: TObject);
+var
+  EVEUniverse: TEVEUniverse;
+  EVEUniverseTypesType: TEVEUniverseTypesType;
+  Str: String;
+begin
+  EVEUniverse := nil;
+  EVEUniverseTypesType := nil;
+  try
+    EVEUniverse := TEVEUniverse.Create;
+    EVEUniverseTypesType := EVEUniverse.GetUniverseTypesType(StrToInt(edUniverseTypeId.Text));
+    Str := EVEUniverseTypesType.name;
+    Memo1.Lines.Add('Type Name: ' + Str);
+  finally
+    EVEUniverseTypesType.Free;
+    EVEUniverse.Free;
+  end;
+end;
+
+procedure TForm1.Button13Click(Sender: TObject);
+var
+  EVEUniverse: TEVEUniverse;
+  EVEUniverseCategoriesCategory: TEVEUniverseCategoriesCategory;
+  Str: String;
+begin
+  EVEUniverse := nil;
+  EVEUniverseCategoriesCategory := nil;
+  try
+    EVEUniverse := TEVEUniverse.Create;
+    EVEUniverseCategoriesCategory := EVEUniverse.GetUniverseCategoriesCategory(StrToInt(edUniverseCategoryId.Text));
+    Str := EVEUniverseCategoriesCategory.name;
+    Memo1.Lines.Add('Category Name: ' + Str);
+  finally
+    EVEUniverseCategoriesCategory.Free;
+    EVEUniverse.Free;
+  end;
+end;
+
+procedure TForm1.Button14Click(Sender: TObject);
+var
+  EVEUniverse: TEVEUniverse;
+  EVEUniverseGroupsGroup: TEVEUniverseGroupsGroup;
+  Str: String;
+begin
+  EVEUniverse := nil;
+  EVEUniverseGroupsGroup := nil;
+  try
+    EVEUniverse := TEVEUniverse.Create;
+    EVEUniverseGroupsGroup := EVEUniverse.GetUniverseGroupsGroup(StrToInt(edUniverseGroupId.Text));
+    Str := EVEUniverseGroupsGroup.name;
+    Memo1.Lines.Add('Group Name: ' + Str);
+  finally
+    EVEUniverseGroupsGroup.Free;
+    EVEUniverse.Free;
+  end;
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);

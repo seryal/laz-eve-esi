@@ -10,7 +10,7 @@ interface
 uses
   esialliance, esiassets, esiauthorization, esibase, esibookmarks, 
   esicalendar, esicharacter, esiclones, esicontacts, esicontracts, 
-  esihttpserver, esikillmails, esilocation, LazarusPackageIntf;
+  esihttpserver, esikillmails, esilocation, esiuniverse, LazarusPackageIntf;
 
 implementation
 

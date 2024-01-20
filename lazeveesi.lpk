@@ -7,7 +7,7 @@
       <Version Value="11"/>
       <SearchPaths>
         <OtherUnitFiles Value="src"/>
-        <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)/"/>
+        <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Files>
@@ -62,6 +62,10 @@
       <Item>
         <Filename Value="src/esilocation.pas"/>
         <UnitName Value="esilocation"/>
+      </Item>
+      <Item>
+        <Filename Value="src/esiuniverse.pas"/>
+        <UnitName Value="esiuniverse"/>
       </Item>
     </Files>
     <RequiredPkgs>
