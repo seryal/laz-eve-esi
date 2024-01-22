@@ -59,13 +59,13 @@ type
   TEVEUniverseGroupsGroup = class(TCollectionItem)
   private
     Fcategory_id: Integer;
-    FgroupId: Integer;
+    Fgroup_id: Integer;
     Fname: String;
     Fpublished: Boolean;
 //    Ftypes
   published
     property category_id: Integer read Fcategory_id write Fcategory_id;
-    property groupId: Integer read FgroupId write FgroupId;
+    property group_id: Integer read Fgroup_id write Fgroup_id;
     property name: String read Fname write Fname;
     property published: Boolean read Fpublished write Fpublished;
 //    property types
