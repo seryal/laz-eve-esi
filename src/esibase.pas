@@ -170,7 +170,7 @@ begin
   if AValue.JSONType = jtArray then
     begin
       lObject := GetObjectProp(AObject, Info^.Name);
-      if lObject.ClassType = TESIArrayIntegerValueList then
+      if (lObject <> nil) and (lObject.ClassType = TESIArrayIntegerValueList) then
         begin
           SetArrayIntegerValue(TESIArrayIntegerValueList(lObject), TJSONArray(AValue));
           Handled := True;
