@@ -20,7 +20,20 @@ uses
 
 type
 
-  { TESIBase }
+  TESIArrayIntegerValue = class(TCollectionItem)
+  private
+    FValue: Integer;
+  published
+    property Value: Integer read FValue write FValue;
+  end;
+
+  TESIArrayIntegerValueList = class(TCollection)
+  private
+    function GetItems(Index: integer): Integer;
+  public
+    constructor Create;
+    property Items[Index: integer]: Integer read GetItems;
+  end;
 
   TESIBase = class
   protected
@@ -33,6 +46,7 @@ type
     procedure DeStreamerArray(AJsonString: string; var AObject: TCollection);
     procedure DeStreamerArray(AJsonString: string; var V: variant);
     procedure RestorePropertyNotify(Sender: TObject; AObject: TObject; Info: PPropInfo; AValue: TJSONData; var Handled: boolean); virtual;
+    procedure SetArrayIntegerValue(AESIArrayIntegerValueList: TESIArrayIntegerValueList; AValue: TJSONArray);
   private
     FDataSource: string;
   public
@@ -40,8 +54,19 @@ type
     property DataSource: string read FDataSource write FDataSource;
   end;
 
-
 implementation
+
+{ TESIArrayIntegerValueList }
+
+function TESIArrayIntegerValueList.GetItems(Index: integer): Integer;
+begin
+  Result := TESIArrayIntegerValue(inherited Items[Index]).Value;
+end;
+
+constructor TESIArrayIntegerValueList.Create;
+begin
+  Inherited Create(TESIArrayIntegerValue);
+end;
 
 { TESIBase }
 
@@ -138,8 +163,31 @@ begin
 end;
 
 procedure TESIBase.RestorePropertyNotify(Sender: TObject; AObject: TObject; Info: PPropInfo; AValue: TJSONData; var Handled: boolean);
+var
+  lObject: TObject;
+  I: Integer;
 begin
+  if AValue.JSONType = jtArray then
+    begin
+      lObject := GetObjectProp(AObject, Info^.Name);
+      if lObject.ClassType = TESIArrayIntegerValueList then
+        begin
+          SetArrayIntegerValue(TESIArrayIntegerValueList(lObject), TJSONArray(AValue));
+          Handled := True;
+        end;
+    end;
+end;
 
+procedure TESIBase.SetArrayIntegerValue(AESIArrayIntegerValueList: TESIArrayIntegerValueList; AValue: TJSONArray);
+var
+  lIntegerObject: TESIArrayIntegerValue;
+  I: Integer;
+begin
+  for I := 0 to AValue.Count - 1 do
+    begin
+      lIntegerObject := TESIArrayIntegerValue(AESIArrayIntegerValueList.Add);
+      lIntegerObject.Value := AValue.Items[I].AsInteger;
+    end;
 end;
 
 function TESIBase.Get(AAuthKey, AURL: string): string;

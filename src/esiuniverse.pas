@@ -56,19 +56,23 @@ type
     property volume: Double read Fvolume write Fvolume;
   end;
 
+  { TEVEUniverseGroupsGroup }
+
   TEVEUniverseGroupsGroup = class(TCollectionItem)
   private
     Fcategory_id: Integer;
     Fgroup_id: Integer;
     Fname: String;
     Fpublished: Boolean;
-//    Ftypes
+    Ftypes: TESIArrayIntegerValueList;
   published
+    constructor Create(ACollection: TCollection); override;
+    destructor Destroy; override;
     property category_id: Integer read Fcategory_id write Fcategory_id;
     property group_id: Integer read Fgroup_id write Fgroup_id;
     property name: String read Fname write Fname;
     property published: Boolean read Fpublished write Fpublished;
-//    property types
+    property types: TESIArrayIntegerValueList read Ftypes write Ftypes;
   end;
 
   TEVEUniverseCategoriesCategory = class(TCollectionItem)
@@ -97,6 +101,20 @@ type
   end;
 
 implementation
+
+{ TEVEUniverseGroupsGroup }
+
+constructor TEVEUniverseGroupsGroup.Create(ACollection: TCollection);
+begin
+  inherited Create(ACollection);
+  Ftypes := TESIArrayIntegerValueList.Create;
+end;
+
+destructor TEVEUniverseGroupsGroup.Destroy;
+begin
+  Ftypes.Free;
+  inherited Destroy;
+end;
 
 { TEVEUniverse }
 

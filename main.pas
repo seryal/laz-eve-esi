@@ -854,6 +854,8 @@ var
   EVEUniverse: TEVEUniverse;
   EVEUniverseGroupsGroup: TEVEUniverseGroupsGroup;
   Str: String;
+  lValueType: Integer;
+  I: Integer;
 begin
   EVEUniverse := nil;
   EVEUniverseGroupsGroup := nil;
@@ -862,6 +864,11 @@ begin
     EVEUniverseGroupsGroup := EVEUniverse.GetUniverseGroupsGroup(StrToInt(edUniverseGroupId.Text));
     Str := EVEUniverseGroupsGroup.name;
     Memo1.Lines.Add('Group Name: ' + Str);
+    for I := 0 to EVEUniverseGroupsGroup.types.Count - 1 do
+      begin
+        lValueType := EVEUniverseGroupsGroup.types.Items[I];
+        Memo1.Lines.Add('Group types: ' + lValueType.ToString);
+      end;
   finally
     EVEUniverseGroupsGroup.Free;
     EVEUniverse.Free;
