@@ -28,7 +28,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="src;C:\Lazarus_Trunk\fpcsrc\packages\fcl-json\src\"/>
+            <OtherUnitFiles Value="src"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -77,7 +77,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="src;C:\Lazarus_Trunk\fpcsrc\packages\fcl-json\src\"/>
+            <OtherUnitFiles Value="src"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -108,7 +108,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="src;C:\Lazarus_Trunk\fpcsrc\packages\fcl-json\src\"/>
+            <OtherUnitFiles Value="src"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -162,7 +162,7 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="17">
+    <Units Count="16">
       <Unit0>
         <Filename Value="eve_demo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -230,10 +230,6 @@
         <Filename Value="src\esiuniverse.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit15>
-      <Unit16>
-        <Filename Value="C:\Lazarus_Trunk\fpcsrc\packages\fcl-json\src\fpjsonrtti.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit16>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -244,7 +240,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="src;C:\Lazarus_Trunk\fpcsrc\packages\fcl-json\src\"/>
+      <OtherUnitFiles Value="src"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

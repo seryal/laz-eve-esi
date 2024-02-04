@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, main, fpjsonrtti, ESIAuthorization, esihttpserver,
+  Forms, main, ESIAuthorization, esihttpserver,
   esilocation, esibase, esicharacter, esialliance, esiassets, esibookmarks,
   esicalendar, esiclones, esicontacts, esicontracts, esikillmails, esiuniverse
   { you can add units after this };

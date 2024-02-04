@@ -1,30 +1,29 @@
 object Form1: TForm1
-  Left = 548
-  Height = 1288
-  Top = 352
-  Width = 1810
+  Left = 471
+  Height = 695
+  Top = 250
+  Width = 1356
   Caption = 'Form1'
-  ClientHeight = 1288
-  ClientWidth = 1810
-  DesignTimePPI = 192
+  ClientHeight = 695
+  ClientWidth = 1356
   LCLVersion = '3.99.0.0'
   OnClose = FormClose
   OnShow = FormShow
   object Panel1: TPanel
     Left = 0
-    Height = 372
-    Top = 916
-    Width = 1810
+    Height = 186
+    Top = 509
+    Width = 1356
     Align = alBottom
     Caption = 'Panel1'
-    ClientHeight = 372
-    ClientWidth = 1810
+    ClientHeight = 186
+    ClientWidth = 1356
     TabOrder = 0
     object Memo1: TMemo
       Left = 1
-      Height = 370
+      Height = 184
       Top = 1
-      Width = 1808
+      Width = 1354
       Align = alClient
       Lines.Strings = (
         'Memo1'
@@ -37,167 +36,168 @@ object Form1: TForm1
   object Splitter1: TSplitter
     Cursor = crVSplit
     Left = 0
-    Height = 10
-    Top = 906
-    Width = 1810
+    Height = 5
+    Top = 504
+    Width = 1356
     Align = alBottom
     ResizeAnchor = akBottom
   end
   object PageControl1: TPageControl
     Left = 0
-    Height = 742
-    Top = 164
-    Width = 1810
+    Height = 422
+    Top = 82
+    Width = 1356
     ActivePage = TabSheet2
     Align = alClient
     TabIndex = 11
     TabOrder = 2
     object tbsAuth: TTabSheet
       Caption = 'Authentication'
-      ClientHeight = 684
-      ClientWidth = 1794
+      ClientHeight = 392
+      ClientWidth = 1346
       object Button4: TButton
-        Left = 496
-        Height = 50
-        Top = 448
-        Width = 150
+        Left = 248
+        Height = 25
+        Top = 224
+        Width = 75
         Caption = '4. Refresh'
         TabOrder = 0
         OnClick = Button4Click
       end
       object Label1: TLabel
-        Left = 16
-        Height = 32
-        Top = 224
-        Width = 142
+        Left = 8
+        Height = 16
+        Top = 112
+        Width = 80
         Caption = 'Refresh Code'
         ParentColor = False
       end
       object edRefreshCode: TEdit
-        Left = 16
-        Height = 40
-        Top = 256
-        Width = 746
+        Left = 8
+        Height = 28
+        Top = 128
+        Width = 373
         Color = clInactiveCaption
         ReadOnly = True
         TabOrder = 1
         OnChange = edRefreshCodeChange
       end
       object Label2: TLabel
-        Left = 16
-        Height = 32
-        Top = 320
-        Width = 141
+        Left = 8
+        Height = 16
+        Top = 160
+        Width = 80
         Caption = 'Access Token'
         ParentColor = False
       end
       object edAuthCode: TEdit
-        Left = 16
-        Height = 40
-        Top = 352
-        Width = 746
+        Left = 8
+        Height = 28
+        Top = 176
+        Width = 373
         Color = clInactiveCaption
         ReadOnly = True
         TabOrder = 2
       end
       object Button1: TButton
-        Left = 16
-        Height = 50
-        Top = 448
-        Width = 150
+        Left = 8
+        Height = 25
+        Top = 224
+        Width = 75
         Caption = '1. URL'
         ParentFont = False
         TabOrder = 3
         OnClick = Button1Click
       end
       object Button2: TButton
-        Left = 176
-        Height = 50
-        Top = 448
-        Width = 150
+        Left = 88
+        Height = 25
+        Top = 224
+        Width = 75
         Caption = '2. Open URL'
         ParentFont = False
         TabOrder = 4
         OnClick = Button2Click
       end
       object Button3: TButton
-        Left = 336
-        Height = 50
-        Top = 448
-        Width = 150
+        Left = 168
+        Height = 25
+        Top = 224
+        Width = 75
         Caption = '3. Auth'
         TabOrder = 5
         OnClick = Button3Click
       end
       object edClientID: TEdit
-        Left = 16
-        Height = 40
-        Top = 64
-        Width = 746
+        Left = 8
+        Height = 28
+        Top = 32
+        Width = 373
         TabOrder = 6
         OnChange = edClientIDChange
       end
       object Label3: TLabel
-        Left = 16
-        Height = 32
-        Top = 32
-        Width = 92
+        Left = 8
+        Height = 16
+        Top = 16
+        Width = 52
         Caption = 'Client ID'
         ParentColor = False
       end
       object lbScopes: TListBox
-        Left = 848
-        Height = 384
-        Top = 128
-        Width = 880
+        Left = 424
+        Height = 192
+        Top = 64
+        Width = 440
         ItemHeight = 0
         TabOrder = 7
+        TopIndex = -1
       end
       object Label4: TLabel
-        Left = 848
-        Height = 32
-        Top = 32
-        Width = 65
+        Left = 424
+        Height = 16
+        Top = 16
+        Width = 36
         Caption = 'Scope'
         ParentColor = False
       end
       object edScope: TEdit
-        Left = 848
-        Height = 40
-        Top = 64
-        Width = 746
+        Left = 424
+        Height = 28
+        Top = 32
+        Width = 373
         TabOrder = 8
       end
       object btnAddScope: TButton
-        Left = 1616
-        Height = 50
-        Top = 60
-        Width = 112
+        Left = 808
+        Height = 25
+        Top = 30
+        Width = 56
         Caption = 'Add'
         TabOrder = 9
         OnClick = btnAddScopeClick
       end
       object Label5: TLabel
-        Left = 16
-        Height = 32
-        Top = 112
-        Width = 136
+        Left = 8
+        Height = 16
+        Top = 56
+        Width = 78
         Caption = 'Callback URL'
         ParentColor = False
       end
       object edCallbackURL: TEdit
-        Left = 16
-        Height = 40
-        Top = 144
-        Width = 746
+        Left = 8
+        Height = 28
+        Top = 72
+        Width = 373
         TabOrder = 10
         OnChange = edCallbackURLChange
       end
       object Button5: TButton
-        Left = 656
-        Height = 50
-        Top = 448
-        Width = 150
+        Left = 328
+        Height = 25
+        Top = 224
+        Width = 75
         Caption = '5. Verify'
         TabOrder = 11
         OnClick = Button5Click
@@ -205,56 +205,56 @@ object Form1: TForm1
     end
     object tbsAlliance: TTabSheet
       Caption = 'Alliance'
-      ClientHeight = 684
-      ClientWidth = 1794
+      ClientHeight = 392
+      ClientWidth = 1346
       object btnAllianceList: TButton
-        Left = 18
-        Height = 50
-        Top = 112
-        Width = 150
+        Left = 9
+        Height = 25
+        Top = 56
+        Width = 75
         Caption = 'List'
         TabOrder = 0
         OnClick = btnAllianceListClick
       end
       object btnInfo: TButton
-        Left = 182
-        Height = 50
-        Top = 112
-        Width = 150
+        Left = 91
+        Height = 25
+        Top = 56
+        Width = 75
         Caption = 'Info'
         TabOrder = 1
         OnClick = btnInfoClick
       end
       object edAllianceID: TEdit
-        Left = 16
-        Height = 40
-        Top = 48
-        Width = 400
+        Left = 8
+        Height = 28
+        Top = 24
+        Width = 200
         TabOrder = 2
         Text = '100'
       end
       object Label7: TLabel
-        Left = 18
-        Height = 32
-        Top = 14
-        Width = 113
+        Left = 9
+        Height = 16
+        Top = 7
+        Width = 65
         Caption = 'Alliance ID'
         ParentColor = False
       end
       object btnAllianceCorporation: TButton
-        Left = 348
-        Height = 50
-        Top = 112
-        Width = 150
+        Left = 174
+        Height = 25
+        Top = 56
+        Width = 75
         Caption = 'Corporations'
         TabOrder = 3
         OnClick = btnAllianceCorporationClick
       end
       object btnAllianceIcon: TButton
-        Left = 512
-        Height = 50
-        Top = 112
-        Width = 182
+        Left = 256
+        Height = 25
+        Top = 56
+        Width = 91
         Caption = 'Alliance Icon'
         TabOrder = 4
         OnClick = btnAllianceIconClick
@@ -262,58 +262,58 @@ object Form1: TForm1
     end
     object tbsAssets: TTabSheet
       Caption = 'Assets'
-      ClientHeight = 684
-      ClientWidth = 1794
+      ClientHeight = 392
+      ClientWidth = 1346
       object btnAssets: TButton
-        Left = 32
-        Height = 50
-        Top = 48
-        Width = 150
+        Left = 16
+        Height = 25
+        Top = 24
+        Width = 75
         Caption = 'Assets'
         TabOrder = 0
         OnClick = btnAssetsClick
       end
       object btnAssetsLocation: TButton
-        Left = 208
-        Height = 50
-        Top = 48
-        Width = 150
+        Left = 104
+        Height = 25
+        Top = 24
+        Width = 75
         Caption = 'Location'
         TabOrder = 1
         OnClick = btnAssetsLocationClick
       end
       object btnAssetNames: TButton
-        Left = 384
-        Height = 50
-        Top = 48
-        Width = 150
+        Left = 192
+        Height = 25
+        Top = 24
+        Width = 75
         Caption = 'Names'
         TabOrder = 2
         OnClick = btnAssetNamesClick
       end
       object btnCorporationAssets: TButton
-        Left = 32
-        Height = 50
-        Top = 160
-        Width = 150
+        Left = 16
+        Height = 25
+        Top = 80
+        Width = 75
         Caption = 'Corporation'
         TabOrder = 3
         OnClick = btnCorporationAssetsClick
       end
       object btnCorpLocation: TButton
-        Left = 208
-        Height = 50
-        Top = 160
-        Width = 176
+        Left = 104
+        Height = 25
+        Top = 80
+        Width = 88
         Caption = 'Corp Location'
         TabOrder = 4
         OnClick = btnCorpLocationClick
       end
       object btnCorpNames: TButton
-        Left = 416
-        Height = 50
-        Top = 160
-        Width = 150
+        Left = 208
+        Height = 25
+        Top = 80
+        Width = 75
         Caption = 'Corp Names'
         TabOrder = 5
         OnClick = btnCorpNamesClick
@@ -321,22 +321,22 @@ object Form1: TForm1
     end
     object tbsBookmark: TTabSheet
       Caption = 'Bookmark'
-      ClientHeight = 684
-      ClientWidth = 1794
+      ClientHeight = 392
+      ClientWidth = 1346
       object btnCharBookmark: TButton
-        Left = 30
-        Height = 50
-        Top = 94
-        Width = 210
+        Left = 15
+        Height = 25
+        Top = 47
+        Width = 105
         Caption = 'Char Bookmark'
         TabOrder = 0
         OnClick = btnCharBookmarkClick
       end
       object btnCharFolders: TButton
-        Left = 272
-        Height = 50
-        Top = 94
-        Width = 150
+        Left = 136
+        Height = 25
+        Top = 47
+        Width = 75
         Caption = 'Char Folders'
         TabOrder = 1
         OnClick = btnCharFoldersClick
@@ -344,13 +344,13 @@ object Form1: TForm1
     end
     object tbsCalendar: TTabSheet
       Caption = 'Calendar'
-      ClientHeight = 684
-      ClientWidth = 1794
+      ClientHeight = 392
+      ClientWidth = 1346
       object btnCalendarResponse: TButton
-        Left = 64
-        Height = 50
-        Top = 80
-        Width = 150
+        Left = 32
+        Height = 25
+        Top = 40
+        Width = 75
         Caption = 'Response'
         TabOrder = 0
         OnClick = btnCalendarResponseClick
@@ -358,156 +358,156 @@ object Form1: TForm1
     end
     object tbsCharacter: TTabSheet
       Caption = 'Character'
-      ClientHeight = 684
-      ClientWidth = 1794
+      ClientHeight = 392
+      ClientWidth = 1346
       object GroupBox1: TGroupBox
-        Left = 16
-        Height = 256
-        Top = 16
-        Width = 962
+        Left = 8
+        Height = 128
+        Top = 8
+        Width = 481
         Caption = 'Public Information'
-        ClientHeight = 219
-        ClientWidth = 958
+        ClientHeight = 126
+        ClientWidth = 479
         TabOrder = 0
         object btnCorporation: TButton
-          Left = 176
-          Height = 50
-          Top = 128
-          Width = 246
+          Left = 88
+          Height = 25
+          Top = 64
+          Width = 123
           Caption = 'Corporation History'
           TabOrder = 0
           OnClick = btnCorporationClick
         end
         object Button6: TButton
-          Left = 16
-          Height = 50
-          Top = 128
-          Width = 150
+          Left = 8
+          Height = 25
+          Top = 64
+          Width = 75
           Caption = 'Get Info'
           TabOrder = 1
           OnClick = Button6Click
         end
         object edCharacterID: TEdit
-          Left = 16
-          Height = 40
-          Top = 60
-          Width = 272
+          Left = 8
+          Height = 28
+          Top = 30
+          Width = 136
           TabOrder = 2
           Text = '0'
         end
         object Label6: TLabel
-          Left = 16
-          Height = 32
-          Top = 16
-          Width = 131
+          Left = 8
+          Height = 16
+          Top = 8
+          Width = 75
           Caption = 'Character ID'
           ParentColor = False
         end
         object Button10: TButton
-          Left = 442
-          Height = 50
-          Top = 128
-          Width = 150
+          Left = 221
+          Height = 25
+          Top = 64
+          Width = 75
           Caption = 'Portrait'
           TabOrder = 3
           OnClick = Button10Click
         end
         object btnAffilation: TButton
-          Left = 608
-          Height = 50
-          Top = 128
-          Width = 150
+          Left = 304
+          Height = 25
+          Top = 64
+          Width = 75
           Caption = 'Affilation'
           TabOrder = 4
           OnClick = btnAffilationClick
         end
       end
       object GroupBox2: TGroupBox
-        Left = 16
-        Height = 290
-        Top = 288
-        Width = 962
+        Left = 8
+        Height = 145
+        Top = 144
+        Width = 481
         Caption = 'Private Information'
-        ClientHeight = 253
-        ClientWidth = 958
+        ClientHeight = 128
+        ClientWidth = 479
         TabOrder = 1
         object btnBlueprints: TButton
-          Left = 256
-          Height = 50
-          Top = 32
-          Width = 150
+          Left = 128
+          Height = 25
+          Top = 16
+          Width = 75
           Caption = 'Blueprints'
           TabOrder = 0
           OnClick = btnBlueprintsClick
         end
         object Button7: TButton
-          Left = 16
-          Height = 50
-          Top = 32
-          Width = 224
+          Left = 8
+          Height = 25
+          Top = 16
+          Width = 112
           Caption = 'Agents Research'
           TabOrder = 1
           OnClick = Button7Click
         end
         object Button9: TButton
-          Left = 416
-          Height = 50
-          Top = 32
-          Width = 176
+          Left = 208
+          Height = 25
+          Top = 16
+          Width = 88
           Caption = 'Jump Fatigue'
           TabOrder = 2
           OnClick = Button9Click
         end
         object btnMedals: TButton
-          Left = 608
-          Height = 50
-          Top = 32
-          Width = 150
+          Left = 304
+          Height = 25
+          Top = 16
+          Width = 75
           Caption = 'Get Medals'
           TabOrder = 3
           OnClick = btnMedalsClick
         end
         object btnNotification: TButton
-          Left = 768
-          Height = 50
-          Top = 32
-          Width = 176
+          Left = 384
+          Height = 25
+          Top = 16
+          Width = 88
           Caption = 'Notifications'
           TabOrder = 4
           OnClick = btnNotificationClick
         end
         object btnContacts: TButton
-          Left = 16
-          Height = 50
-          Top = 110
-          Width = 150
+          Left = 8
+          Height = 25
+          Top = 55
+          Width = 75
           Caption = 'Contacts'
           TabOrder = 5
           OnClick = btnContactsClick
         end
         object btnRoles: TButton
-          Left = 182
-          Height = 50
-          Top = 110
-          Width = 150
+          Left = 91
+          Height = 25
+          Top = 55
+          Width = 75
           Caption = 'Roles'
           TabOrder = 6
           OnClick = btnRolesClick
         end
         object btnStanding: TButton
-          Left = 352
-          Height = 50
-          Top = 110
-          Width = 150
+          Left = 176
+          Height = 25
+          Top = 55
+          Width = 75
           Caption = 'Standing'
           TabOrder = 7
           OnClick = btnStandingClick
         end
         object btnTitle: TButton
-          Left = 512
-          Height = 50
-          Top = 110
-          Width = 150
+          Left = 256
+          Height = 25
+          Top = 55
+          Width = 75
           Caption = 'Title'
           TabOrder = 8
           OnClick = btnTitleClick
@@ -516,22 +516,22 @@ object Form1: TForm1
     end
     object tbsClones: TTabSheet
       Caption = 'Clones'
-      ClientHeight = 684
-      ClientWidth = 1794
+      ClientHeight = 392
+      ClientWidth = 1346
       object btnClones: TButton
-        Left = 154
-        Height = 50
-        Top = 146
-        Width = 150
+        Left = 77
+        Height = 25
+        Top = 73
+        Width = 75
         Caption = 'Clones'
         TabOrder = 0
         OnClick = btnClonesClick
       end
       object btnImplants: TButton
-        Left = 336
-        Height = 50
-        Top = 146
-        Width = 150
+        Left = 168
+        Height = 25
+        Top = 73
+        Width = 75
         Caption = 'Implants'
         TabOrder = 1
         OnClick = btnImplantsClick
@@ -539,13 +539,13 @@ object Form1: TForm1
     end
     object tbsContact: TTabSheet
       Caption = 'Contacts'
-      ClientHeight = 684
-      ClientWidth = 1794
+      ClientHeight = 392
+      ClientWidth = 1346
       object btnContactCharacter: TButton
-        Left = 16
-        Height = 50
-        Top = 48
-        Width = 150
+        Left = 8
+        Height = 25
+        Top = 24
+        Width = 75
         Caption = 'Characters'
         TabOrder = 0
         OnClick = btnContactCharacterClick
@@ -553,13 +553,13 @@ object Form1: TForm1
     end
     object tbsContracts: TTabSheet
       Caption = 'Contracts'
-      ClientHeight = 684
-      ClientWidth = 1794
+      ClientHeight = 392
+      ClientWidth = 1346
       object Button8: TButton
-        Left = 16
-        Height = 50
-        Top = 32
-        Width = 150
+        Left = 8
+        Height = 25
+        Top = 16
+        Width = 75
         Caption = 'Public'
         TabOrder = 0
         OnClick = Button8Click
@@ -567,31 +567,31 @@ object Form1: TForm1
     end
     object tbsLocation: TTabSheet
       Caption = 'Location'
-      ClientHeight = 684
-      ClientWidth = 1794
+      ClientHeight = 392
+      ClientWidth = 1346
       object btnLcation: TButton
-        Left = 32
-        Height = 50
-        Top = 160
-        Width = 150
+        Left = 16
+        Height = 25
+        Top = 80
+        Width = 75
         Caption = 'Location'
         TabOrder = 0
         OnClick = btnLcationClick
       end
       object btnOnline: TButton
-        Left = 192
-        Height = 50
-        Top = 160
-        Width = 150
+        Left = 96
+        Height = 25
+        Top = 80
+        Width = 75
         Caption = 'Online'
         TabOrder = 1
         OnClick = btnOnlineClick
       end
       object btnShip: TButton
-        Left = 352
-        Height = 50
-        Top = 160
-        Width = 150
+        Left = 176
+        Height = 25
+        Top = 80
+        Width = 75
         Caption = 'Ship'
         TabOrder = 2
         OnClick = btnShipClick
@@ -599,13 +599,13 @@ object Form1: TForm1
     end
     object TabSheet1: TTabSheet
       Caption = 'KillMails'
-      ClientHeight = 684
-      ClientWidth = 1794
+      ClientHeight = 392
+      ClientWidth = 1346
       object Memo2: TMemo
-        Left = 16
-        Height = 502
-        Top = 160
-        Width = 1764
+        Left = 8
+        Height = 301
+        Top = 80
+        Width = 1331
         Anchors = [akTop, akLeft, akRight, akBottom]
         Lines.Strings = (
           'Memo2'
@@ -613,42 +613,42 @@ object Form1: TForm1
         TabOrder = 0
       end
       object edKillId: TEdit
-        Left = 16
-        Height = 40
-        Top = 64
-        Width = 384
+        Left = 8
+        Height = 28
+        Top = 32
+        Width = 192
         TabOrder = 1
         Text = '114353010'
       end
       object Label8: TLabel
-        Left = 16
-        Height = 32
-        Top = 32
-        Width = 60
+        Left = 8
+        Height = 16
+        Top = 16
+        Width = 36
         Caption = 'kill_id'
         ParentColor = False
       end
       object Label9: TLabel
-        Left = 450
-        Height = 32
-        Top = 32
-        Width = 90
+        Left = 225
+        Height = 16
+        Top = 16
+        Width = 54
         Caption = 'kill_hash'
         ParentColor = False
       end
       object edKillHash: TEdit
-        Left = 454
-        Height = 40
-        Top = 64
-        Width = 842
+        Left = 227
+        Height = 28
+        Top = 32
+        Width = 421
         TabOrder = 2
         Text = '826c689bef101671de6f5299e7e2b6c5d9142204'
       end
       object Button11: TButton
-        Left = 1344
-        Height = 50
-        Top = 64
-        Width = 150
+        Left = 672
+        Height = 25
+        Top = 32
+        Width = 75
         Caption = 'Get'
         TabOrder = 3
         OnClick = Button11Click
@@ -656,76 +656,76 @@ object Form1: TForm1
     end
     object TabSheet2: TTabSheet
       Caption = 'Universe'
-      ClientHeight = 684
-      ClientWidth = 1794
+      ClientHeight = 392
+      ClientWidth = 1346
       object edUniverseTypeId: TEdit
-        Left = 24
-        Height = 40
-        Top = 40
-        Width = 160
+        Left = 12
+        Height = 28
+        Top = 20
+        Width = 80
         TabOrder = 0
         Text = '32880'
       end
       object Label10: TLabel
-        Left = 24
-        Height = 32
+        Left = 12
+        Height = 16
         Top = 0
-        Width = 71
+        Width = 41
         Caption = 'TypeId'
       end
       object Button12: TButton
-        Left = 207
-        Height = 50
-        Top = 40
-        Width = 150
+        Left = 104
+        Height = 25
+        Top = 20
+        Width = 75
         Caption = 'Get'
         TabOrder = 1
         OnClick = Button12Click
       end
       object Label11: TLabel
-        Left = 24
-        Height = 32
-        Top = 232
-        Width = 116
+        Left = 12
+        Height = 16
+        Top = 116
+        Width = 67
         Caption = 'CategoryId'
       end
       object Button13: TButton
-        Left = 207
-        Height = 50
-        Top = 272
-        Width = 150
+        Left = 104
+        Height = 25
+        Top = 136
+        Width = 75
         Caption = 'Get'
         TabOrder = 2
         OnClick = Button13Click
       end
       object edUniverseCategoryId: TEdit
-        Left = 24
-        Height = 40
-        Top = 272
-        Width = 160
+        Left = 12
+        Height = 28
+        Top = 136
+        Width = 80
         TabOrder = 3
         Text = '6'
       end
       object Label12: TLabel
-        Left = 24
-        Height = 32
-        Top = 112
-        Width = 86
+        Left = 12
+        Height = 16
+        Top = 56
+        Width = 50
         Caption = 'GroupId'
       end
       object edUniverseGroupId: TEdit
-        Left = 24
-        Height = 40
-        Top = 160
-        Width = 160
+        Left = 12
+        Height = 28
+        Top = 80
+        Width = 80
         TabOrder = 4
         Text = '25'
       end
       object Button14: TButton
-        Left = 207
-        Height = 50
-        Top = 160
-        Width = 150
+        Left = 104
+        Height = 25
+        Top = 80
+        Width = 75
         Caption = 'Get'
         TabOrder = 5
         OnClick = Button14Click
@@ -734,35 +734,35 @@ object Form1: TForm1
   end
   object Panel2: TPanel
     Left = 0
-    Height = 164
+    Height = 82
     Top = 0
-    Width = 1810
+    Width = 1356
     Align = alTop
     BevelOuter = bvNone
-    ClientHeight = 164
-    ClientWidth = 1810
+    ClientHeight = 82
+    ClientWidth = 1356
     TabOrder = 3
     object lblName: TLabel
-      Left = 16
-      Height = 32
-      Top = 16
-      Width = 90
+      Left = 8
+      Height = 16
+      Top = 8
+      Width = 51
       Caption = 'lblName'
       ParentColor = False
     end
     object lblCharID: TLabel
-      Left = 16
-      Height = 32
-      Top = 64
-      Width = 98
+      Left = 8
+      Height = 16
+      Top = 32
+      Width = 58
       Caption = 'lblCharID'
       ParentColor = False
     end
     object lblCorpId: TLabel
-      Left = 16
-      Height = 32
-      Top = 116
-      Width = 97
+      Left = 8
+      Height = 16
+      Top = 58
+      Width = 57
       Caption = 'lblCorpId'
       ParentColor = False
     end
@@ -787,7 +787,7 @@ object Form1: TForm1
       end>
     JSONFileName = 'settings.json'
     Formatted = True
-    Left = 1696
-    Top = 576
+    Left = 848
+    Top = 288
   end
 end
