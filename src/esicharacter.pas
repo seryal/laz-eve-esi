@@ -363,40 +363,40 @@ type
   TESICharacter = class(TESIBase)
   public
     {Get character's public information.}
-    function GetPublicInfo(ACharacterId: uint64): TEVECharacterPublic;
+    function GetPublicInfo(const ACharacterId: uint64): TEVECharacterPublic;
     {Get agent research list
      Free memory after use.}
-    function GetAgentResearch(AAccessToken: string; ACharacterId: uint64): TEVECharacterAgentList;
+    function GetAgentResearch(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterAgentList;
     {Get blueprint list
      Free memory after use.}
-    function GetBlueprints(AAccessToken: string; ACharacterId: uint64; APage: integer): TEVECharacterBlueprintList;
+    function GetBlueprints(const AAccessToken: string; const ACharacterId: uint64; APage: integer): TEVECharacterBlueprintList;
     {Get Corporation list
      Free memory after use.}
-    function GetCorporationHistory(ACharacterId: uint64): TEVECharacterCorporationList;
+    function GetCorporationHistory(const ACharacterId: uint64): TEVECharacterCorporationList;
     {Get Jump Fatigue
      Free memory after use.}
-    function GetJumpFatigue(AAccessToken: string; ACharacterId: uint64): TEVECharacterJumpFatigue;
+    function GetJumpFatigue(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterJumpFatigue;
     {Get Character Medals
      Free memory after use.}
-    function GetMedals(AAccessToken: string; ACharacterId: uint64): TEVECharacterMedalsList;
+    function GetMedals(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterMedalsList;
     {Get Character Notification
      Free memory after use.}
-    function GetNotifications(AAccessToken: string; ACharacterId: uint64): TEVECharacterNotificationList;
+    function GetNotifications(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterNotificationList;
     {Get Character Notification
      Free memory after use.}
-    function GetContacts(AAccessToken: string; ACharacterId: uint64): TEVECharacterContactList;
+    function GetContacts(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterContactList;
     {Get Character Portrait
      Free memory after use.}
-    function GetPortrait(ACharacterId: uint64): TEVECharacterPortrait;
+    function GetPortrait(const ACharacterId: uint64): TEVECharacterPortrait;
     {Get Character Roles
      Free memory after use.}
-    function GetRoles(AAccessToken: string; ACharacterId: uint64): TEVECharacterRoles;
+    function GetRoles(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterRoles;
     {Get Character Standing
      Free memory after use.}
-    function GetStanding(AAccessToken: string; ACharacterId: uint64): TEVECharacterStandingList;
+    function GetStanding(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterStandingList;
     {Get Character Titles
      Free memory after use.}
-    function GetTitles(AAccessToken: string; ACharacterId: uint64): TEVECharacterTitleList;
+    function GetTitles(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterTitleList;
     {Get Character Affiliation
      Free memory after use.}
     function GetAffiliation(ACharacterList: TStrings): TEVECharacterAffiliationList;
@@ -510,7 +510,7 @@ end;
 
 { TESICharacter }
 
-function TESICharacter.GetPublicInfo(ACharacterId: uint64): TEVECharacterPublic;
+function TESICharacter.GetPublicInfo(const ACharacterId: uint64): TEVECharacterPublic;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/?datasource=%s';
 begin
@@ -518,7 +518,7 @@ begin
   DeStreamerObject(Get(Format(URL, [ACharacterId.ToString, DataSource])), TObject(Result));
 end;
 
-function TESICharacter.GetAgentResearch(AAccessToken: string; ACharacterId: uint64): TEVECharacterAgentList;
+function TESICharacter.GetAgentResearch(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterAgentList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/agents_research/?datasource=%s';
 begin
@@ -526,7 +526,7 @@ begin
   DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TCollection(Result));
 end;
 
-function TESICharacter.GetBlueprints(AAccessToken: string; ACharacterId: uint64; APage: integer): TEVECharacterBlueprintList;
+function TESICharacter.GetBlueprints(const AAccessToken: string; const ACharacterId: uint64; APage: integer): TEVECharacterBlueprintList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/blueprints/?datasource=%s&page=%d';
 begin
@@ -534,7 +534,7 @@ begin
   DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource, APage])), TCollection(Result));
 end;
 
-function TESICharacter.GetCorporationHistory(ACharacterId: uint64): TEVECharacterCorporationList;
+function TESICharacter.GetCorporationHistory(const ACharacterId: uint64): TEVECharacterCorporationList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/corporationhistory/?datasource=%s';
 begin
@@ -542,7 +542,7 @@ begin
   DeStreamerArray(Get(Format(URL, [ACharacterId.ToString, DataSource])), TCollection(Result));
 end;
 
-function TESICharacter.GetJumpFatigue(AAccessToken: string; ACharacterId: uint64): TEVECharacterJumpFatigue;
+function TESICharacter.GetJumpFatigue(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterJumpFatigue;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/fatigue/?datasource=%s';
 begin
@@ -550,7 +550,7 @@ begin
   DeStreamerObject(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TObject(Result));
 end;
 
-function TESICharacter.GetMedals(AAccessToken: string; ACharacterId: uint64): TEVECharacterMedalsList;
+function TESICharacter.GetMedals(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterMedalsList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/medals/?datasource=%s';
 begin
@@ -558,7 +558,7 @@ begin
   DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TCollection(Result));
 end;
 
-function TESICharacter.GetNotifications(AAccessToken: string; ACharacterId: uint64): TEVECharacterNotificationList;
+function TESICharacter.GetNotifications(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterNotificationList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/notifications/?datasource=%s';
 begin
@@ -566,7 +566,7 @@ begin
   DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TCollection(Result));
 end;
 
-function TESICharacter.GetContacts(AAccessToken: string; ACharacterId: uint64): TEVECharacterContactList;
+function TESICharacter.GetContacts(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterContactList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/notifications/contacts/?datasource=%s';
 begin
@@ -574,7 +574,7 @@ begin
   DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TCollection(Result));
 end;
 
-function TESICharacter.GetPortrait(ACharacterId: uint64): TEVECharacterPortrait;
+function TESICharacter.GetPortrait(const ACharacterId: uint64): TEVECharacterPortrait;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/portrait/?datasource=%s';
 begin
@@ -582,7 +582,7 @@ begin
   DeStreamerObject(Get(Format(URL, [ACharacterId.ToString, DataSource])), TObject(Result));
 end;
 
-function TESICharacter.GetRoles(AAccessToken: string; ACharacterId: uint64): TEVECharacterRoles;
+function TESICharacter.GetRoles(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterRoles;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/roles/?datasource=%s';
 begin
@@ -590,7 +590,7 @@ begin
   DeStreamerObject(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TObject(Result));
 end;
 
-function TESICharacter.GetStanding(AAccessToken: string; ACharacterId: uint64): TEVECharacterStandingList;
+function TESICharacter.GetStanding(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterStandingList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/standings/?datasource=%s';
 begin
@@ -598,7 +598,7 @@ begin
   DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TCollection(Result));
 end;
 
-function TESICharacter.GetTitles(AAccessToken: string; ACharacterId: uint64): TEVECharacterTitleList;
+function TESICharacter.GetTitles(const AAccessToken: string; const ACharacterId: uint64): TEVECharacterTitleList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/standings/?datasource=%s';
 begin

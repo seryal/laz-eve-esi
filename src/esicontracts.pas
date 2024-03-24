@@ -292,15 +292,15 @@ type
 
   TESIContracts = class(TESIBase)
   public
-    function GetContractsCharacter(AAccessToken: string; ACharacterId: integer; APage: integer): string;
-    function GetContractCharactersBids(AAccessToken: string; ACharacterId, AContractID: integer): string;
-    function GetContractCharactersItems(AAccessToken: string; ACharacterId, AContractID, APage: integer): string;
+    function GetContractsCharacter(const AAccessToken: string; ACharacterId: integer; APage: integer): string;
+    function GetContractCharactersBids(const AAccessToken: string; ACharacterId, AContractID: integer): string;
+    function GetContractCharactersItems(const AAccessToken: string; ACharacterId, AContractID, APage: integer): string;
     function GetPublicContracts(ARegionID, APage: integer): TEVEContractList;
     function GetPublicBids(AContractID: integer): string;
     function GetPublicItems(AContractID, APage: integer): string;
-    function GetContractsCorporation(AAccessToken: string; ACharacterId: integer; APage: integer): string;
-    function GetContractCorporationBids(AAccessToken: string; ACorporationId, AContractID: integer): string;
-    function GetContractCorporationItems(AAccessToken: string; ACorporationId, AContractID, APage: integer): string;
+    function GetContractsCorporation(const AAccessToken: string; ACharacterId: integer; APage: integer): string;
+    function GetContractCorporationBids(const AAccessToken: string; ACorporationId, AContractID: integer): string;
+    function GetContractCorporationItems(const AAccessToken: string; ACorporationId, AContractID, APage: integer): string;
   end;
 
 implementation
@@ -370,17 +370,17 @@ end;
 
 { TESIContracts }
 
-function TESIContracts.GetContractsCharacter(AAccessToken: string; ACharacterId: integer; APage: integer): string;
+function TESIContracts.GetContractsCharacter(const AAccessToken: string; ACharacterId: integer; APage: integer): string;
 begin
 
 end;
 
-function TESIContracts.GetContractCharactersBids(AAccessToken: string; ACharacterId, AContractID: integer): string;
+function TESIContracts.GetContractCharactersBids(const AAccessToken: string; ACharacterId, AContractID: integer): string;
 begin
 
 end;
 
-function TESIContracts.GetContractCharactersItems(AAccessToken: string; ACharacterId, AContractID, APage: integer): string;
+function TESIContracts.GetContractCharactersItems(const AAccessToken: string; ACharacterId, AContractID, APage: integer): string;
 begin
 
 end;
@@ -403,17 +403,17 @@ begin
 
 end;
 
-function TESIContracts.GetContractsCorporation(AAccessToken: string; ACharacterId: integer; APage: integer): string;
+function TESIContracts.GetContractsCorporation(const AAccessToken: string; ACharacterId: integer; APage: integer): string;
 begin
 
 end;
 
-function TESIContracts.GetContractCorporationBids(AAccessToken: string; ACorporationId, AContractID: integer): string;
+function TESIContracts.GetContractCorporationBids(const AAccessToken: string; ACorporationId, AContractID: integer): string;
 begin
 
 end;
 
-function TESIContracts.GetContractCorporationItems(AAccessToken: string; ACorporationId, AContractID, APage: integer): string;
+function TESIContracts.GetContractCorporationItems(const AAccessToken: string; ACorporationId, AContractID, APage: integer): string;
 begin
 
 end;

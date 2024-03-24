@@ -22,29 +22,29 @@ type
 
   TESIArrayIntegerValue = class(TCollectionItem)
   private
-    FValue: Integer;
+    FValue: integer;
   published
-    property Value: Integer read FValue write FValue;
+    property Value: integer read FValue write FValue;
   end;
 
   TESIArrayIntegerValueList = class(TCollection)
   private
-    function GetItems(Index: integer): Integer;
+    function GetItems(Index: integer): integer;
   public
     constructor Create;
-    property Items[Index: integer]: Integer read GetItems;
+    property Items[Index: integer]: integer read GetItems;
   end;
 
   TESIBase = class
   protected
-    function Get(AAuthKey, AURL: string): string;
-    function Get(AURL: string): string;
-    function Post(AURL: string; AValue: string): string;
-    function Post(AAuthKey, AURL: string; AValue: string): string;
-    function Put(AAuthKey, AURL: string; AValue: string): string;
-    procedure DeStreamerObject(AJsonString: string; var AObject: TObject);
-    procedure DeStreamerArray(AJsonString: string; var AObject: TCollection);
-    procedure DeStreamerArray(AJsonString: string; var V: variant);
+    function Get(const AAuthKey, AURL: string): string;
+    function Get(const AURL: string): string;
+    function Post(const AURL, AValue: string): string;
+    function Post(const AAuthKey, AURL, AValue: string): string;
+    function Put(const AAuthKey, AURL, AValue: string): string;
+    procedure DeStreamerObject(const AJsonString: string; var AObject: TObject);
+    procedure DeStreamerArray(const AJsonString: string; var AObject: TCollection);
+    procedure DeStreamerArray(const AJsonString: string; var V: variant);
     procedure RestorePropertyNotify(Sender: TObject; AObject: TObject; Info: PPropInfo; AValue: TJSONData; var Handled: boolean); virtual;
     procedure SetArrayIntegerValue(AESIArrayIntegerValueList: TESIArrayIntegerValueList; AValue: TJSONArray);
   private
@@ -58,14 +58,14 @@ implementation
 
 { TESIArrayIntegerValueList }
 
-function TESIArrayIntegerValueList.GetItems(Index: integer): Integer;
+function TESIArrayIntegerValueList.GetItems(Index: integer): integer;
 begin
   Result := TESIArrayIntegerValue(inherited Items[Index]).Value;
 end;
 
 constructor TESIArrayIntegerValueList.Create;
 begin
-  Inherited Create(TESIArrayIntegerValue);
+  inherited Create(TESIArrayIntegerValue);
 end;
 
 { TESIBase }
@@ -75,17 +75,17 @@ begin
   DataSource := 'tranquility';
 end;
 
-function TESIBase.Get(AURL: string): string;
+function TESIBase.Get(const AURL: string): string;
 begin
   Result := Get('', AURL);
 end;
 
-function TESIBase.Post(AURL: string; AValue: string): string;
+function TESIBase.Post(const AURL, AValue: string): string;
 begin
   Result := Post('', AURL, AValue);
 end;
 
-function TESIBase.Post(AAuthKey, AURL: string; AValue: string): string;
+function TESIBase.Post(const AAuthKey, AURL, AValue: string): string;
 var
   http: TFPHTTPClient;
 begin
@@ -97,16 +97,16 @@ begin
       http.AddHeader('Authorization', 'Bearer ' + AAuthKey);
     Result := http.FormPost(AURL, AValue);
     if http.ResponseStatusCode <> 200 then
-      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' + http.ResponseStatusText);
+      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' +
+        http.ResponseStatusText);
   finally
     FreeAndNil(http);
   end;
 end;
 
-function TESIBase.Put(AAuthKey, AURL: string; AValue: string): string;
+function TESIBase.Put(const AAuthKey, AURL, AValue: string): string;
 var
   http: TFPHTTPClient;
-  res: integer;
 begin
   http := TFPHTTPClient.Create(nil);
   try
@@ -117,14 +117,15 @@ begin
     http.RequestBody := TRawByteStringStream.Create(AValue);
     Result := http.Put(AURL);
     if http.ResponseStatusCode <> 204 then
-      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' + http.ResponseStatusText);
+      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' +
+        http.ResponseStatusText);
   finally
     http.RequestBody.Free;
     FreeAndNil(http);
   end;
 end;
 
-procedure TESIBase.DeStreamerObject(AJsonString: string; var AObject: TObject);
+procedure TESIBase.DeStreamerObject(const AJsonString: string; var AObject: TObject);
 var
   jsoDeSerialize: TJSONDeStreamer;
 begin
@@ -137,7 +138,7 @@ begin
   end;
 end;
 
-procedure TESIBase.DeStreamerArray(AJsonString: string; var AObject: TCollection);
+procedure TESIBase.DeStreamerArray(const AJsonString: string; var AObject: TCollection);
 var
   jsoDeSerialize: TJSONDeStreamer;
 begin
@@ -150,7 +151,7 @@ begin
   end;
 end;
 
-procedure TESIBase.DeStreamerArray(AJsonString: string; var V: variant);
+procedure TESIBase.DeStreamerArray(const AJsonString: string; var V: variant);
 var
   jsoDeSerialize: TJSONDeStreamer;
 begin
@@ -162,35 +163,36 @@ begin
   end;
 end;
 
-procedure TESIBase.RestorePropertyNotify(Sender: TObject; AObject: TObject; Info: PPropInfo; AValue: TJSONData; var Handled: boolean);
+procedure TESIBase.RestorePropertyNotify(Sender: TObject; AObject: TObject;
+  Info: PPropInfo; AValue: TJSONData; var Handled: boolean);
 var
   lObject: TObject;
-  I: Integer;
 begin
   if AValue.JSONType = jtArray then
+  begin
+    lObject := GetObjectProp(AObject, Info^.Name);
+    if (lObject <> nil) and (lObject.ClassType = TESIArrayIntegerValueList) then
     begin
-      lObject := GetObjectProp(AObject, Info^.Name);
-      if (lObject <> nil) and (lObject.ClassType = TESIArrayIntegerValueList) then
-        begin
-          SetArrayIntegerValue(TESIArrayIntegerValueList(lObject), TJSONArray(AValue));
-          Handled := True;
-        end;
+      SetArrayIntegerValue(TESIArrayIntegerValueList(lObject), TJSONArray(AValue));
+      Handled := True;
     end;
+  end;
 end;
 
-procedure TESIBase.SetArrayIntegerValue(AESIArrayIntegerValueList: TESIArrayIntegerValueList; AValue: TJSONArray);
+procedure TESIBase.SetArrayIntegerValue(AESIArrayIntegerValueList:
+  TESIArrayIntegerValueList; AValue: TJSONArray);
 var
   lIntegerObject: TESIArrayIntegerValue;
-  I: Integer;
+  I: integer;
 begin
   for I := 0 to AValue.Count - 1 do
-    begin
-      lIntegerObject := TESIArrayIntegerValue(AESIArrayIntegerValueList.Add);
-      lIntegerObject.Value := AValue.Items[I].AsInteger;
-    end;
+  begin
+    lIntegerObject := TESIArrayIntegerValue(AESIArrayIntegerValueList.Add);
+    lIntegerObject.Value := AValue.Items[I].AsInteger;
+  end;
 end;
 
-function TESIBase.Get(AAuthKey, AURL: string): string;
+function TESIBase.Get(const AAuthKey, AURL: string): string;
 var
   http: TFPHTTPClient;
 begin
@@ -202,7 +204,8 @@ begin
       http.AddHeader('Authorization', 'Bearer ' + AAuthKey);
     Result := http.Get(AURL);
     if http.ResponseStatusCode <> 200 then
-      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' + http.ResponseStatusText);
+      raise Exception.Create(http.ResponseStatusCode.ToString + ': ' +
+        http.ResponseStatusText);
   finally
     FreeAndNil(http);
   end;

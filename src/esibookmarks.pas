@@ -105,10 +105,10 @@ type
 
   TESIBookmarks = class(TESIBase)
   public
-    function GetCharacterBookmarks(AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarkList;
-    function GetCharacterBookmarksFolders(AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarksFolderList;
-    function GetCorporationBookmarks(AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarkList;
-    function GetCorporationBookmarksFolders(AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarksFolderList;
+    function GetCharacterBookmarks(const AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarkList;
+    function GetCharacterBookmarksFolders(const AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarksFolderList;
+    function GetCorporationBookmarks(const AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarkList;
+    function GetCorporationBookmarksFolders(const AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarksFolderList;
   end;
 
 implementation
@@ -145,7 +145,7 @@ end;
 
 { TESIBookmarks }
 
-function TESIBookmarks.GetCharacterBookmarks(AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarkList;
+function TESIBookmarks.GetCharacterBookmarks(const AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarkList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/bookmarks/?datasource=%s&page=%d';
 begin
@@ -153,7 +153,7 @@ begin
   DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource, APage])), TCollection(Result));
 end;
 
-function TESIBookmarks.GetCharacterBookmarksFolders(AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarksFolderList;
+function TESIBookmarks.GetCharacterBookmarksFolders(const AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarksFolderList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/bookmarks/folders/?datasource=%s&page=%d';
 begin
@@ -161,7 +161,7 @@ begin
   DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource, APage])), TCollection(Result));
 end;
 
-function TESIBookmarks.GetCorporationBookmarks(AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarkList;
+function TESIBookmarks.GetCorporationBookmarks(const AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarkList;
 const
   URL = 'https://esi.evetech.net/latest/corporations/%s/bookmarks/?datasource=%s&page=%d';
 begin
@@ -169,7 +169,7 @@ begin
   DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource, APage])), TCollection(Result));
 end;
 
-function TESIBookmarks.GetCorporationBookmarksFolders(AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarksFolderList;
+function TESIBookmarks.GetCorporationBookmarksFolders(const AAccessToken: string; ACharacterId, APage: integer): TEVEBookmarksFolderList;
 const
   URL = 'https://esi.evetech.net/latest/corporations/%s/bookmarks/folders/?datasource=%s&page=%d';
 begin

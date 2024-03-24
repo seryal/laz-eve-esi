@@ -99,10 +99,10 @@ type
 
   TESICalendar = class(TESIBase)
   public
-    function GetCalendar(AAccessToken: string; ACharacterId: integer): TEVECharacterCalendarList;
-    function GetEvent(AAccessToken: string; ACharacterId, AEventId: integer): TEVECalendarEvent;
-    function SetResponse(AAccessToken: string; ACharacterId, AEventId: integer; AResponse: TEVEResponseEnum): boolean;
-    function GetAttendees(AAccessToken: string; ACharacterId, AEventId: integer): TEVECalendarAttendeeList;
+    function GetCalendar(const AAccessToken: string; ACharacterId: integer): TEVECharacterCalendarList;
+    function GetEvent(const AAccessToken: string; ACharacterId, AEventId: integer): TEVECalendarEvent;
+    function SetResponse(const AAccessToken: string; ACharacterId, AEventId: integer; AResponse: TEVEResponseEnum): boolean;
+    function GetAttendees(const AAccessToken: string; ACharacterId, AEventId: integer): TEVECalendarAttendeeList;
   end;
 
 
@@ -117,7 +117,7 @@ end;
 
 { TESICalendar }
 
-function TESICalendar.GetCalendar(AAccessToken: string; ACharacterId: integer): TEVECharacterCalendarList;
+function TESICalendar.GetCalendar(const AAccessToken: string; ACharacterId: integer): TEVECharacterCalendarList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/calendar/?datasource=%s';
 begin
@@ -125,7 +125,7 @@ begin
   DeStreamerArray(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TCollection(Result));
 end;
 
-function TESICalendar.GetEvent(AAccessToken: string; ACharacterId, AEventId: integer): TEVECalendarEvent;
+function TESICalendar.GetEvent(const AAccessToken: string; ACharacterId, AEventId: integer): TEVECalendarEvent;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/calendar/%s/?datasource=%s';
 begin
@@ -133,7 +133,7 @@ begin
   DeStreamerObject(Get(AAccessToken, Format(URL, [ACharacterId.ToString, AEventId.ToString, DataSource])), TObject(Result));
 end;
 
-function TESICalendar.SetResponse(AAccessToken: string; ACharacterId, AEventId: integer; AResponse: TEVEResponseEnum): boolean;
+function TESICalendar.SetResponse(const AAccessToken: string; ACharacterId, AEventId: integer; AResponse: TEVEResponseEnum): boolean;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/calendar/%s/?datasource=%s';
   RESPONSE = '{"response":"%s"}';
@@ -150,7 +150,7 @@ begin
   Result := True;
 end;
 
-function TESICalendar.GetAttendees(AAccessToken: string; ACharacterId, AEventId: integer): TEVECalendarAttendeeList;
+function TESICalendar.GetAttendees(const AAccessToken: string; ACharacterId, AEventId: integer): TEVECalendarAttendeeList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/calendar/%s/attendees/?datasource=%s';
 begin

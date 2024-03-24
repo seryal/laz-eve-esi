@@ -35,7 +35,7 @@ type
     procedure RequestErrorHandler(Sender: TObject; E: Exception);
     procedure RequestHandler(Sender: TObject; var ARequest: TFPHTTPConnectionRequest; var AResponse: TFPHTTPConnectionResponse);
   public
-    constructor Create(APort: word; AHTMLAnswer: string);
+    constructor Create(APort: word; const AHTMLAnswer: string);
     destructor Destroy; override;
     procedure StopAndFree;
     property OnRequest: TOnRequestNotify read FOnRequestNotify write FOnRequestNotify;
@@ -85,7 +85,7 @@ begin
   Terminate;
 end;
 
-constructor TEVEHTTPServer.Create(APort: word; AHTMLAnswer: string);
+constructor TEVEHTTPServer.Create(APort: word; const AHTMLAnswer: string);
 begin
   inherited Create(True);
   FHTMLAnswer := AHTMLAnswer;

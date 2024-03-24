@@ -63,16 +63,16 @@ type
     function GetAuthURL: string;
     function GetScope(Index: integer): string;
     function GenerateCodeChallenge: string;
-    function Base64UrlSafe(AValue: string): string;
+    function Base64UrlSafe(const AValue: string): string;
   public
     constructor Create;
     destructor Destroy; override;
-    procedure AddScope(AScope: string);
+    procedure AddScope(const AScope: string);
     procedure ClearScope;
     procedure DeleteScope(AIndex: integer);
-    function AuthByAccessToken(ACode: string; ACodeVerifier: string): TAccessToken;
-    function AuthByRefreshToken(ARefreshCode: string): TAccessToken;
-    function GetCharacter(AAccessToken: string): TEVEAuthCharacter;
+    function AuthByAccessToken(const ACode: string): TAccessToken;
+    function AuthByRefreshToken(const ARefreshCode: string): TAccessToken;
+    function GetCharacter(const AAccessToken: string): TEVEAuthCharacter;
     property ClientID: string read FClientID write FClientID;
     property CallbackURL: string read FCallbackURL write FCallbackURL;
     property Scope[Index: integer]: string read GetScope;
@@ -130,7 +130,7 @@ begin
   Result := str;
 end;
 
-function TEVEESIAuth.Base64UrlSafe(AValue: string): string;
+function TEVEESIAuth.Base64UrlSafe(const AValue: string): string;
 var
   val: string;
 begin
@@ -148,7 +148,6 @@ var
   url: string;
   scopes: string;
   tmp: string;
-  code_challenge_str: string;
 begin
   scopes := '';
   for tmp in FScopeList do
@@ -177,7 +176,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TEVEESIAuth.AddScope(AScope: string);
+procedure TEVEESIAuth.AddScope(const AScope: string);
 begin
   FScopeList.Add(AScope);
 end;
@@ -192,7 +191,7 @@ begin
   FScopeList.Delete(AIndex);
 end;
 
-function TEVEESIAuth.AuthByAccessToken(ACode: string; ACodeVerifier: string): TAccessToken;
+function TEVEESIAuth.AuthByAccessToken(const ACode: string): TAccessToken;
 const
   AUTH_STR = 'grant_type=authorization_code&code=%s&client_id=%s&code_verifier=%s';
 var
@@ -223,7 +222,7 @@ begin
   end;
 end;
 
-function TEVEESIAuth.AuthByRefreshToken(ARefreshCode: string): TAccessToken;
+function TEVEESIAuth.AuthByRefreshToken(const ARefreshCode: string): TAccessToken;
 const
   AUTH_STR = 'grant_type=refresh_token&refresh_token=%s&client_id=%s';
 var
@@ -254,7 +253,7 @@ begin
   end;
 end;
 
-function TEVEESIAuth.GetCharacter(AAccessToken: string): TEVEAuthCharacter;
+function TEVEESIAuth.GetCharacter(const AAccessToken: string): TEVEAuthCharacter;
 const
   URL = 'https://esi.evetech.net/verify';
 var

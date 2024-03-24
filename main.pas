@@ -892,7 +892,7 @@ end;
 procedure TForm1.Button3Click(Sender: TObject);
 begin
   Memo1.Lines.Add('=====');
-  Ftoken := Fesi.AuthByAccessToken(FAuthCode, FCodeChallenge);
+  FToken := Fesi.AuthByAccessToken(FAuthCode);
   Memo1.Lines.Add(Ftoken.AccessToken);
   Memo1.Lines.Add(Ftoken.RefreshToken);
   Memo1.Lines.Add(Ftoken.TokenType);

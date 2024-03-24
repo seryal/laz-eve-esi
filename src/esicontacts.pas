@@ -91,13 +91,13 @@ type
   protected
     procedure RestorePropertyNotify(Sender: TObject; AObject: TObject; Info: PPropInfo; AValue: TJSONData; var Handled: boolean); override;
   public
-    function GetAllianceContacts(AAccessToken: string; AAllianceID, APage: integer): TEVEContactAllianceList;
+    function GetAllianceContacts(const AAccessToken: string; AAllianceID, APage: integer): TEVEContactAllianceList;
     //function GetAllianceContactLabels(AAccessToken: string; AAllianceID: integer): string;
     //function DeleteCharacterContact(AAccessToken: string; AChatacterID: integer): string;
-    function GetCharacterContacts(AAccessToken: string; ACharacterID, APage: integer): TEVEContactCharacterList;
+    function GetCharacterContacts(const AAccessToken: string; ACharacterID, APage: integer): TEVEContactCharacterList;
     //function AddCharacterContact(AAccessToken: string; ACharacterID: integer): string;
     //function GetCharacterContactLabels(AAccessToken: string; ACharacterID: integer): string;
-    function GetCorporationContacts(AAccessToken: string; ACorporationID, APage: integer): TEVEContactCorporationList;
+    function GetCorporationContacts(const AAccessToken: string; ACorporationID, APage: integer): TEVEContactCorporationList;
     //function GetCorporationContactLabels(AAccessToken: string; ACorporationID: integer): string;
   end;
 
@@ -144,7 +144,7 @@ begin
     inherited RestorePropertyNotify(Sender, AObject, Info, AValue, Handled);
 end;
 
-function TESIContacts.GetAllianceContacts(AAccessToken: string; AAllianceID, APage: integer): TEVEContactAllianceList;
+function TESIContacts.GetAllianceContacts(const AAccessToken: string; AAllianceID, APage: integer): TEVEContactAllianceList;
 const
   URL = 'https://esi.evetech.net/latest/alliances/%s/contacts/?datasource=%s&page=%d';
 begin
@@ -154,7 +154,7 @@ begin
   Fproperty_name := '';
 end;
 
-function TESIContacts.GetCharacterContacts(AAccessToken: string; ACharacterID, APage: integer): TEVEContactCharacterList;
+function TESIContacts.GetCharacterContacts(const AAccessToken: string; ACharacterID, APage: integer): TEVEContactCharacterList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/contacts/?datasource=%s&page=%d';
 begin
@@ -164,7 +164,7 @@ begin
   Fproperty_name := '';
 end;
 
-function TESIContacts.GetCorporationContacts(AAccessToken: string; ACorporationID, APage: integer): TEVEContactCorporationList;
+function TESIContacts.GetCorporationContacts(const AAccessToken: string; ACorporationID, APage: integer): TEVEContactCorporationList;
 const
   URL = 'https://esi.evetech.net/latest/corporations/%s/contacts/?datasource=%s&page=%d';
 begin

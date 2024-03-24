@@ -31,7 +31,7 @@ type
     property location_type: string read Flocation_type write Flocation_type;
   end;
 
-  TEVEImplantList = specialize TList<longint>;
+  TEVEImplantList = specialize TList<longint>; // need remake
 
   { TEVEClonesJumpClone }
 
@@ -85,9 +85,9 @@ type
   TESIClones = class(TESIBase)
   public
     {A list of the character’s clones}
-    function GetClones(AAccessToken: string; ACharacterId: integer): TEVEClonesCharacter;
+    function GetClones(const AAccessToken: string; ACharacterId: integer): TEVEClonesCharacter;
     {Return implants on the active clone of a character}
-    function GetImplants(AAccessToken: string; ACharacterId: integer): TEVEImplantList;
+    function GetImplants(const AAccessToken: string; ACharacterId: integer): TEVEImplantList;
   end;
 
 implementation
@@ -131,7 +131,7 @@ end;
 
 { TESIClones }
 
-function TESIClones.GetClones(AAccessToken: string; ACharacterId: integer): TEVEClonesCharacter;
+function TESIClones.GetClones(const AAccessToken: string; ACharacterId: integer): TEVEClonesCharacter;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/clones/?datasource=%s';
 begin
@@ -139,7 +139,7 @@ begin
   DeStreamerObject(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TObject(Result));
 end;
 
-function TESIClones.GetImplants(AAccessToken: string; ACharacterId: integer): TEVEImplantList;
+function TESIClones.GetImplants(const AAccessToken: string; ACharacterId: integer): TEVEImplantList;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/implants/?datasource=%s';
 var

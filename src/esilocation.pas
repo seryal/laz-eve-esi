@@ -67,9 +67,9 @@ type
   private
     FAuthKey: string;
   public
-    function GetLocation(AAccessToken: string; ACharacterId: UInt64): TEVELocationLocation;
-    function GetOnline(AAccessToken: string; ACharacterId: UInt64): TEVELocationOnline;
-    function GetShip(AAccessToken: string; ACharacterId: UInt64): TEVELocationShip;
+    function GetLocation(const AAccessToken: string; const ACharacterId: UInt64): TEVELocationLocation;
+    function GetOnline(const AAccessToken: string; const ACharacterId: UInt64): TEVELocationOnline;
+    function GetShip(const AAccessToken: string; const ACharacterId: UInt64): TEVELocationShip;
   end;
 
 
@@ -77,7 +77,7 @@ implementation
 
 { TESILocation }
 
-function TESILocation.GetLocation(AAccessToken: string; ACharacterId: UInt64): TEVELocationLocation;
+function TESILocation.GetLocation(const AAccessToken: string; const ACharacterId: UInt64): TEVELocationLocation;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/location/?datasource=%s';
 begin
@@ -85,7 +85,7 @@ begin
   DeStreamerObject(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TObject(Result));
 end;
 
-function TESILocation.GetOnline(AAccessToken: string; ACharacterId: UInt64): TEVELocationOnline;
+function TESILocation.GetOnline(const AAccessToken: string; const ACharacterId: UInt64): TEVELocationOnline;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/online/?datasource=%s';
 begin
@@ -93,7 +93,7 @@ begin
   DeStreamerObject(Get(AAccessToken, Format(URL, [ACharacterId.ToString, DataSource])), TObject(Result));
 end;
 
-function TESILocation.GetShip(AAccessToken: string; ACharacterId: UInt64): TEVELocationShip;
+function TESILocation.GetShip(const AAccessToken: string; const ACharacterId: UInt64): TEVELocationShip;
 const
   URL = 'https://esi.evetech.net/latest/characters/%s/ship/?datasource=%s';
 begin
